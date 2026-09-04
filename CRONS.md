@@ -82,3 +82,8 @@ Commit `c3a023c` (2026-09-03, "review fixes") substantially rewrote the collecto
 - removed stray `data/system.sav`, added `.gitignore`
 
 If the cron message text and `collector.py` docstring ever disagree, **trust the docstring** — and update the automation message.
+
+## Validation status (2026-09-04)
+- Collector cron: live since Sep 3, verified across update-day boundary (staleness self-heal exercised Sep 4 00:03 + 06:03 runs).
+- Digest cron: implemented Sep 4 (id 325717d2). Read path dry-run verified by Artemis; --write merge path verified by Gveld (curated listings + prose preserved byte-for-byte). Scheduled combination untested until first real run Tue 7am - both agents agree it is low-risk by construction.
+- Expected behavior: gen_digest --write always refreshes the generated timestamp, so Tue/Fri runs produce a small commit even with no listing changes. This is intentional provenance stamping, not churn.

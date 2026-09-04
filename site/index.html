@@ -255,12 +255,31 @@ function noSchoolMap(yearCal){
 
 // LINQ item names carry portion/brand suffixes ("Orange, sliced, 1/2 cup serving")
 const cleanItem = s => String(s).replace(/,?\s*\d+\/\d+ cup serving/i,"").replace(/\s+/g," ").trim();
-function linqMeal(day){
+const normFood = s => String(s).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
+
+// LINQ lists the daily alternates (yogurt parfait, SunButter bag) as "Main Entree" too —
+// pick the hot lunch by excluding the menu's published daily options
+function linqMeal(day, dailyOptions){
   const lunch = (day && day.lunch) || [];
   const mains = lunch.filter(m => m.cat === "Main Entree").map(m => cleanItem(m.item)).filter(Boolean);
   if (!mains.length) return null;
+  const alts = (dailyOptions||[]).map(normFood);
+  const hot = mains.filter(m => { const n = normFood(m); return !alts.some(a => n.includes(a) || a.includes(n)); });
+  const main = (hot.length ? hot : mains)[0];
   const sides = lunch.filter(m => m.cat !== "Main Entree" && m.cat !== "Milk").map(m => cleanItem(m.item)).filter(Boolean);
-  return {main: mains[0], sides};
+  return {main, sides};
+}
+
+// next actual school day after `from` — skips weekends AND calendar no-school days
+function nextSchoolDay(from, noSchool){
+  const d = new Date(from);
+  for (let i = 0; i < 15; i++) {
+    d.setDate(d.getDate()+1);
+    if (d.getDay() === 0 || d.getDay() === 6) continue;
+    if (noSchool.has(isoOf(d))) continue;
+    return new Date(d);
+  }
+  return null;
 }
 
 function renderLunch(menu, linqDays, noSchool){
@@ -268,8 +287,10 @@ function renderLunch(menu, linqDays, noSchool){
   const now = new Date();
   const dow = now.getDay();
   const iso = isoOf(now);
-  const tmr = new Date(now); tmr.setDate(tmr.getDate()+1);   // rollover-safe tomorrow
-  const tISO = isoOf(tmr);
+  const tmr = new Date(now); tmr.setDate(tmr.getDate()+1);   // literal tomorrow
+  const alts = (menu.menu && menu.menu.daily_options) || [];
+  const nsd = nextSchoolDay(now, noSchool);                  // next SCHOOL day (skips weekends + holidays)
+  const nsdISO = nsd ? isoOf(nsd) : null;
 
   const nsLabel = noSchool.get(iso);
   if (nsLabel) {
@@ -277,13 +298,13 @@ function renderLunch(menu, linqDays, noSchool){
     return;
   }
 
-  const lq = linqMeal(linqDays[iso]);
+  const lq = linqMeal(linqDays[iso], alts);
   const pdf = menu.menu && menu.menu.lunch ? menu.menu.lunch[iso] : null;
   const main = lq ? lq.main : (pdf ? pdf.main : null);
   const sides = lq ? lq.sides : (pdf ? pdf.sides||[] : []);
   if (!main) {
     if (dow === 0 || dow === 6) {
-      const back = dow === 6 ? "Monday" : "tomorrow";
+      const back = nsd ? (nsd.toDateString() === tmr.toDateString() ? "tomorrow" : dowNames[nsd.getDay()]) : "soon";
       $("lunch-card").innerHTML = `<div class="no-school">🏖️ Weekend<br><span class="sub">No school — see you ${back}!</span></div>`;
       return;
     }
@@ -293,23 +314,25 @@ function renderLunch(menu, linqDays, noSchool){
 
   let html = `<div class="lunch-main"><div class="lunch-emoji">${EMOJI(main)}</div><div class="lunch-name">${esc(main)}</div></div>`;
   html += `<div class="lunch-sides">${(sides||[]).map(s=>`<span class="side-chip">${SIDE(s)} ${esc(s)}</span>`).join("")}</div>`;
-  const alts = (menu.menu && menu.menu.daily_options) || [];
   const bk = menu.menu && menu.menu.breakfast_weekly ? menu.menu.breakfast_weekly[["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dow]] : null;
   html += `<div class="lunch-alt">Always: ${esc(alts.join(" · "))}${bk?`<br>Breakfast: ${esc(bk)}`:""}</div>`;
 
-  // tomorrow's entrée sub-card
-  const tLq = linqMeal(linqDays[tISO]);
-  const tPdf = menu.menu && menu.menu.lunch ? menu.menu.lunch[tISO] : null;
-  const tMain = tLq ? tLq.main : (tPdf ? tPdf.main : null);
-  if (tMain) {
-    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft)"><div class="kicker">Tomorrow · ${dowNames[tmr.getDay()]}</div><div style="font-family:'Baloo 2';font-size:17px;font-weight:700">${EMOJI(tMain)} ${esc(tMain)}</div></div>`;
+  // tease the NEXT SCHOOL DAY's entrée (Friday teases Tuesday over a 3-day weekend)
+  const nLq = nsdISO ? linqMeal(linqDays[nsdISO], alts) : null;
+  const nPdf = nsdISO && menu.menu && menu.menu.lunch ? menu.menu.lunch[nsdISO] : null;
+  const nMain = nLq ? nLq.main : (nPdf ? nPdf.main : null);
+  if (nMain) {
+    const label = nsdISO === isoOf(tmr)
+      ? `Tomorrow · ${dowNames[nsd.getDay()]}`
+      : `Next school day · ${nsd.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}`;
+    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft)"><div class="kicker">${label}</div><div style="font-family:'Baloo 2';font-size:17px;font-weight:700">${EMOJI(nMain)} ${esc(nMain)}</div></div>`;
   }
   $("lunch-card").innerHTML = html;
 
   // theme callout: pizza friday today OR tomorrow
   if (dow === 5 && /pizza/i.test(main||"")) {
     $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Today is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
-  } else if (dow === 4 && tMain && /pizza/i.test(tMain)) {
+  } else if (dow === 4 && nMain && nsdISO === isoOf(tmr) && /pizza/i.test(nMain)) {
     $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Tomorrow is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
   }
 }

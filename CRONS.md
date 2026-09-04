@@ -37,11 +37,11 @@ Consequence: the "morning run does LINQ/shARK" idea from the original spec is su
 ## Deploy chain
 
 ```
-collector cron → JSON updates → git add data/ + commit + push (origin/main) → GitHub Pages auto-deploy (~30s)
+collector cron → JSON updates → git add data/ + commit + push (origin/main) → Vercel auto-deploy (~30s)
 ```
 
-- **Hosting:** GitHub Pages at `https://thegizmopro.github.io/school-dashboard/` (workflow: `.github/workflows/deploy-pages.yml`, deploys `site/` folder only)
-- **Vercel mirror exists** (`school-dashboard-zeta-ebon.vercel.app`) but GitHub Pages is the canonical link. Vercel needs Root Directory = `site` if ever revived.
+- **Hosting (canonical): Vercel** — `school-dashboard-zeta-ebon.vercel.app`. Git-integrated with this repo; `vercel.json` sets `outputDirectory: site`. Every push (cron or human) auto-deploys.
+- **GitHub Pages is FROZEN** as of commit `c3a023c` (2026-09-03): the dual-deploy workflow `.github/workflows/deploy-pages.yml` was deliberately removed — Vercel is the single target. `https://thegizmopro.github.io/school-dashboard/` still serves the last Pages snapshot and will NOT update. If anyone bookmarked it, either share the Vercel link or re-add the workflow.
 - Privacy: raw WhatsApp feed is gitignored (`data/` is local-only); only derived/curated JSON deploys.
 
 ## Other scheduled jobs that touch this project
@@ -58,7 +58,7 @@ Commit `c3a023c` (2026-09-03, "review fixes") substantially rewrote the collecto
 - WhatsApp feed made local-only (privacy)
 - `gen_digest.py`: dry-run default, `--write` to publish, 14-day listing expiry, dedupe, URL extraction
 - ICS unfold + all-day support + URL capture; HTML-escaping of collector-sourced strings
-- dropped the dual GitHub Pages deploy workflow (Pages now deploys via the separate workflow file, deploys `site/` only)
+- dropped the dual GitHub Pages deploy workflow — Vercel is the only deploy target; the Pages URL is frozen at the pre-`c3a023c` snapshot
 - removed stray `data/system.sav`, added `.gitignore`
 
 If the cron message text and `collector.py` docstring ever disagree, **trust the docstring** — and update the automation message.

@@ -62,10 +62,13 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .no-school{background:var(--oat);border:1px solid var(--oat-line);color:var(--oat-ink);border-radius:var(--r-card);padding:24px;text-align:center;font-family:'Baloo 2';font-size:26px;font-weight:700}
 .no-school .sub{font-family:Karla;font-size:14px;font-weight:400;color:var(--oat-ink-soft)}
 
-/* Theme callout */
+/* Next-lunch teaser + pizza-friday callout (mini card below the lunch card) */
 .theme-callout{background:var(--clay);color:#fff;border-radius:var(--r-card);padding:14px 18px;margin-top:12px}
 .theme-callout .kicker{color:#F1E6DC}
 .theme-callout .line{font-family:'Baloo 2';font-size:20px;font-weight:700}
+.next-lunch{background:var(--oat);border:1px solid var(--oat-line);color:var(--oat-ink);border-radius:var(--r-card);padding:12px 18px;margin-top:12px}
+.next-lunch .kicker{color:var(--oat-ink-soft)}
+.next-lunch .line{font-family:'Baloo 2';font-size:18px;font-weight:700}
 
 /* Coming up */
 .event-row{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line-soft);overflow:hidden}
@@ -283,7 +286,6 @@ function nextSchoolDay(from, noSchool){
 }
 
 function renderLunch(menu, linqDays, noSchool){
-  $("theme-callout").innerHTML = "";
   const now = new Date();
   const dow = now.getDay();
   const iso = isoOf(now);
@@ -291,6 +293,24 @@ function renderLunch(menu, linqDays, noSchool){
   const alts = (menu.menu && menu.menu.daily_options) || [];
   const nsd = nextSchoolDay(now, noSchool);                  // next SCHOOL day (skips weekends + holidays)
   const nsdISO = nsd ? isoOf(nsd) : null;
+
+  // mini card below the lunch card: the NEXT school day's lunch
+  const nLq = nsdISO ? linqMeal(linqDays[nsdISO], alts) : null;
+  const nPdf = nsdISO && menu.menu && menu.menu.lunch ? menu.menu.lunch[nsdISO] : null;
+  const nMain = nLq ? nLq.main : (nPdf ? nPdf.main : null);
+  const isTomorrow = nsdISO !== null && nsdISO === isoOf(tmr);
+  if (nMain && nsd) {
+    if (isTomorrow && dow === 4 && /pizza/i.test(nMain)) {
+      $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Tomorrow is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
+    } else {
+      const label = isTomorrow
+        ? `Tomorrow · ${dowNames[nsd.getDay()]}`
+        : `Next school day · ${nsd.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}`;
+      $("theme-callout").innerHTML = `<div class="next-lunch"><div class="kicker">${label}</div><div class="line">${EMOJI(nMain)} ${esc(nMain)}</div></div>`;
+    }
+  } else {
+    $("theme-callout").innerHTML = "";
+  }
 
   const nsLabel = noSchool.get(iso);
   if (nsLabel) {
@@ -304,7 +324,7 @@ function renderLunch(menu, linqDays, noSchool){
   const sides = lq ? lq.sides : (pdf ? pdf.sides||[] : []);
   if (!main) {
     if (dow === 0 || dow === 6) {
-      const back = nsd ? (nsd.toDateString() === tmr.toDateString() ? "tomorrow" : dowNames[nsd.getDay()]) : "soon";
+      const back = nsd ? (isTomorrow ? "tomorrow" : dowNames[nsd.getDay()]) : "soon";
       $("lunch-card").innerHTML = `<div class="no-school">🏖️ Weekend<br><span class="sub">No school — see you ${back}!</span></div>`;
       return;
     }
@@ -316,25 +336,7 @@ function renderLunch(menu, linqDays, noSchool){
   html += `<div class="lunch-sides">${(sides||[]).map(s=>`<span class="side-chip">${SIDE(s)} ${esc(s)}</span>`).join("")}</div>`;
   const bk = menu.menu && menu.menu.breakfast_weekly ? menu.menu.breakfast_weekly[["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dow]] : null;
   html += `<div class="lunch-alt">Always: ${esc(alts.join(" · "))}${bk?`<br>Breakfast: ${esc(bk)}`:""}</div>`;
-
-  // tease the NEXT SCHOOL DAY's entrée (Friday teases Tuesday over a 3-day weekend)
-  const nLq = nsdISO ? linqMeal(linqDays[nsdISO], alts) : null;
-  const nPdf = nsdISO && menu.menu && menu.menu.lunch ? menu.menu.lunch[nsdISO] : null;
-  const nMain = nLq ? nLq.main : (nPdf ? nPdf.main : null);
-  if (nMain) {
-    const label = nsdISO === isoOf(tmr)
-      ? `Tomorrow · ${dowNames[nsd.getDay()]}`
-      : `Next school day · ${nsd.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}`;
-    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft)"><div class="kicker">${label}</div><div style="font-family:'Baloo 2';font-size:17px;font-weight:700">${EMOJI(nMain)} ${esc(nMain)}</div></div>`;
-  }
   $("lunch-card").innerHTML = html;
-
-  // theme callout: pizza friday today OR tomorrow
-  if (dow === 5 && /pizza/i.test(main||"")) {
-    $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Today is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
-  } else if (dow === 4 && nMain && nsdISO === isoOf(tmr) && /pizza/i.test(nMain)) {
-    $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Tomorrow is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
-  }
 }
 
 function renderEvents(){

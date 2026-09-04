@@ -225,6 +225,7 @@ function countdown(events, yearCal){
 function renderLunch(menu){
   const now = new Date();
   const dow = now.getDay();
+  const bust = "?t=" + Date.now();
   const iso = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
   const day = (menu.menu && menu.menu.lunch && menu.menu.lunch[iso]) || null;
   const linq = menu.menu_linq && menu.menu_linq[iso];
@@ -261,8 +262,9 @@ function renderLunch(menu){
 function renderEvents(){
   const now = new Date(); now.setHours(0,0,0,0);
   const items = [];
+  const bust = "?t=" + Date.now();
   // from ics (simple parse)
-  fetch("data/parentsquare-live.ics").then(r=>r.text()).then(t=>{
+  fetch("data/parentsquare-live.ics" + bust).then(r=>r.text()).then(t=>{
     const blocks = t.split("BEGIN:VEVENT").slice(1);
     for (const b of blocks) {
       const dt = (b.match(/DTSTART[^:]*:(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})/)||[]);
@@ -272,51 +274,47 @@ function renderEvents(){
         items.push({date:d, title:sum.trim().replace(/^Copy of /,""), src:"ParentSquare"});
       }
     }
-    // from calendar-year.json
-    return fetch("data/calendar-year.json").then(r=>r.json()).then(yc=>{
+    return fetch("data/calendar-year.json" + bust).then(r=>r.json()).then(yc=>{
       for (const d of (yc.keyDates||[])) {
         items.push({date:fmt(d.date), title:d.label, kind:d.kind, range:d.range});
       }
-      // shARK events (merged: calendar answers when, card answers why)
-      return fetch("data/shark.json").then(r=>r.json()).then(sk=>{
-        const sharkNames = ["Glow Party","Autumn Gather","Fall Festival","Move-a-thon","Tree Lighting","Pancake Breakfast","Winter Festival"];
+      return fetch("data/shark.json" + bust).then(r=>r.json()).then(sk=>{
+        const dates = {"Glow Party":"2026-09-18","Autumn Gather":"2026-10-03","Fall Festival":"2026-10-16","Move-a-thon":"2026-11-13","Occidental Tree Lighting":"2026-12-03","Pancake Breakfast":"2026-12-05","Winter Festival":"2026-12-10"};
         for (const e of (sk.events||[])) {
-          if (!sharkNames.some(n => e.title && e.title.includes(n))) continue;
-          // parse dates like "Sep 18", "Oct 3" from fetched titles context if present; shARK fetch only grabs titles, so use known dates map
-          const dates = {"Glow Party":"2026-09-18","Autumn Gather":"2026-10-03","Fall Festival":"2026-10-16","Move-a-thon":"2026-11-13","Tree Lighting":"2026-12-03","Pancake Breakfast":"2026-12-05","Winter Festival":"2026-12-10"};
-          const name = sharkNames.find(n => e.title && e.title.includes(n));
-          if (name && dates[name]) items.push({date:fmt(dates[name]), title:name, kind:"event", src:"shARK"});
+          if (!e.title) continue;
+          const name = Object.keys(dates).find(n => e.title.includes(n));
+          if (name) items.push({date:fmt(dates[name]), title:name, kind:"event", src:"shARK"});
         }
         items.sort((a,b)=>a.date-b.date);
-      });
-      const upcoming = items.filter(i=>i.date>=now);
-      const todayItems = upcoming.filter(i=>i.date.toDateString()===new Date().toDateString());
-      const week = upcoming.filter(i=>i.date>new Date()).slice(0,7);
-      const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};
-      let html = "";
-      if (todayItems.length) {
-        html += todayItems.map(i=>`<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${i.title}</div></div></div>`).join("");
-      } else {
-        html += `<div class="event-row"><span style="font-size:20px">🏫</span><div><div class="event-title">Regular school day</div><div class="event-detail">No special events today</div></div></div>`;
-      }
-      for (const i of week) {
-        const dow = i.date.toLocaleDateString("en-US",{weekday:"short"});
-        const day = i.date.getDate();
-        const color = kindColor[i.kind] || "var(--garden)";
-        if (i.kind === "no_school" || i.kind === "holiday") {
-          html += `<div class="no-school-row">🚫 ${i.date.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})} — ${i.title.replace(/ — No School.*/,"")}</div>`;
+        const upcoming = items.filter(i=>i.date>=now);
+        const todayItems = upcoming.filter(i=>i.date.toDateString()===new Date().toDateString());
+        const week = upcoming.filter(i=>i.date>new Date()).slice(0,7);
+        const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};
+        let html = "";
+        if (todayItems.length) {
+          html += todayItems.map(i=>`<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${i.title}</div></div></div>`).join("");
         } else {
-          html += `<div class="event-row"><div class="date-block"><div class="dow">${dow}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${i.title}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div></div></div>`;
+          html += `<div class="event-row"><span style="font-size:20px">🏫</span><div><div class="event-title">Regular school day</div><div class="event-detail">No special events today</div></div></div>`;
         }
-      }
-      $("events-card").innerHTML = html || '<div class="empty-note">Nothing scheduled this week</div>';
-      countdown(null, yc);
+        for (const i of week) {
+          const dow2 = i.date.toLocaleDateString("en-US",{weekday:"short"});
+          const day = i.date.getDate();
+          const color = kindColor[i.kind] || "var(--garden)";
+          if (i.kind === "no_school" || i.kind === "holiday") {
+            html += `<div class="no-school-row">🚫 ${i.date.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})} — ${i.title.replace(/ — No School.*/,"")}</div>`;
+          } else {
+            html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${i.title}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div></div></div>`;
+          }
+        }
+        $("events-card").innerHTML = html || '<div class="empty-note">Nothing scheduled this week</div>';
+        countdown(null, yc);
+      });
     });
   }).catch(()=>{ $("events-card").innerHTML = '<div class="empty-note">Calendar unavailable</div>'; });
 }
 
 function renderWeather(){
-  fetch("data/weather.json").then(r=>r.json()).then(w=>{
+  fetch("data/weather.json" + "?t=" + Date.now()).then(r=>r.json()).then(w=>{
     $("wx-glyph").textContent = WMO(w.code);
     $("wx-temp").textContent = Math.round(w.temp) + "°";
     if (w.daily && w.daily[0]) $("wx-hilo").textContent = `H ${Math.round(w.daily[0].hi)}° · L ${Math.round(w.daily[0].lo)}°`;
@@ -324,7 +322,7 @@ function renderWeather(){
 }
 
 function renderCommunity(){
-  fetch("data/community-digest.json").then(r=>r.json()).then(d=>{
+  fetch("data/community-digest.json" + "?t=" + Date.now()).then(r=>r.json()).then(d=>{
     let html = `<div class="digest-prose">${d.digest||""}</div>`;
     const listings = (d.listings||[]);
     if (listings.length) {
@@ -332,7 +330,7 @@ function renderCommunity(){
       for (const l of listings) {
         html += `<div class="listing"><span class="item">${l.item}</span><span class="price">${l.price}</span></div>`;
       }
-      html += `<div class="prov stamp">Digest ${d.generated ? d.generated.slice(0,10) : ""} · community-digest.json</div></div>`;
+      html += `</div>`;
     }
     $("community-card").innerHTML = html || '<div class="empty-note">First community digest coming soon</div>';
   }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community digest unavailable</div>'; });
@@ -358,7 +356,7 @@ function renderSponsors(){
 }
 
 function renderNotices(){
-  fetch("data/notices.json").then(r=>r.json()).then(n=>{
+  fetch("data/notices.json" + "?t=" + Date.now()).then(r=>r.json()).then(n=>{
     const items = (n.notices||[]).slice(0,3);
     $("notices-card").innerHTML = items.map(i=>`<div class="notice"><div class="notice-head"><span class="source-chip chip-${i.source==="parentsquare"?"ps":i.source==="whatsapp"?"wa":"email"}">${i.source}</span><span class="ts">${i.posted}</span></div><div class="notice-title">${i.title}</div><div class="notice-text">${i.text||""}</div></div>`).join("") || '<div class="empty-note">No notices yet</div>';
   }).catch(()=>{ $("notices-card").innerHTML = '<div class="empty-note">No notices yet</div>'; });

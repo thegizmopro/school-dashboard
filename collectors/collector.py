@@ -1,29 +1,52 @@
 """
 Harmony Today — data collector (tiered, 4x daily)
-Runs: WhatsApp scan + iCal fetch ALWAYS; weather + LINQ daily (6am); shARK weekly (Mon)
-Writes JSON files into site/data/, then leaves git commit/push to caller.
+Runs: WhatsApp scan + iCal fetch + weather ALWAYS; LINQ/shARK refresh only when
+their JSON is stale (LINQ > 20h, shARK > 6 days) so a missed 6am cron never
+leaves data frozen for a whole day.
+
+Output split (privacy):
+  site/data/    — published to the web: ics, weather, menu-linq, shark, community-digest
+  data/         — LOCAL pipeline state only: raw-ish WhatsApp feed (names + chat text
+                  must never be deployed), scan-state
+Writes JSON files, then leaves git commit/push to caller.
 """
 import json, re, io, os, sys, urllib.request, datetime, pathlib
 
 ROOT = pathlib.Path(r"C:\dev\school-dashboard")
-DATA = ROOT / "site" / "data"
+DATA = ROOT / "site" / "data"      # published
+LOCAL = ROOT / "data"              # local-only pipeline state
 DATA.mkdir(parents=True, exist_ok=True)
+LOCAL.mkdir(parents=True, exist_ok=True)
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) HarmonyToday/1.0",
-      "Origin": "https://linqconnect.com", "Referer": "https://linqconnect.com/"}
+      "Origin": "https://linqconnect.com",
+      "Referer": "https://linqconnect.com/"}
 
 def fetch(url, headers=None, timeout=30):
     req = urllib.request.Request(url, headers=headers or UA)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read()
 
-def write_json(name, obj):
-    p = DATA / name
+def write_json(path, obj):
+    p = pathlib.Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(obj, indent=1, ensure_ascii=False), encoding="utf-8")
-    print(f"wrote {name} ({p.stat().st_size} bytes)")
+    print(f"wrote {p.relative_to(ROOT)} ({p.stat().st_size} bytes)")
 
-def now_pst():
-    return datetime.datetime.now()
+def stale(name, hours):
+    """True when site/data/<name> is missing, unreadable, or its 'fetched' stamp is older than hours."""
+    p = DATA / name
+    if not p.exists(): return True
+    try:
+        fetched = json.loads(p.read_text(encoding="utf-8")).get("fetched", "")
+        age = datetime.datetime.now() - datetime.datetime.fromisoformat(fetched)
+        return age.total_seconds() > hours * 3600
+    except Exception:
+        return True
+
+def first_url(text):
+    m = re.search(r"https?://\S+", text or "")
+    return m.group(0).rstrip(".,)!") if m else None
 
 # ---------------- WhatsApp scan ----------------
 KEYWORDS = re.compile(r"no school|reminder|due|early release|half day|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancelled|canceled|sold|free|for sale|iso|looking for|heads up|alert", re.I)
@@ -48,17 +71,18 @@ def scan_whatsapp():
             if re.search(r"for sale|\$\d|free\b|iso\b|selling|give away|giveaway", text, re.I) or group == "harmony-sc":
                 listings.append({"date": date, "group": g, "who": sender.strip(),
                                  "text": text.strip()[:200],
+                                 "url": first_url(text),
                                  "price": (re.search(r"\$\d+[\d,\.]*", text) or [None])[0] if re.search(r"\$", text) else "Free?" if re.search(r"\bfree\b", text, re.I) else "—"})
             if KEYWORDS.search(text):
                 items.append({"date": date, "time": time, "group": g, "who": sender.strip(),
-                              "text": text.strip()[:300]})
+                              "text": text.strip()[:300], "url": first_url(text)})
         state[log.name] = len(lines)
     STATE.parent.mkdir(exist_ok=True)
     STATE.write_text(json.dumps(state))
-    feed = {"scanned": now_pst().isoformat(timespec="seconds"),
+    feed = {"scanned": datetime.datetime.now().isoformat(timespec="seconds"),
             "items": items[-25:],
             "listings": listings[-20:]}
-    write_json("community-feed.json", feed)
+    write_json(LOCAL / "community-feed.json", feed)   # local ONLY — real names/chat text
     return f"whatsapp: {len(items)} notable, {len(listings)} listings"
 
 # ---------------- iCal fetch ----------------
@@ -79,14 +103,14 @@ def fetch_weather():
            f"&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code"
            f"&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=5")
     raw = json.loads(fetch(url).decode())
-    out = {"updated": now_pst().isoformat(timespec="seconds"),
+    out = {"updated": datetime.datetime.now().isoformat(timespec="seconds"),
            "temp": raw["current"]["temperature_2m"],
            "code": raw["current"]["weather_code"],
            "daily": [{"date": d, "hi": raw["daily"]["temperature_2m_max"][i],
                       "lo": raw["daily"]["temperature_2m_min"][i],
                       "code": raw["daily"]["weather_code"][i]}
                      for i, d in enumerate(raw["daily"]["time"])]}
-    write_json("weather.json", out)
+    write_json(DATA / "weather.json", out)
     return "weather: ok"
 
 # ---------------- LINQ menu ----------------
@@ -120,37 +144,57 @@ def fetch_linq():
                     entry["lunch"] = meals
                 elif session == "Breakfast" and meals:
                     entry["breakfast"] = meals
-    write_json("menu-linq.json", {"fetched": now_pst().isoformat(timespec="seconds"), "days": out_days})
+    write_json(DATA / "menu-linq.json", {"fetched": datetime.datetime.now().isoformat(timespec="seconds"), "days": out_days})
     return f"linq: {len(out_days)} days"
 
 # ---------------- shARK ----------------
+SHARK_URL = "https://www.harmonyark.org/"
+
+def _unesc(s):
+    """harmonyark.org embeds its event data as JS object literals with \\uXXXX escapes."""
+    return re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), s)
+
 def fetch_shark():
-    raw = fetch("https://www.harmonyark.org/").decode("utf-8", errors="replace")
-    # light extraction: the site is hand-built; grab the events block markers
+    raw = fetch(SHARK_URL).decode("utf-8", errors="replace")
     events = []
-    for m in re.finditer(r"<h3[^>]*>\s*<a[^>]*>([^<]+)</a>|<h3[^>]*>([^<]+)</h3>", raw):
-        title = (m.group(1) or m.group(2) or "").strip()
-        if title and title not in [e["title"] for e in events]:
-            events.append({"title": title})
-    out = {"fetched": now_pst().isoformat(timespec="seconds"),
-           "url": "https://www.harmonyark.org/",
+    # primary: the page's own embedded data — { date: "2026-10-03", title: "Autumn Gather", time, location, tickets, page }
+    for m in re.finditer(r'\{\s*date:\s*"(\d{4}-\d{2}-\d{2})"\s*,\s*title:\s*"([^"]+)"[^}]*\}', raw):
+        date, title = m.group(1), _unesc(m.group(2)).strip()
+        blob = m.group(0)
+        tickets = re.search(r'tickets:\s*"(https?://[^"]+)"', blob)
+        page = re.search(r'page:\s*"(/[^"]*)"', blob)
+        url = tickets.group(1) if tickets else (SHARK_URL.rstrip("/") + page.group(1) if page else None)
+        tm = re.search(r'time:\s*"([^"]+)"', blob)
+        loc = re.search(r'location:\s*"([^"]+)"', blob)
+        events.append({"date": date, "title": title,
+                       "time": _unesc(tm.group(1)) if tm else None,
+                       "location": _unesc(loc.group(1)) if loc else None,
+                       "url": url})
+    # fallback: bare h3 titles (no dates) if the embedded data ever moves
+    if not events:
+        seen = set()
+        for m in re.finditer(r"<h3[^>]*>([^<]+)</h3>", raw):
+            t = m.group(1).strip()
+            if t and t not in seen and "ROLE" not in t.upper():
+                seen.add(t)
+                events.append({"title": t})
+    out = {"fetched": datetime.datetime.now().isoformat(timespec="seconds"),
+           "url": SHARK_URL,
            "campaign": "shARK raises ~$75K/yr: $50K block grants to the school, rest to events, classroom requests, staff appreciation",
-           "events": events[:10]}
-    write_json("shark.json", out)
-    return f"shark: {len(events)} event titles"
+           "events": events}
+    write_json(DATA / "shark.json", out)
+    return f"shark: {len(events)} events (dated: {sum(1 for e in events if e.get('date'))})"
 
 # ---------------- Runner ----------------
 def main():
-    hour = now_pst().hour
-    weekday = now_pst().weekday()  # 0=Mon
     results = []
     results.append(scan_whatsapp())
     results.append(fetch_ical())
-    if hour < 9:  # 6am run does daily refreshes
-        results.append(fetch_weather())
+    results.append(fetch_weather())
+    if stale("menu-linq.json", 20):
         results.append(fetch_linq())
-        if weekday == 0:
-            results.append(fetch_shark())
+    if stale("shark.json", 24 * 6):
+        results.append(fetch_shark())
     print(" | ".join(results))
 
 if __name__ == "__main__":

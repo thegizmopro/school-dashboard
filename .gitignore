@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+
+# local pipeline state (never deploy/publish)
+collectors/scan-state.json
+data/community-feed.json
+data/community-items.json
+
+# scratch
+data/shark-scan.html

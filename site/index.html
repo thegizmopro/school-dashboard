@@ -104,6 +104,8 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .shark{background:var(--garden-pale);border:1px solid var(--garden-line);border-radius:var(--r-card);padding:18px 20px}
 .shark h3{color:var(--garden-deep)}
 .shark .next-up{margin:8px 0}
+.shark-ev{margin:5px 0;font-size:14.5px}
+.shark-ev .lnk{color:var(--garden-deep);font-weight:700}
 .shark .cta{display:inline-block;margin-top:12px;background:var(--garden);color:#fff;text-decoration:none;font-weight:700;padding:8px 18px;border-radius:999px;font-size:14px}
 .shark .campaign{margin-top:10px;font-size:13px;color:var(--ink-soft)}
 
@@ -112,10 +114,15 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .footer-zone .kicker{margin-bottom:10px}
 .sponsor-slots{display:flex;gap:12px;flex-wrap:wrap}
 .sponsor-slot{flex:1;min-width:140px;aspect-ratio:3/1;border:2px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--ink-ghost);font-size:13px}
+.sponsor-slot.filled{border-style:solid;color:var(--ink)}
+a.sponsor-slot.filled{text-decoration:none}
 .involved{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 .involved a{display:inline-block;background:var(--garden);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:8px 18px;border-radius:999px}
 .involved a.alt{background:var(--clay)}
 .footer-note{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-muted)}
+
+/* Data-driven links */
+.lnk{color:inherit;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
 
 /* Weather glyph mapping */
 .empty-note{color:var(--ink-muted);font-style:italic}
@@ -192,65 +199,113 @@ const SIDE = t => {t=t.toLowerCase();if(/salad|kale/.test(t))return"🥗";if(/ap
 const $ = id => document.getElementById(id);
 const fmt = iso => new Date(iso + (iso.length===10?"T12:00:00":""));
 
+// every JSON/text fetch is cache-busted so wall displays pick up new data without a reload
+const J = p => fetch(p + "?t=" + Date.now()).then(r => r.json());
+const T = p => fetch(p + "?t=" + Date.now()).then(r => r.text());
+
+// collector data is semi-trusted (scraped/from chat) — never interpolate it raw into innerHTML
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl = u => { try { const x = new URL(String(u)); return /^https?:$/.test(x.protocol) ? x.href : null; } catch { return null; } };
+const link = (text, url) => { const u = safeUrl(url); return u ? `<a class="lnk" href="${esc(u)}" target="_blank" rel="noopener">${esc(text)}</a>` : esc(text); };
+
+const isoOf = d => d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+const dowNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
 function hero(){
   const now = new Date();
-  const opts = {weekday:"long", month:"long", day:"numeric"};
   $("hero-date").textContent = now.toLocaleDateString("en-US", {month:"long", day:"numeric"});
   $("hero-sub").textContent = now.toLocaleDateString("en-US", {weekday:"long"}) + " · HUSD";
   document.title = "Harmony Today — " + now.toLocaleDateString("en-US", {weekday:"long", month:"short", day:"numeric"});
 }
 
-function countdown(events, yearCal){
-  // nearest future break/holiday/no_school
-  const now = new Date(); now.setHours(0,0,0,0);
+// countdown math anchors both ends at LOCAL NOON so the diff is an exact multiple
+// of 24h (DST-safe) and never rounds a half-day up into an off-by-one
+function countdown(yearCal){
+  const noon = new Date(); noon.setHours(12,0,0,0);
   let best = null;
   for (const d of (yearCal.keyDates||[])) {
-    const dt = fmt(d.date);
-    if (dt >= now && ["break","holiday","no_school"].includes(d.kind)) { best = d; break; }
+    if (["break","holiday","no_school"].includes(d.kind) && fmt(d.date) >= noon) { best = d; break; }
   }
-  let lastDay = (yearCal.keyDates||[]).find(d => d.label.startsWith("Last Day"));
+  const lastDay = (yearCal.keyDates||[]).find(d => (d.label||"").startsWith("Last Day"));
   const target = best || lastDay;
   if (target) {
-    const days = Math.round((fmt(target.date) - now) / 86400000);
+    const days = Math.round((fmt(target.date) - noon) / 86400000);
     const icon = target.kind === "break" ? "🌴" : target.kind === "holiday" ? "🎉" : "📚";
-    $("countdown").textContent = `${icon} ${target.label.replace(/ — No School.*/,"")}: ${days} day${days===1?"":"s"}`;
+    const label = target.label.replace(/ — No School.*/,"");
+    $("countdown").textContent = days === 0 ? `${icon} ${label} — today!` : `${icon} ${label}: ${days} day${days===1?"":"s"}`;
   }
-  // summer counter chip
   if (lastDay) {
-    const days = Math.round((fmt(lastDay.date) - now) / 86400000);
-    $("summer-chip").textContent = `☀️ ${days} days until summer`;
+    const days = Math.round((fmt(lastDay.date) - noon) / 86400000);
+    $("summer-chip").textContent = `☀️ ${days} day${days===1?"":"s"} until summer`;
   }
 }
 
-function renderLunch(menu){
+// map of iso-date -> label for every day without school (holidays, in-service, break ranges)
+function noSchoolMap(yearCal){
+  const m = new Map();
+  for (const d of (yearCal.keyDates||[])) {
+    if (d.kind === "holiday" || d.kind === "no_school") m.set(d.date, d.label);
+    if (d.kind === "break" && Array.isArray(d.range)) {
+      const end = fmt(d.range[1]);
+      for (let t = fmt(d.range[0]); t <= end; t.setDate(t.getDate()+1)) m.set(isoOf(t), d.label);
+    }
+  }
+  return m;
+}
+
+// LINQ item names carry portion/brand suffixes ("Orange, sliced, 1/2 cup serving")
+const cleanItem = s => String(s).replace(/,?\s*\d+\/\d+ cup serving/i,"").replace(/\s+/g," ").trim();
+function linqMeal(day){
+  const lunch = (day && day.lunch) || [];
+  const mains = lunch.filter(m => m.cat === "Main Entree").map(m => cleanItem(m.item)).filter(Boolean);
+  if (!mains.length) return null;
+  const sides = lunch.filter(m => m.cat !== "Main Entree" && m.cat !== "Milk").map(m => cleanItem(m.item)).filter(Boolean);
+  return {main: mains[0], sides};
+}
+
+function renderLunch(menu, linqDays, noSchool){
+  $("theme-callout").innerHTML = "";
   const now = new Date();
   const dow = now.getDay();
-  const bust = "?t=" + Date.now();
-  const iso = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
-  const day = (menu.menu && menu.menu.lunch && menu.menu.lunch[iso]) || null;
-  const linq = menu.menu_linq && menu.menu_linq[iso];
-  $("lunch-prov").textContent = "";
-  if (!day && !linq) {
-    if (dow === 0 || dow === 6) { $("lunch-card").innerHTML = '<div class="no-school">🏖️ Weekend<br><span class="sub">No school — see you ' + (dow===6?"Monday":"Tuesday") + '!</span></div>'; return; }
-    $("lunch-card").innerHTML = '<div class="empty-note">Menu not published yet</div>'; return;
+  const iso = isoOf(now);
+  const tmr = new Date(now); tmr.setDate(tmr.getDate()+1);   // rollover-safe tomorrow
+  const tISO = isoOf(tmr);
+
+  const nsLabel = noSchool.get(iso);
+  if (nsLabel) {
+    $("lunch-card").innerHTML = `<div class="no-school">🚫 ${esc(nsLabel.replace(/ — No School.*/,""))}<br><span class="sub">No school today</span></div>`;
+    return;
   }
-  const main = day ? day.main : (linq && linq.lunch ? linq.lunch.filter(m=>m.cat==="Main Entree").map(m=>m.item).join(" or ") : null);
-  const sides = day ? day.sides : (linq && linq.lunch ? linq.lunch.filter(m=>m.cat!=="Main Entree").map(m=>m.item) : []);
-  let html = `<div class="lunch-main"><div class="lunch-emoji">${EMOJI(main||"")}</div><div class="lunch-name">${main||"Menu TBD"}</div></div>`;
-  html += `<div class="lunch-sides">${(sides||[]).map(s=>`<span class="side-chip">${SIDE(s)} ${s}</span>`).join("")}</div>`;
+
+  const lq = linqMeal(linqDays[iso]);
+  const pdf = menu.menu && menu.menu.lunch ? menu.menu.lunch[iso] : null;
+  const main = lq ? lq.main : (pdf ? pdf.main : null);
+  const sides = lq ? lq.sides : (pdf ? pdf.sides||[] : []);
+  if (!main) {
+    if (dow === 0 || dow === 6) {
+      const back = dow === 6 ? "Monday" : "tomorrow";
+      $("lunch-card").innerHTML = `<div class="no-school">🏖️ Weekend<br><span class="sub">No school — see you ${back}!</span></div>`;
+      return;
+    }
+    $("lunch-card").innerHTML = '<div class="empty-note">Menu not published yet</div>';
+    return;
+  }
+
+  let html = `<div class="lunch-main"><div class="lunch-emoji">${EMOJI(main)}</div><div class="lunch-name">${esc(main)}</div></div>`;
+  html += `<div class="lunch-sides">${(sides||[]).map(s=>`<span class="side-chip">${SIDE(s)} ${esc(s)}</span>`).join("")}</div>`;
   const alts = (menu.menu && menu.menu.daily_options) || [];
   const bk = menu.menu && menu.menu.breakfast_weekly ? menu.menu.breakfast_weekly[["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dow]] : null;
-  html += `<div class="lunch-alt">Always: ${alts.join(" · ")}${bk?`<br>Breakfast: ${bk}`:""}</div>`;
+  html += `<div class="lunch-alt">Always: ${esc(alts.join(" · "))}${bk?`<br>Breakfast: ${esc(bk)}`:""}</div>`;
+
   // tomorrow's entrée sub-card
-  const tISO = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()+1).padStart(2,"0");
-  const tDay = (menu.menu && menu.menu.lunch && menu.menu.lunch[tISO]) || null;
-  const tLinQ = (menu.menu_linq && menu.menu_linq[tISO] && menu.menu_linq[tISO].lunch) ? menu.menu_linq[tISO].lunch.filter(m=>m.cat==="Main Entree").map(m=>m.item).join(" or ") : null;
-  const tMain = tDay ? tDay.main : tLinQ;
-  const dowNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const tLq = linqMeal(linqDays[tISO]);
+  const tPdf = menu.menu && menu.menu.lunch ? menu.menu.lunch[tISO] : null;
+  const tMain = tLq ? tLq.main : (tPdf ? tPdf.main : null);
   if (tMain) {
-    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft)"><div class="kicker">Tomorrow · ${dowNames[(dow+1)%7]}</div><div style="font-family:'Baloo 2';font-size:17px;font-weight:700">${EMOJI(tMain)} ${tMain}</div></div>`;
+    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft)"><div class="kicker">Tomorrow · ${dowNames[tmr.getDay()]}</div><div style="font-family:'Baloo 2';font-size:17px;font-weight:700">${EMOJI(tMain)} ${esc(tMain)}</div></div>`;
   }
   $("lunch-card").innerHTML = html;
+
   // theme callout: pizza friday today OR tomorrow
   if (dow === 5 && /pizza/i.test(main||"")) {
     $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Today is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
@@ -261,67 +316,74 @@ function renderLunch(menu){
 
 function renderEvents(){
   const now = new Date(); now.setHours(0,0,0,0);
-  const items = [];
-  const bust = "?t=" + Date.now();
-  // from ics (simple parse)
-  fetch("data/parentsquare-live.ics" + bust).then(r=>r.text()).then(t=>{
-    const blocks = t.split("BEGIN:VEVENT").slice(1);
-    for (const b of blocks) {
-      const dt = (b.match(/DTSTART[^:]*:(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})/)||[]);
-      const sum = (b.match(/SUMMARY:([^\n]+)/)||[])[1];
-      if (dt.length && sum) {
-        const d = new Date(+dt[1], +dt[2]-1, +dt[3], +dt[4], +dt[5]);
-        items.push({date:d, title:sum.trim().replace(/^Copy of /,""), src:"ParentSquare"});
+  Promise.all([
+    T("data/parentsquare-live.ics").catch(()=>null),
+    J("data/calendar-year.json").catch(()=>null),
+    J("data/shark.json").catch(()=>null)
+  ]).then(([icsText, yc, sk])=>{
+    if (!yc) { $("events-card").innerHTML = '<div class="empty-note">Calendar unavailable</div>'; return; }
+    const items = [];
+
+    // shARK first so its linked/detail rows win any dedupe tie with a bare ParentSquare twin
+    for (const e of ((sk&&sk.events)||[])) {
+      if (!e.title || !e.date) continue;
+      items.push({date:fmt(e.date), title:e.title, kind:"event", src:"shARK",
+                  url:e.url, detail:[e.time, e.location].filter(Boolean).join(" · ")});
+    }
+
+    if (icsText) {
+      // unfold RFC5545 continuation lines before matching; support all-day (VALUE=DATE) starts
+      const flat = icsText.replace(/\r?\n[ \t]/g, "");
+      for (const b of flat.split("BEGIN:VEVENT").slice(1)) {
+        const dt = b.match(/DTSTART[^:\n]*:(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2}))?/);
+        const sum = (b.match(/SUMMARY:([^\r\n]+)/)||[])[1];
+        if (!dt || !sum) continue;
+        const d = dt[4] ? new Date(+dt[1], +dt[2]-1, +dt[3], +dt[4], +dt[5])
+                        : new Date(+dt[1], +dt[2]-1, +dt[3]);   // TZID times read as local (family is in-district)
+        const urlProp = (b.match(/^URL:([^\r\n]+)/m)||[])[1];
+        const desc = (b.match(/DESCRIPTION:([^\r\n]+)/)||[])[1];
+        items.push({date:d, title:sum.trim().replace(/^Copy of /,""), src:"ParentSquare",
+                    url:urlProp || (desc && (desc.match(/https?:\/\/[^\s,]+/)||[])[0])});
       }
     }
-    return fetch("data/calendar-year.json" + bust).then(r=>r.json()).then(yc=>{
-      for (const d of (yc.keyDates||[])) {
-        items.push({date:fmt(d.date), title:d.label, kind:d.kind, range:d.range});
-      }
-      return fetch("data/shark.json" + bust).then(r=>r.json()).then(sk=>{
-        const dates = {"Glow Party":"2026-09-18","Autumn Gather":"2026-10-03","Fall Festival":"2026-10-16","Move-a-thon":"2026-11-13","Occidental Tree Lighting":"2026-12-03","Pancake Breakfast":"2026-12-05","Winter Festival":"2026-12-10"};
-        for (const e of (sk.events||[])) {
-          if (!e.title) continue;
-          const name = Object.keys(dates).find(n => e.title.includes(n));
-          if (name) items.push({date:fmt(dates[name]), title:name, kind:"event", src:"shARK"});
-        }
-        items.sort((a,b)=>a.date-b.date);
-        // dedupe: same date + normalized title = one row (ParentSquare "Copy of" twins, double-registered shARK events)
-        const seen = new Set();
-        const deduped = items.filter(i => {
-          const key = i.date.toDateString() + "|" + i.title.toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,40);
-          if (seen.has(key)) return false;
-          seen.add(key); return true;
-        });
-        const upcoming = deduped.filter(i=>i.date>=now);
-        const todayItems = upcoming.filter(i=>i.date.toDateString()===new Date().toDateString());
-        const week = upcoming.filter(i=>i.date>new Date()).slice(0,7);
-        const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};
-        let html = "";
-        if (todayItems.length) {
-          html += todayItems.map(i=>`<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${i.title}</div></div></div>`).join("");
-        } else {
-          html += `<div class="event-row"><span style="font-size:20px">🏫</span><div><div class="event-title">Regular school day</div><div class="event-detail">No special events today</div></div></div>`;
-        }
-        for (const i of week) {
-          const dow2 = i.date.toLocaleDateString("en-US",{weekday:"short"});
-          const day = i.date.getDate();
-          const color = kindColor[i.kind] || "var(--garden)";
-          if (i.kind === "no_school" || i.kind === "holiday") {
-            html += `<div class="no-school-row">🚫 ${i.date.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})} — ${i.title.replace(/ — No School.*/,"")}</div>`;
-          } else {
-            html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${i.title}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div></div></div>`;
-          }
-        }
-        $("events-card").innerHTML = html || '<div class="empty-note">Nothing scheduled this week</div>';
-        countdown(null, yc);
-      });
+
+    for (const d of (yc.keyDates||[])) items.push({date:fmt(d.date), title:d.label, kind:d.kind});
+
+    items.sort((a,b)=>a.date-b.date);
+    // dedupe: same date + normalized title = one row (ParentSquare "Copy of" twins, shARK double-listing)
+    const seen = new Set();
+    const deduped = items.filter(i => {
+      const key = i.date.toDateString() + "|" + i.title.toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,40);
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
     });
-  }).catch(()=>{ $("events-card").innerHTML = '<div class="empty-note">Calendar unavailable</div>'; });
+
+    const todayItems = deduped.filter(i=>i.date.toDateString()===new Date().toDateString());
+    const week = deduped.filter(i=>i.date>new Date()).slice(0,7);
+    const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};
+    let html = "";
+    if (todayItems.length) {
+      html += todayItems.map(i=>`<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${link(i.title, i.url)}</div>${i.detail?`<div class="event-detail">${esc(i.detail)}</div>`:""}</div></div>`).join("");
+    } else {
+      html += `<div class="event-row"><span style="font-size:20px">🏫</span><div><div class="event-title">Regular school day</div><div class="event-detail">No special events today</div></div></div>`;
+    }
+    for (const i of week) {
+      const dow2 = i.date.toLocaleDateString("en-US",{weekday:"short"});
+      const day = i.date.getDate();
+      const color = kindColor[i.kind] || "var(--garden)";
+      if (i.kind === "no_school" || i.kind === "holiday") {
+        html += `<div class="no-school-row">🚫 ${i.date.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})} — ${esc(i.title.replace(/ — No School.*/,""))}</div>`;
+      } else {
+        html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${link(i.title, i.url)}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div>${i.detail?`<div class="event-detail">${esc(i.detail)}</div>`:""}</div></div>`;
+      }
+    }
+    $("events-card").innerHTML = html || '<div class="empty-note">Nothing scheduled this week</div>';
+    countdown(yc);
+  });
 }
 
 function renderWeather(){
-  fetch("data/weather.json" + "?t=" + Date.now()).then(r=>r.json()).then(w=>{
+  J("data/weather.json").then(w=>{
     $("wx-glyph").textContent = WMO(w.code);
     $("wx-temp").textContent = Math.round(w.temp) + "°";
     if (w.daily && w.daily[0]) $("wx-hilo").textContent = `H ${Math.round(w.daily[0].hi)}° · L ${Math.round(w.daily[0].lo)}°`;
@@ -329,13 +391,15 @@ function renderWeather(){
 }
 
 function renderCommunity(){
-  fetch("data/community-digest.json" + "?t=" + Date.now()).then(r=>r.json()).then(d=>{
+  J("data/community-digest.json").then(d=>{
+    // digest prose is agent-written (trusted HTML); listings are chat-derived — escaped + linked only
     let html = `<div class="digest-prose">${d.digest||""}</div>`;
     const listings = (d.listings||[]);
     if (listings.length) {
       html += `<div class="for-sale"><h4>📌 Don't miss + For Sale & Free</h4>`;
       for (const l of listings) {
-        html += `<div class="listing"><span class="item">${l.item}</span><span class="price">${l.price}</span></div>`;
+        const label = l.item || l.text || "";
+        html += `<div class="listing"><span class="item">${link(label, l.url)}</span><span class="price">${esc(l.price||"")}</span></div>`;
       }
       html += `</div>`;
     }
@@ -344,42 +408,72 @@ function renderCommunity(){
 }
 
 function renderShark(){
-  fetch("data/shark.json").then(r=>r.json()).then(s=>{
-    const next = (s.events||[]).slice(0,3);
-    let html = `<div class="next-up"><strong>Next up:</strong> ${next.map(e=>e.title).join(" · ")}</div>`;
-    html += `<div class="campaign">${s.campaign}</div>`;
+  J("data/shark.json").then(s=>{
+    const today = new Date(); today.setHours(0,0,0,0);
+    const upcoming = (s.events||[])
+      .filter(e=>e.date && fmt(e.date) >= today)
+      .sort((a,b)=>a.date<b.date?-1:1)
+      .slice(0,3);
+    let html = "";
+    if (upcoming.length) {
+      html = `<div class="next-up"><strong>Next up:</strong></div>` + upcoming.map(e=>{
+        const d = fmt(e.date).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+        return `<div class="shark-ev">📅 ${link(`${d} — ${e.title}${e.time?` · ${e.time}`:""}`, e.url)}</div>`;
+      }).join("");
+    } else {
+      html = `<div class="next-up">Fall events wrapped — spring dates will appear here</div>`;
+    }
+    html += `<div class="campaign">${esc(s.campaign||"")}</div>`;
     $("shark-body").innerHTML = html;
-    $("update-stamp").textContent = " · updated " + s.fetched.slice(0,10);
+    $("update-stamp").textContent = " · updated " + String(s.fetched||"").slice(0,10);
   }).catch(()=>{ $("shark-body").innerHTML = '<div class="empty-note">shARK info unavailable</div>'; });
 }
 
 function renderSponsors(){
-  fetch("data/sponsors.json").then(r=>r.json()).then(s=>{
+  J("data/sponsors.json").then(s=>{
     const active = (s.sponsors||[]).filter(x=>x.active);
     if (active.length) {
-      $("sponsors").innerHTML = active.map(x=>`<div class="sponsor-slot" style="border-style:solid;color:var(--ink)">${x.image?`<img src="${x.image}" alt="${x.name}" style="max-height:100%">`:x.name}</div>`).join("");
+      $("sponsors").innerHTML = active.map(x=>{
+        const inner = x.image ? `<img src="${esc(x.image)}" alt="${esc(x.name)}" style="max-height:100%">` : esc(x.name);
+        const open = safeUrl(x.link) ? `<a class="sponsor-slot filled" href="${esc(x.link)}" target="_blank" rel="noopener">` : `<div class="sponsor-slot filled">`;
+        const close = safeUrl(x.link) ? `</a>` : `</div>`;
+        return open + inner + close;
+      }).join("");
     }
   }).catch(()=>{});
 }
 
 function renderNotices(){
-  fetch("data/notices.json" + "?t=" + Date.now()).then(r=>r.json()).then(n=>{
+  J("data/notices.json").then(n=>{
     const items = (n.notices||[]).slice(0,3);
-    $("notices-card").innerHTML = items.map(i=>`<div class="notice"><div class="notice-head"><span class="source-chip chip-${i.source==="parentsquare"?"ps":i.source==="whatsapp"?"wa":"email"}">${i.source}</span><span class="ts">${i.posted}</span></div><div class="notice-title">${i.title}</div><div class="notice-text">${i.text||""}</div></div>`).join("") || '<div class="empty-note">No notices yet</div>';
+    $("notices-card").innerHTML = items.map(i=>`<div class="notice"><div class="notice-head"><span class="source-chip chip-${i.source==="parentsquare"?"ps":i.source==="whatsapp"?"wa":"email"}">${esc(i.source)}</span><span class="ts">${esc(i.posted)}</span></div><div class="notice-title">${link(i.title, i.url)}</div><div class="notice-text">${esc(i.text||"")}</div></div>`).join("") || '<div class="empty-note">No notices yet</div>';
   }).catch(()=>{ $("notices-card").innerHTML = '<div class="empty-note">No notices yet</div>'; });
 }
 
-hero();
-renderWeather();
-(async()=>{ try { const m = await (await fetch("data/menu-and-events.json")).json(); renderLunch(m); } catch(e){ $("lunch-card").innerHTML = '<div class="empty-note">Menu unavailable</div>'; } })();
-renderEvents();
-renderCommunity();
-renderShark();
-renderNotices();
-renderSponsors();
+function renderLunchCard(){
+  Promise.all([
+    J("data/menu-and-events.json").catch(()=>null),
+    J("data/menu-linq.json").catch(()=>null),
+    J("data/calendar-year.json").catch(()=>null)
+  ]).then(([menu, linq, yc])=>{
+    if (!menu) { $("lunch-card").innerHTML = '<div class="empty-note">Menu unavailable</div>'; return; }
+    renderLunch(menu, (linq && linq.days) || {}, yc ? noSchoolMap(yc) : new Map());
+  });
+}
 
-// refresh every 5 min
-setInterval(()=>{ renderWeather(); }, 300000);
+// full re-render: wall tablets stay open for days — everything (date, lunch, countdown) must roll over
+function renderAll(){
+  hero();
+  renderWeather();
+  renderLunchCard();
+  renderEvents();
+  renderCommunity();
+  renderShark();
+  renderNotices();
+  renderSponsors();
+}
+renderAll();
+setInterval(renderAll, 300000);
 </script>
 </body>
 </html>

@@ -1,0 +1,46 @@
+{
+  "menu": {
+    "source": "Harmony Union School District - Harmony Elementary, September 2026 lunch menu (full-sept-menu.pdf, Grades K-8)",
+    "captured": "2026-09-03",
+    "daily_options": ["Yogurt & seasonal fruit parfait", "SunButter & jam brown bag lunch"],
+    "milk": ["1% Milk", "Nonfat chocolate milk"],
+    "notes": "Pizza Friday is house-made Dos Pisano's. Menus subject to change.",
+    "breakfast_weekly": {
+      "monday": "Whole grain bagel w/ butter or cream cheese",
+      "tuesday": "Breakfast burrito",
+      "wednesday": "Whole grain chocolate croissant",
+      "thursday": "Oatmeal with butter and syrup",
+      "friday": "House made whole grain pancakes or cereal"
+    },
+    "breakfast_always": ["Cereal choice", "Oatmeal bar and string cheese", "Fruit choice", "1% or nonfat milk"],
+    "lunch": {
+      "2026-08-31": {"main": "Plant based patty on WW bun", "sides": ["Salad bar", "Baked potato bar", "Apple"]},
+      "2026-09-01": {"main": "Carnitas tacos", "sides": ["Brown rice", "Pinto beans", "Salad bar", "Berries"]},
+      "2026-09-02": {"main": "Grilled cheese", "sides": ["Tomato soup", "Salad bar", "Banana"]},
+      "2026-09-03": {"main": "Pesto pasta", "sides": ["Cottage cheese", "Apple", "Salad bar", "Celery"]},
+      "2026-09-04": {"main": "House cheese pizza", "sides": ["Salad bar", "Peas", "Orange"]},
+      "2026-09-07": {"no_school": true},
+      "2026-09-08": {"main": "Shredded chicken taco", "sides": ["Brown rice", "Refried beans", "Apple"]},
+      "2026-09-09": {"main": "Bean and cheese tamale", "sides": ["Brown rice", "Pears", "Salad bar"]},
+      "2026-09-10": {"main": "Spaghetti with marinara (V)", "sides": ["Cottage cheese", "Peas", "Salad bar", "Banana"]},
+      "2026-09-11": {"main": "House cheese pizza", "sides": ["Kale salad", "Salad bar", "Apple"]},
+      "2026-09-14": {"main": "Plant based nuggets", "sides": ["Sweet potato puffs", "Baked potato bar", "Cucumber", "Salad", "Banana"]},
+      "2026-09-15": {"main": "Bean and cheese burrito", "sides": ["Brown rice", "Baby carrots", "Salad bar", "Apple"]},
+      "2026-09-16": {"main": "Turkey and cheese wrap", "sides": ["Creamy coleslaw", "Salad bar", "Oranges"]},
+      "2026-09-17": {"main": "Spaghetti with roasted garlic and olive oil", "sides": ["String cheese", "Corn", "Salad bar", "Fresh berries"]},
+      "2026-09-18": {"main": "House cheese pizza", "sides": ["Peas", "Salad bar", "Oranges"]},
+      "2026-09-21": {"main": "Baked tofu", "sides": ["Brown rice", "Baked potato bar", "Salad bar", "Fresh berries"]},
+      "2026-09-22": {"main": "Shredded chicken taco", "sides": ["Brown rice", "Refried beans", "Salad bar", "Apple"]},
+      "2026-09-23": {"main": "Hot dog on whole wheat bun", "sides": ["Baby carrots", "Salad bar", "Banana"]},
+      "2026-09-24": {"main": "Macaroni and cheese", "sides": ["Celery sticks", "Salad bar", "Oranges"]},
+      "2026-09-25": {"main": "House cheese pizza", "sides": ["Kale salad", "Salad bar", "Apple"]},
+      "2026-09-28": {"main": "Plant based patty on whole wheat bun", "sides": ["Baked potato bar", "Salad bar", "Apple"]},
+      "2026-09-29": {"main": "Ground beef taco", "sides": ["Brown rice", "Black beans", "Salad bar", "Oranges"]},
+      "2026-09-30": {"main": "Grilled cheese", "sides": ["Tomato soup", "Salad bar", "Fresh berries"]}
+    }
+  },
+  "events": [
+    {"date": "2026-09-10", "time": "18:00-22:00", "title": "HUSD Board Meeting", "source": "parentsquare-ics", "allDay": false},
+    {"date": "2026-09-11", "time": "08:30", "title": "Parenting Through Adversity — Parent Workshop (library)", "source": "parentsquare-ics", "allDay": false}
+  ]
+}

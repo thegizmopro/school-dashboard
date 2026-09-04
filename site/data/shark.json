@@ -1,28 +1,70 @@
 {
- "fetched": "2026-09-03T20:10:47",
+ "fetched": "2026-09-03T23:29:01",
  "url": "https://www.harmonyark.org/",
  "campaign": "shARK raises ~$75K/yr: $50K block grants to the school, rest to events, classroom requests, staff appreciation",
  "events": [
   {
-   "title": "Glow Party"
+   "date": "2026-09-18",
+   "title": "Glow Party",
+   "time": "6–9pm",
+   "location": "Harmony Salmon Creek School",
+   "url": "https://shark-education-foundation.betterworld.org/events/glow-party-2026"
   },
   {
-   "title": "Autumn Gather"
+   "date": "2026-10-03",
+   "title": "Autumn Gather",
+   "time": "from 6pm",
+   "location": "Harmony Salmon Creek School",
+   "url": "https://docs.google.com/forms/d/12E4kPtgJKlld23SONsHcC23UeIZ7kEV57Vn41YVu0HA/viewform"
   },
   {
-   "title": "Fall Festival"
+   "date": "2026-10-16",
+   "title": "Fall Festival",
+   "time": null,
+   "location": "Harmony Salmon Creek School",
+   "url": null
   },
   {
-   "title": "Move-a-thon"
+   "date": "2026-11-13",
+   "title": "Move-a-thon",
+   "time": null,
+   "location": "Harmony Salmon Creek School",
+   "url": null
   },
   {
-   "title": "Occidental Tree Lighting"
+   "date": "2026-12-03",
+   "title": "Occidental Tree Lighting",
+   "time": null,
+   "location": "Downtown Occidental",
+   "url": null
   },
   {
-   "title": "Pancake Breakfast + Giving Tree"
+   "date": "2026-12-05",
+   "title": "Pancake Breakfast + Giving Tree",
+   "time": null,
+   "location": "Harmony Salmon Creek School",
+   "url": null
   },
   {
-   "title": "Winter Festival"
+   "date": "2026-12-10",
+   "title": "Winter Festival",
+   "time": null,
+   "location": "Harmony Salmon Creek School",
+   "url": null
+  },
+  {
+   "date": "2026-08-28",
+   "title": "Welcome Back Dinner",
+   "time": "5–7pm",
+   "location": "Harmony Salmon Creek campus",
+   "url": null
+  },
+  {
+   "date": "2026-10-08",
+   "title": "Pledge forms are due",
+   "time": null,
+   "location": null,
+   "url": null
   }
  ]
 }

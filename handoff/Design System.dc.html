@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#F6F1E4; -webkit-font-smoothing:antialiased; }
+  a { color:#3F7A43; text-decoration:none; }
+  a:hover { text-decoration:underline; }
+</style>
+</helmet>
+
+<div style="font-family:Karla, system-ui, sans-serif; color:#22301F; max-width:1180px; margin:0 auto; padding:64px 56px 110px;">
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:#7C8A72;">Harmony Union School District</div>
+  <div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:52px; line-height:1.05; letter-spacing:-0.02em; color:#2C5A34; margin:6px 0 12px;">Harmony Today — design system</div>
+  <div style="max-width:680px; font-size:16px; line-height:1.65; color:#4E5A48;">Earthy / outdoor-ed direction, v1.0. Oat paper, near-white cards, one green for identity and action, three accents that encode meaning. Separation is border plus fill, never shadow. Every value here matches <span style="font-family:'IBM Plex Mono', monospace; font-size:14px;">tokens.json</span>.</div>
+
+  <div style="height:1px; background:#DCD3BE; margin:44px 0 40px;"></div>
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#7C8A72; margin-bottom:6px;">01</div>
+  <div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:30px; color:#22301F; margin-bottom:6px;">Color</div>
+  <div style="font-size:15px; line-height:1.6; color:#5A6B54; max-width:640px; margin-bottom:24px;">Green is identity and action. Sun, clay, sky and iris are encoding accents — each one means a specific thing and is never used decoratively.</div>
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:10px;">Surfaces</div>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px;">
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; background:#F6F1E4;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">paper</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#F6F1E4</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">page background</div></div>
+    </div>
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; background:#FFFDF7; border-bottom:1px solid #DCD3BE;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">card</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#FFFDF7</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">raised card</div></div>
+    </div>
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; background:#EFE9D9;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">card-alt</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#EFE9D9</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">footer zone</div></div>
+    </div>
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; background:#E7EEDF;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">garden-pale</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#E7EEDF</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">info fills</div></div>
+    </div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:10px;">Ink</div>
+  <div style="display:flex; border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; margin-bottom:28px;">
+    <div style="flex:1; background:#22301F; color:#F6F1E4; padding:16px 14px;"><div style="font-weight:700; font-size:14px;">ink</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; opacity:.75;">#22301F</div><div style="font-size:12.5px; opacity:.75; margin-top:3px;">headings</div></div>
+    <div style="flex:1; background:#3B4A37; color:#F6F1E4; padding:16px 14px;"><div style="font-weight:700; font-size:14px;">ink-body</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; opacity:.75;">#3B4A37</div><div style="font-size:12.5px; opacity:.75; margin-top:3px;">on tinted fills</div></div>
+    <div style="flex:1; background:#5A6B54; color:#F6F1E4; padding:16px 14px;"><div style="font-weight:700; font-size:14px;">ink-soft</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; opacity:.75;">#5A6B54</div><div style="font-size:12.5px; opacity:.75; margin-top:3px;">notice bodies</div></div>
+    <div style="flex:1; background:#6B7A63; color:#F6F1E4; padding:16px 14px;"><div style="font-weight:700; font-size:14px;">ink-muted</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; opacity:.75;">#6B7A63</div><div style="font-size:12.5px; opacity:.75; margin-top:3px;">captions</div></div>
+    <div style="flex:1; background:#8A9280; color:#F6F1E4; padding:16px 14px;"><div style="font-weight:700; font-size:14px;">ink-faint</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; opacity:.8;">#8A9280</div><div style="font-size:12.5px; opacity:.8; margin-top:3px;">timestamps</div></div>
+    <div style="flex:1; background:#A39A83; color:#F6F1E4; padding:16px 14px;"><div style="font-weight:700; font-size:14px;">ink-ghost</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; opacity:.85;">#A39A83</div><div style="font-size:12.5px; opacity:.85; margin-top:3px;">stamps, expired</div></div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:10px;">Identity &amp; encoding accents</div>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:14px;">
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; background:linear-gradient(150deg,#3F7A43,#2C5A34);"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">garden → garden-deep</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#3F7A43 · #2C5A34</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">identity, actions, hero gradient</div></div>
+    </div>
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; background:#E8A33D;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">sun</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#E8A33D</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">no school, breaks, countdown</div></div>
+    </div>
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; background:#C2643B;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">clay</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#C2643B</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">alerts, theme day, shARK</div></div>
+    </div>
+    <div style="border-radius:18px; overflow:hidden; border:1px solid #DCD3BE; background:#FFFDF7;">
+      <div style="height:76px; display:flex;"><div style="flex:1; background:#6E9BC2;"></div><div style="flex:1; background:#8E7CB0;"></div></div>
+      <div style="padding:12px 14px;"><div style="font-weight:700; font-size:14px;">sky · iris</div><div style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:#7C8A72;">#6E9BC2 · #8E7CB0</div><div style="font-size:12.5px; color:#6B7A63; margin-top:3px;">events · conferences</div></div>
+    </div>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:44px;">
+    <div style="border-radius:14px; border:1px solid #DCD3BE; background:#FFFDF7; padding:10px 12px;"><div style="height:22px; border-radius:6px; background:#F1E9D6; border:1px solid #E0D3AE; margin-bottom:8px;"></div><div style="font-size:12.5px; font-weight:700;">oat</div><div style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:#7C8A72;">#F1E9D6</div></div>
+    <div style="border-radius:14px; border:1px solid #DCD3BE; background:#FFFDF7; padding:10px 12px;"><div style="height:22px; border-radius:6px; background:#F1E6DC; margin-bottom:8px;"></div><div style="font-size:12.5px; font-weight:700;">clay-pale</div><div style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:#7C8A72;">#F1E6DC</div></div>
+    <div style="border-radius:14px; border:1px solid #DCD3BE; background:#FFFDF7; padding:10px 12px;"><div style="height:22px; border-radius:6px; background:#E3EAF2; margin-bottom:8px;"></div><div style="font-size:12.5px; font-weight:700;">sky-pale</div><div style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:#7C8A72;">#E3EAF2</div></div>
+    <div style="border-radius:14px; border:1px solid #DCD3BE; background:#FFFDF7; padding:10px 12px;"><div style="height:22px; border-radius:6px; background:#DCD3BE; margin-bottom:8px;"></div><div style="font-size:12.5px; font-weight:700;">line</div><div style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:#7C8A72;">#DCD3BE</div></div>
+    <div style="border-radius:14px; border:1px solid #DCD3BE; background:#FFFDF7; padding:10px 12px;"><div style="height:22px; border-radius:6px; background:#EDE5D2; margin-bottom:8px;"></div><div style="font-size:12.5px; font-weight:700;">line-soft</div><div style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:#7C8A72;">#EDE5D2</div></div>
+    <div style="border-radius:14px; border:1px solid #DCD3BE; background:#FFFDF7; padding:10px 12px;"><div style="height:22px; border-radius:6px; background:#CFDCC4; margin-bottom:8px;"></div><div style="font-size:12.5px; font-weight:700;">garden-line</div><div style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:#7C8A72;">#CFDCC4</div></div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#7C8A72; margin-bottom:6px;">02</div>
+  <div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:30px; color:#22301F; margin-bottom:6px;">Type</div>
+  <div style="font-size:15px; line-height:1.6; color:#5A6B54; max-width:640px; margin-bottom:24px;">Baloo 2 for anything read across a room. Karla for anything read up close. IBM Plex Mono marks provenance — kickers, timestamps, source chips, and the file name under any data-driven slot.</div>
+
+  <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:28px 30px; margin-bottom:14px;">
+    <div style="display:flex; gap:24px; align-items:baseline; padding-bottom:16px; border-bottom:1px solid #EDE5D2;">
+      <div style="width:120px; flex:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8A9280;">Hero date<br>46 / 800</div>
+      <div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:46px; line-height:.95; letter-spacing:-0.02em;">Sep 3</div>
+    </div>
+    <div style="display:flex; gap:24px; align-items:baseline; padding:16px 0; border-bottom:1px solid #EDE5D2;">
+      <div style="width:120px; flex:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8A9280;">Menu name<br>30 / 800</div>
+      <div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:30px; line-height:1.1;">Pesto pasta</div>
+    </div>
+    <div style="display:flex; gap:24px; align-items:baseline; padding:16px 0; border-bottom:1px solid #EDE5D2;">
+      <div style="width:120px; flex:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8A9280;">Card heading<br>19 / 700</div>
+      <div style="font-family:'Baloo 2', system-ui; font-weight:700; font-size:19px;">Coming up</div>
+    </div>
+    <div style="display:flex; gap:24px; align-items:baseline; padding:16px 0; border-bottom:1px solid #EDE5D2;">
+      <div style="width:120px; flex:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8A9280;">List title<br>15 / 700</div>
+      <div style="font-size:15px; font-weight:700;">HUSD Board Meeting</div>
+    </div>
+    <div style="display:flex; gap:24px; align-items:baseline; padding:16px 0; border-bottom:1px solid #EDE5D2;">
+      <div style="width:120px; flex:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8A9280;">Body<br>13.5 / 400</div>
+      <div style="font-size:13.5px; line-height:1.5; color:#5A6B54; max-width:460px;">Public comment opens at 6:00 pm in the multipurpose room. Body copy never drops below 13px on the phone, 15px on the wall tablet.</div>
+    </div>
+    <div style="display:flex; gap:24px; align-items:baseline; padding-top:16px;">
+      <div style="width:120px; flex:none; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8A9280;">Kicker<br>10 / 500 mono</div>
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#7C8A72;">Today's lunch</div>
+    </div>
+  </div>
+  <div style="font-size:13.5px; color:#6B7A63; margin-bottom:44px;">Wall tablet multiplies the ramp roughly 1.5× (hero 68, menu 42, heading 24, body 15.5). Laptop sits between (hero 58, menu 36, heading 21, body 14).</div>
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#7C8A72; margin-bottom:6px;">03</div>
+  <div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:30px; color:#22301F; margin-bottom:6px;">Components</div>
+  <div style="font-size:15px; line-height:1.6; color:#5A6B54; max-width:640px; margin-bottom:24px;">Each shown at phone scale, in the states the real data produces.</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:14px;">Coming-up row · four kinds</div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; gap:12px; align-items:center; background:#F1E9D6; border:1px solid #E0D3AE; border-radius:18px; padding:12px 14px;">
+          <div style="width:44px; text-align:center; flex:none;"><div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; color:#8A7B4E;">MON</div><div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:20px; color:#6B5520; line-height:1;">7</div></div>
+          <div style="width:3px; height:30px; border-radius:2px; background:#E8A33D;"></div>
+          <div><div style="font-size:15px; font-weight:700; color:#3F3115;">Labor Day — no school</div><div style="font-size:12.5px; color:#8A7B4E;">sun · whole row on oat</div></div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; background:#FFFDF7; border:1px solid #DCD3BE; border-radius:18px; padding:12px 14px;">
+          <div style="width:44px; text-align:center; flex:none;"><div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; color:#7C8A72;">THU</div><div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:20px; color:#2C5A34; line-height:1;">10</div></div>
+          <div style="width:3px; height:30px; border-radius:2px; background:#6E9BC2;"></div>
+          <div><div style="font-size:15px; font-weight:700;">HUSD Board Meeting</div><div style="font-size:12.5px; color:#6B7A63;">sky · event</div></div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; background:#FFFDF7; border:1px solid #DCD3BE; border-radius:18px; padding:12px 14px;">
+          <div style="width:44px; text-align:center; flex:none;"><div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; color:#7C8A72;">FRI</div><div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:20px; color:#2C5A34; line-height:1;">18</div></div>
+          <div style="width:3px; height:30px; border-radius:2px; background:#C2643B;"></div>
+          <div><div style="display:flex; gap:7px; align-items:center;"><span style="font-size:15px; font-weight:700;">Glow Party</span><span style="font-family:'IBM Plex Mono', monospace; font-size:8.5px; letter-spacing:0.12em; color:#C2643B; border:1px solid #E4BCA6; border-radius:4px; padding:2px 5px;">shARK</span></div><div style="font-size:12.5px; color:#6B7A63;">clay · source tag never uppercased</div></div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; background:#FFFDF7; border:1px solid #DCD3BE; border-radius:18px; padding:12px 14px;">
+          <div style="width:44px; text-align:center; flex:none;"><div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; color:#7C8A72;">OCT</div><div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:20px; color:#2C5A34; line-height:1;">5</div></div>
+          <div style="width:3px; height:30px; border-radius:2px; background:#8E7CB0;"></div>
+          <div><div style="font-size:15px; font-weight:700;">Conference Week</div><div style="font-size:12.5px; color:#6B7A63;">iris · school business</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:14px;">Notice · three sources</div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="padding-bottom:14px; border-bottom:1px solid #EDE5D2;">
+          <div style="display:flex; gap:8px; align-items:center; margin-bottom:5px;">
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; background:#E7EEDF; color:#2C5A34; padding:3px 7px; border-radius:5px;">ParentSquare</span>
+            <span style="font-size:11.5px; color:#8A9280;">today, 7:12 am</span>
+          </div>
+          <div style="font-size:15px; font-weight:700; margin-bottom:3px;">Board meeting agenda posted for Sep 10</div>
+          <div style="font-size:13.5px; line-height:1.5; color:#5A6B54;">Canonical source when the same notice arrives twice.</div>
+        </div>
+        <div style="padding-bottom:14px; border-bottom:1px solid #EDE5D2;">
+          <div style="display:flex; gap:8px; align-items:center; margin-bottom:5px;">
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; background:#F1E6DC; color:#8A4A28; padding:3px 7px; border-radius:5px;">WhatsApp</span>
+            <span style="font-size:11.5px; color:#8A9280;">yesterday, 6:40 pm</span>
+          </div>
+          <div style="font-size:15px; font-weight:700; margin-bottom:3px;">Garden work party needs two more grown-ups</div>
+          <div style="font-size:13.5px; line-height:1.5; color:#5A6B54;">Body runs to two lines maximum, then truncates.</div>
+        </div>
+        <div>
+          <div style="display:flex; gap:8px; align-items:center; margin-bottom:5px;">
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; background:#E3EAF2; color:#3C5A78; padding:3px 7px; border-radius:5px;">Email</span>
+            <span style="font-size:11.5px; color:#8A9280;">Sep 1</span>
+          </div>
+          <div style="font-size:15px; font-weight:700; margin-bottom:3px;">September lunch menu is up</div>
+          <div style="font-size:13.5px; line-height:1.5; color:#5A6B54;">Absolute date once a notice is older than yesterday.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-bottom:20px;">
+
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:14px;">Chips &amp; strips</div>
+      <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:#E8A33D; color:#33260C; padding:8px 14px; border-radius:999px; font-weight:700; font-size:14px;">🍂 Labor Day in 4 days</div>
+        <div style="width:100%; padding:12px 16px; border-radius:18px; background:#E7EEDF; display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; gap:9px; align-items:center; font-family:'Baloo 2', system-ui; font-weight:700; font-size:16px; color:#2C5A34;"><span style="font-size:18px;">☀️</span>272 days until summer</div>
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:#7C8A72;">Jun 2</div>
+        </div>
+        <div style="width:100%; padding:12px 16px; border-radius:18px; background:#E7EEDF; color:#2C5A34; display:flex; gap:10px; align-items:center; font-size:14px; font-weight:700;"><span style="font-size:18px;">📅</span><span>Nothing else on today's calendar</span></div>
+        <div style="display:flex; gap:8px; width:100%;">
+          <div style="flex:1; display:flex; gap:8px; align-items:center; background:#F6F1E4; border-radius:14px; padding:10px 12px; font-size:14px; font-weight:500; color:#3B4A37;"><span style="font-size:17px;">🥗</span>Salad bar</div>
+          <div style="flex:1; display:flex; gap:8px; align-items:center; background:#F6F1E4; border-radius:14px; padding:10px 12px; font-size:14px; font-weight:500; color:#3B4A37;"><span style="font-size:17px;">🍏</span>Apple</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:14px;">Alert &amp; theme day</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="padding:14px 16px; border-radius:20px; background:#C2643B; color:#FFF6EF; display:flex; gap:12px; align-items:center;">
+          <div style="font-size:24px;">🍕</div>
+          <div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:.85;">Tomorrow is</div>
+            <div style="font-family:'Baloo 2', system-ui; font-weight:700; font-size:20px; line-height:1.15;">Pizza Friday</div>
+          </div>
+        </div>
+        <div style="padding:14px 16px; border-radius:20px; background:#C2643B; color:#FFF6EF; display:flex; gap:12px; align-items:center;">
+          <div style="font-size:24px;">🔔</div>
+          <div>
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:.85;">Heads up</div>
+            <div style="font-family:'Baloo 2', system-ui; font-weight:700; font-size:20px; line-height:1.15;">Early release · 1:30 pickup</div>
+          </div>
+        </div>
+        <div style="font-size:13px; line-height:1.55; color:#6B7A63;">One clay card per screen. If a theme day and an early release collide, the early release wins.</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:14px;">Actions</div>
+      <div style="display:flex; flex-direction:column; gap:9px;">
+        <a href="#" style="display:flex; justify-content:space-between; align-items:center; background:#3F7A43; color:#F3F7EE; border-radius:16px; padding:14px 16px; font-weight:700; font-size:15px;">Primary action<span>→</span></a>
+        <a href="#" style="display:flex; justify-content:space-between; align-items:center; background:#FFFDF7; border:1px solid #DCD3BE; color:#2C5A34; border-radius:16px; padding:14px 16px; font-weight:700; font-size:15px;">Secondary action<span>→</span></a>
+        <a href="#" style="font-size:12px; font-weight:700; color:#3F7A43;">Inline link →</a>
+        <div style="font-size:13px; line-height:1.55; color:#6B7A63; margin-top:4px;">All tappable elements clear 44px. Buttons carry a trailing arrow; inline links carry it inline.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:44px;">
+
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:14px;">For-sale row · three states</div>
+      <div style="display:flex; flex-direction:column; gap:7px;">
+        <div style="display:flex; align-items:baseline; gap:8px; font-size:14px;"><span style="flex:1;">Balance bike, 12"</span><span style="font-weight:700;">$25</span><span style="width:56px; text-align:right; font-size:12px; color:#8A9280;">Marisol</span></div>
+        <div style="display:flex; align-items:baseline; gap:8px; font-size:14px;"><span style="flex:1;">Rain boots, kids' size 1</span><span style="font-weight:700; color:#3F7A43;">Free</span><span style="width:56px; text-align:right; font-size:12px; color:#8A9280;">Dana</span></div>
+        <div style="display:flex; align-items:baseline; gap:8px; font-size:14px; color:#A39A83;"><span style="flex:1; text-decoration:line-through;">Rabbit hutch</span><span style="font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase;">Sold</span><span style="width:56px;"></span></div>
+      </div>
+      <div style="margin-top:12px; font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.1em; color:#A39A83;">LISTINGS EXPIRE AFTER 14 DAYS · community-digest.json</div>
+    </div>
+
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#EFE9D9; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:12px;">Sponsor slot · empty state</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div style="height:64px; border-radius:16px; border:1px dashed #C3B896; background:repeating-linear-gradient(135deg,#F6F1E4 0 6px,#EFE7D2 6px 12px); display:grid; place-items:center; font-family:'IBM Plex Mono', monospace; font-size:9px; color:#8A8064; text-align:center; line-height:1.4;">sponsor logo<br>sponsors.json</div>
+        <div style="height:64px; border-radius:16px; border:1px dashed #C3B896; background:repeating-linear-gradient(135deg,#F6F1E4 0 6px,#EFE7D2 6px 12px); display:grid; place-items:center; font-family:'IBM Plex Mono', monospace; font-size:9px; color:#8A8064; text-align:center; line-height:1.4;">sponsor logo<br>sponsors.json</div>
+      </div>
+      <div style="font-size:13px; line-height:1.55; color:#6B7A63; margin-top:12px;">2 across on phone, 3 in the tablet footer strip, 4 on laptop. Stays dashed until a sponsor is active.</div>
+    </div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#7C8A72; margin-bottom:6px;">04</div>
+  <div style="font-family:'Baloo 2', system-ui; font-weight:800; font-size:30px; color:#22301F; margin-bottom:6px;">Geometry</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-bottom:44px;">
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:12px;">Radius</div>
+      <div style="display:flex; gap:10px; align-items:flex-end; margin-bottom:12px;">
+        <div style="width:46px; height:46px; background:#E7EEDF; border:1px solid #CFDCC4; border-radius:14px;"></div>
+        <div style="width:46px; height:46px; background:#E7EEDF; border:1px solid #CFDCC4; border-radius:18px;"></div>
+        <div style="width:46px; height:46px; background:#E7EEDF; border:1px solid #CFDCC4; border-radius:22px;"></div>
+        <div style="width:46px; height:46px; background:#E7EEDF; border:1px solid #CFDCC4; border-radius:26px;"></div>
+        <div style="width:46px; height:46px; background:#E7EEDF; border:1px solid #CFDCC4; border-radius:999px;"></div>
+      </div>
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.8; color:#4E4A40;">14 chip · 18 row · 22 card<br>26 card-lg · 999 pill<br>0 is never used</div>
+    </div>
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:12px;">Space</div>
+      <div style="display:flex; gap:6px; align-items:flex-end; margin-bottom:12px;">
+        <div style="width:4px; height:34px; background:#3F7A43; border-radius:2px;"></div>
+        <div style="width:8px; height:34px; background:#3F7A43; border-radius:2px;"></div>
+        <div style="width:12px; height:34px; background:#3F7A43; border-radius:2px;"></div>
+        <div style="width:14px; height:34px; background:#3F7A43; border-radius:2px;"></div>
+        <div style="width:20px; height:34px; background:#3F7A43; border-radius:2px;"></div>
+        <div style="width:26px; height:34px; background:#3F7A43; border-radius:2px;"></div>
+      </div>
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:11px; line-height:1.8; color:#4E4A40;">4 · 8 · 12 · 14 · 20 · 26<br>gutter 14 cards / 20 text<br>card padding 18–20</div>
+    </div>
+    <div style="border:1px solid #DCD3BE; border-radius:26px; background:#FFFDF7; padding:22px 24px;">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#8A9280; margin-bottom:12px;">Breakpoints</div>
+      <div style="font-size:13.5px; line-height:1.7; color:#4E4A40;">
+        <div><strong>390</strong> phone — one column, full scroll</div>
+        <div><strong>1194 × 834</strong> wall tablet — two columns, no scroll, drops digest and shARK</div>
+        <div><strong>1440</strong> laptop — three columns, footer spans full width</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="border:1px solid #DCD3BE; border-radius:26px; background:#E7EEDF; padding:26px 28px;">
+    <div style="font-family:'Baloo 2', system-ui; font-weight:700; font-size:22px; color:#2C5A34; margin-bottom:10px;">Two rules to hold onto</div>
+    <div style="font-size:15px; line-height:1.65; color:#3B4A37; max-width:720px;">
+      <div style="margin-bottom:8px;"><strong>1.</strong> Today is the only thing at hero scale. The date, the weather, and the lunch are the largest type on the page — nothing below Today exceeds a 24px heading.</div>
+      <div><strong>2.</strong> Every data-driven region names its source in mono. It's how a family knows the page is alive, and where to look when a widget goes stale.</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

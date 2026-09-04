@@ -289,7 +289,7 @@ function renderEvents(){
         // dedupe: same date + normalized title = one row (ParentSquare "Copy of" twins, double-registered shARK events)
         const seen = new Set();
         const deduped = items.filter(i => {
-          const key = i.date.toDateString() + "|" + i.title.toLowerCase().replace(/[^a-z0-9]/g,"");
+          const key = i.date.toDateString() + "|" + i.title.toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,40);
           if (seen.has(key)) return false;
           seen.add(key); return true;
         });

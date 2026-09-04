@@ -121,8 +121,25 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .sponsor-slot.filled img{max-height:100%;max-width:100%;object-fit:contain;display:block}
 a.sponsor-slot.filled{text-decoration:none}
 .involved{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-.involved a{display:inline-block;background:var(--garden);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:8px 18px;border-radius:999px}
-.involved a.alt{background:var(--clay)}
+.involved a,.involved button{display:inline-block;background:var(--garden);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:8px 18px;border-radius:999px;border:none;cursor:pointer;font-family:Karla}
+.involved a.alt,.involved button.alt{background:var(--clay)}
+
+/* Submit dialog (student news / event suggestion) */
+dialog.submission{border:none;border-radius:var(--r-card);padding:0;max-width:520px;width:calc(100vw - 32px);background:var(--card);color:var(--ink);box-shadow:0 18px 50px rgba(34,48,31,.35)}
+dialog.submission::backdrop{background:rgba(34,48,31,.45)}
+.submission .body{padding:18px 20px 20px}
+.submission h3{font-size:21px;margin-bottom:4px}
+.submission .sub{font-size:13px;color:var(--ink-soft);margin-bottom:6px}
+.field{margin-top:10px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:3px;letter-spacing:.02em}
+.field input,.field textarea{width:100%;font-family:Karla;font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.field textarea{min-height:96px;resize:vertical}
+.hp{position:absolute;left:-5000px;opacity:0}
+.submission .actions{display:flex;gap:10px;margin-top:14px;align-items:center}
+.submission .send{background:var(--garden);color:#fff;border:none;font-weight:700;font-size:14px;padding:8px 18px;border-radius:999px;cursor:pointer;font-family:Karla}
+.submission .send:disabled{opacity:.6;cursor:default}
+.submission .cancel{background:none;border:none;color:var(--ink-muted);font-size:14px;cursor:pointer;font-family:Karla}
+.submission .status{font-size:13.5px;margin-top:10px;min-height:18px;color:var(--ink-soft)}
 .footer-note{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-muted)}
 
 /* Data-driven links */
@@ -187,14 +204,33 @@ a.sponsor-slot.filled{text-decoration:none}
     <div class="sponsor-slot">Your business here</div>
   </div>
   <div class="involved">
-    <a href="mailto:news@daisybakehouse.com?subject=Student%20news%20or%20editorial">✏️ Students: submit news</a>
-    <a class="alt" href="mailto:events@daisybakehouse.com?subject=Event%20suggestion">🎪 Parents: suggest an event</a>
+    <button type="button" data-submit="student">✏️ Students: submit news</button>
+    <button type="button" class="alt" data-submit="event">🎪 Parents: suggest an event</button>
   </div>
   <div class="footer-note">
     No popups, no tracking. Data: ParentSquare · LINQ Connect · Open-Meteo · school WhatsApp groups · harmonyark.org.
     <span class="prov" id="update-stamp"></span>
   </div>
 </footer>
+
+<dialog class="submission" id="submit-dialog">
+  <div class="body">
+    <h3 id="sd-title">✏️ Submit news or an editorial</h3>
+    <div class="sub" id="sd-sub">Student journalists: share a story, photo idea, or editorial.</div>
+    <form id="submit-form" autocomplete="off" novalidate>
+      <input type="hidden" name="type" id="sd-type" value="student">
+      <div class="field"><label for="sd-name">Your name (optional)</label><input id="sd-name" name="name" maxlength="80"></div>
+      <div class="field"><label for="sd-head" id="sd-head-label">Headline</label><input id="sd-head" name="title" maxlength="120" required></div>
+      <div class="field"><label for="sd-body" id="sd-body-label">Tell us more</label><textarea id="sd-body" name="body" maxlength="4000" required></textarea></div>
+      <div class="field hp"><label for="sd-hp">Company</label><input id="sd-hp" name="website" tabindex="-1" autocomplete="off"></div>
+      <div class="actions">
+        <button class="send" type="submit" id="sd-send">Send it ✨</button>
+        <button class="cancel" type="button" id="sd-cancel">Never mind</button>
+      </div>
+      <div class="status" id="sd-status"></div>
+    </form>
+  </div>
+</dialog>
 
 <script>
 const WMO = c => (c===0?"☀️":c<=2?"🌤️":c===3?"☁️":c<=48?"🌫️":c<=57?"🌦️":c<=67?"🌧️":c<=77?"🌨️":c<=82?"🌦️":c<=86?"🌧️":"❄️");
@@ -486,6 +522,51 @@ function renderLunchCard(){
     renderLunch(menu, (linq && linq.days) || {}, yc ? noSchoolMap(yc) : new Map());
   });
 }
+
+// ---------------- Submit dialog (student news / event suggestions) ----------------
+const SUBMIT_COPY = {
+  student: {title:"✏️ Submit news or an editorial", sub:"Student journalists: share a story, photo idea, or editorial.",
+            head:"Headline", body:"Tell us more", crew:"student editors"},
+  event:   {title:"🎪 Suggest an event", sub:"Parents: ideas for the calendar — festivals, meetups, traditions.",
+            head:"What's the event?", body:"Details — when, where, who it's for", crew:"events crew"}
+};
+function openSubmit(type){
+  const c = SUBMIT_COPY[type] || SUBMIT_COPY.student;
+  $("submit-form").reset();
+  $("sd-type").value = type;
+  $("sd-title").textContent = c.title;
+  $("sd-sub").textContent = c.sub;
+  $("sd-head-label").textContent = c.head;
+  $("sd-body-label").textContent = c.body;
+  $("sd-status").textContent = "";
+  $("submit-dialog").showModal();
+}
+document.querySelectorAll("[data-submit]").forEach(b => b.addEventListener("click", () => openSubmit(b.dataset.submit)));
+$("sd-cancel").addEventListener("click", () => $("submit-dialog").close());
+$("submit-dialog").addEventListener("click", e => { if (e.target === $("submit-dialog")) $("submit-dialog").close(); });
+$("submit-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  if ($("sd-hp").value) return;   // honeypot — quietly drop bots
+  const btn = $("sd-send");
+  btn.disabled = true;
+  $("sd-status").textContent = "Sending…";
+  const type = $("sd-type").value === "event" ? "event" : "student";
+  try {
+    const r = await fetch("api/submit", {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({type, name:$("sd-name").value, title:$("sd-head").value, body:$("sd-body").value, website:$("sd-hp").value})});
+    const data = await r.json().catch(()=>({}));
+    if (r.ok) {
+      $("sd-status").textContent = `Thank you! It's on its way to the ${SUBMIT_COPY[type].crew} 🎉`;
+      $("submit-form").reset();
+      $("sd-type").value = type;
+    } else {
+      $("sd-status").textContent = data.error || "Submissions aren't wired up yet — check back soon!";
+    }
+  } catch {
+    $("sd-status").textContent = "Submissions aren't wired up yet — check back soon!";
+  }
+  btn.disabled = false;
+});
 
 // full re-render: wall tablets stay open for days — everything (date, lunch, countdown) must roll over
 function renderAll(){

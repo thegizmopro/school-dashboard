@@ -68,7 +68,9 @@ def scan_whatsapp():
             m = re.match(r"\[(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})\] \[([^\]]+)\] ([^:]+): (.*)", line)
             if not m: continue
             date, time, g, sender, text = m.groups()
-            if re.search(r"for sale|\$\d|free\b|iso\b|selling|give away|giveaway", text, re.I) or group == "harmony-sc":
+            # bare "free" only counts in the free-trade group — in salmon-creek it's
+            # usually a free event/activity announcement, not a for-sale listing
+            if group == "harmony-sc" or re.search(r"for sale|\$\d|iso\b|selling|give ?away|giveaway|wtb", text, re.I):
                 listings.append({"date": date, "group": g, "who": sender.strip(),
                                  "text": text.strip()[:200],
                                  "url": first_url(text),

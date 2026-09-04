@@ -44,11 +44,32 @@ collector cron → JSON updates → git add data/ + commit + push (origin/main) 
 - **GitHub Pages is FROZEN** as of commit `c3a023c` (2026-09-03): the dual-deploy workflow `.github/workflows/deploy-pages.yml` was deliberately removed — Vercel is the single target. `https://thegizmopro.github.io/school-dashboard/` still serves the last Pages snapshot and will NOT update. If anyone bookmarked it, either share the Vercel link or re-add the workflow.
 - Privacy: raw WhatsApp feed is gitignored (`data/` is local-only); only derived/curated JSON deploys.
 
+## Automation to add: weekly digest (not yet a cron — create in OpenClaw)
+
+**Name:** `School Dashboard Digest`
+**Schedule:** `0 7 * * 2,5` America/Los_Angeles (Tuesday & Friday 7am — listings fresh going into the school week and the weekend)
+**What it runs:**
+
+```
+cd C:\dev\school-dashboard
+python collectors\gen_digest.py --write
+cd C:\dev\school-dashboard\site
+git add data/ && git commit -m "digest <date time>" && git push
+```
+
+**Model/failure behavior:** same as the collector cron (error reply on failure, silent on success).
+
+Rules that make this safe unattended:
+- `--write` MERGES listings: curated entries are kept, newly detected ones added, entries age out 14 days after posting. It never replaces the list.
+- **Never pass prose text in the cron.** Digest prose changes only in an interactive agent/human session (`python collectors\gen_digest.py --write "new prose"`) or by hand-editing the JSON.
+- If the merge changes nothing, `git commit` fails with "nothing to commit" — treat that as success (no-op), not an error.
+- Extractor limits: it only catches messages with a price or explicit for-sale/ISO/giveaway markers. Keyword-less listings ("3T rain suit, make me an offer") are caught by the agent during prose-writing sessions, and the merge keeps them safe from overwrite.
+
 ## Other scheduled jobs that touch this project
 
 | Job | Schedule | Role |
 |---|---|---|
-| `gen_digest.py` (via agent, not yet its own cron) | intended 1–2×/week | writes `site/data/community-digest.json` (synopsis + For Sale/Free listings); run with `--write` to publish; dry-run default |
+| `School Dashboard Digest` (see spec above — pending creation) | Tue & Fri 7am | refreshes listings in `site/data/community-digest.json` via `gen_digest.py --write` (merge semantics; prose untouched) |
 | Grants check (Daisy Bakery — separate but related) | Monthly, 1st @ 9am | verifies grant deadlines, emails kenbradbury@gmail.com |
 
 ## Change-history note for the dev

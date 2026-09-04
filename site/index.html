@@ -288,6 +288,7 @@ function renderEvents(){
           if (name && dates[name]) items.push({date:fmt(dates[name]), title:name, kind:"event", src:"shARK"});
         }
         items.sort((a,b)=>a.date-b.date);
+      });
       const upcoming = items.filter(i=>i.date>=now);
       const todayItems = upcoming.filter(i=>i.date.toDateString()===new Date().toDateString());
       const week = upcoming.filter(i=>i.date>new Date()).slice(0,7);

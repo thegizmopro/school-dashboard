@@ -90,9 +90,7 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .notice-text{font-size:13.5px;color:var(--ink-soft)}
 .ts{font-family:'IBM Plex Mono';font-size:9px;color:var(--ink-faint)}
 
-.feed-item{padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:13.5px}
-.feed-item:last-child{border-bottom:none}
-.feed-meta{font-family:'IBM Plex Mono';font-size:9px;color:var(--ink-faint);letter-spacing:.08em}
+.digest-prose{font-size:14px;line-height:1.55;color:var(--ink-body)}
 .for-sale{margin-top:10px;padding-top:10px;border-top:1px solid var(--line-soft)}
 .for-sale h4{font-size:15px;font-weight:700;margin-bottom:6px}
 .listing{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;padding:3px 0}
@@ -300,21 +298,18 @@ function renderWeather(){
 }
 
 function renderCommunity(){
-  fetch("data/community-feed.json").then(r=>r.json()).then(f=>{
-    let html = "";
-    for (const i of (f.items||[]).slice(-4).reverse()) {
-      html += `<div class="feed-item"><div class="feed-meta">${i.date} · ${i.group}</div>${i.text}</div>`;
-    }
-    const listings = (f.listings||[]).slice(-6).reverse();
+  fetch("data/community-digest.json").then(r=>r.json()).then(d=>{
+    let html = `<div class="digest-prose">${d.digest||""}</div>`;
+    const listings = (d.listings||[]);
     if (listings.length) {
-      html += `<div class="for-sale"><h4>🛒 For Sale & Free <span class="prov">community-feed.json</span></h4>`;
+      html += `<div class="for-sale"><h4>📌 Don't miss + For Sale & Free</h4>`;
       for (const l of listings) {
-        html += `<div class="listing"><span class="item">${l.text}</span><span class="price">${l.price}</span></div>`;
+        html += `<div class="listing"><span class="item">${l.item}</span><span class="price">${l.price}</span></div>`;
       }
-      html += `<div class="prov stamp">LISTINGS EXPIRE AFTER 14 DAYS · scanned ${f.scanned}</div></div>`;
+      html += `<div class="prov stamp">Digest ${d.generated ? d.generated.slice(0,10) : ""} · community-digest.json</div></div>`;
     }
-    $("community-card").innerHTML = html || '<div class="empty-note">Community feed warming up — first scan runs tonight</div>';
-  }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community feed unavailable</div>'; });
+    $("community-card").innerHTML = html || '<div class="empty-note">First community digest coming soon</div>';
+  }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community digest unavailable</div>'; });
 }
 
 function renderShark(){

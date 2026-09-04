@@ -225,7 +225,6 @@ function countdown(events, yearCal){
 function renderLunch(menu){
   const now = new Date();
   const dow = now.getDay();
-  const dow = now.getDay();
   const iso = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
   const day = (menu.menu && menu.menu.lunch && menu.menu.lunch[iso]) || null;
   const linq = menu.menu_linq && menu.menu_linq[iso];

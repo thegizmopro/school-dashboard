@@ -220,13 +220,13 @@ function countdown(events, yearCal){
 
 function renderLunch(menu){
   const now = new Date();
+  const dow = now.getDay();
   const iso = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
   const day = (menu.menu && menu.menu.lunch && menu.menu.lunch[iso]) || null;
   const linq = menu.menu_linq && menu.menu_linq[iso];
   $("lunch-prov").textContent = "menu-and-events.json + menu-linq.json";
   if (!day && !linq) {
-    const dow = now.getDay();
-    if (dow === 0 || dow === 6) { $("lunch-card").innerHTML = '<div class="no-school">_weekend<br><span class="sub">No school — see you ' + (dow===6?"Monday":"Tuesday") + '!</span></div>'; return; }
+    if (dow === 0 || dow === 6) { $("lunch-card").innerHTML = '<div class="no-school">🏖️ Weekend<br><span class="sub">No school — see you ' + (dow===6?"Monday":"Tuesday") + '!</span></div>'; return; }
     $("lunch-card").innerHTML = '<div class="empty-note">Menu not published yet</div>'; return;
   }
   const main = day ? day.main : (linq && linq.lunch ? linq.lunch.filter(m=>m.cat==="Main Entree").map(m=>m.item).join(" or ") : null);
@@ -238,7 +238,6 @@ function renderLunch(menu){
   html += `<div class="lunch-alt">Always: ${alts.join(" · ")}${bk?`<br>Breakfast: ${bk}`:""}</div>`;
   $("lunch-card").innerHTML = html;
   // theme callout: pizza friday
-  const dow = now.getDay();
   if (dow === 5 && /pizza/i.test(main||"")) {
     $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Today is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
   }

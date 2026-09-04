@@ -286,7 +286,14 @@ function renderEvents(){
           if (name) items.push({date:fmt(dates[name]), title:name, kind:"event", src:"shARK"});
         }
         items.sort((a,b)=>a.date-b.date);
-        const upcoming = items.filter(i=>i.date>=now);
+        // dedupe: same date + normalized title = one row (ParentSquare "Copy of" twins, double-registered shARK events)
+        const seen = new Set();
+        const deduped = items.filter(i => {
+          const key = i.date.toDateString() + "|" + i.title.toLowerCase().replace(/[^a-z0-9]/g,"");
+          if (seen.has(key)) return false;
+          seen.add(key); return true;
+        });
+        const upcoming = deduped.filter(i=>i.date>=now);
         const todayItems = upcoming.filter(i=>i.date.toDateString()===new Date().toDateString());
         const week = upcoming.filter(i=>i.date>new Date()).slice(0,7);
         const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};

@@ -221,7 +221,7 @@ function countdown(events, yearCal){
 
 function renderLunch(menu){
   const now = new Date();
-  const iso = now.toISOString().slice(0,10);
+  const iso = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
   const day = (menu.menu && menu.menu.lunch && menu.menu.lunch[iso]) || null;
   const linq = menu.menu_linq && menu.menu_linq[iso];
   $("lunch-prov").textContent = "menu-and-events.json + menu-linq.json";
@@ -345,8 +345,7 @@ function renderNotices(){
 
 hero();
 renderWeather();
-renderLunch((async()=>{ return await (await fetch("data/menu-and-events.json")).json() })());
-(async()=>{ try { const m = await (await fetch("data/menu-and-events.json")).json(); renderLunch(m); } catch(e){} })();
+(async()=>{ try { const m = await (await fetch("data/menu-and-events.json")).json(); renderLunch(m); } catch(e){ $("lunch-card").innerHTML = '<div class="empty-note">Menu unavailable</div>'; } })();
 renderEvents();
 renderCommunity();
 renderShark();

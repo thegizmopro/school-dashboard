@@ -1,0 +1,1670 @@
+{
+ "fetched": "2026-09-03T20:10:46",
+ "days": {
+  "2026-09-01": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Beef taco"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Beans, Black, canned"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Breakfast Burrito"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-02": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Grilled Cheese, Whole Grain"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Creamy Tomato Soup"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Banana"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Croissant, choc, Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-03": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Pesto Pasta"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Meat/meat alternative",
+     "item": "Cottage cheese"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Celery sticks, 1/4 cup serving"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-04": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Pizza, house with Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Peas, frozen"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-08": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Shredded chicken tacos"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Pinto, organic, cooked from dry"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Bagel, WG, Dos Pisano"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-09": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Tamale, Bean and cheese, WG, Gluten free"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salsa"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Pear, 1 cup"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Croissant, choc, Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-10": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Spaghetti with Marinara"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Meat/meat alternative",
+     "item": "Cottage cheese"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Peas, frozen"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Banana"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-11": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Pizza, house with Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Harmony Kale Salad"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-14": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Plant based nuggets and sweet potato puffs"
+    },
+    {
+     "cat": "Meat/meat alternative",
+     "item": "Cheddar cheese, shredded, 2 oz"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Cucumber"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Baked potato, russet, 70 ct, .75 C starchy"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Banana"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    },
+    {
+     "cat": "Condiments",
+     "item": "Sour cream, serving"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Bagel, WG, Dos Pisano"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-15": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Burrito, bean and cheese"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Carrot, baby"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Breakfast Burrito"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-16": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Turkey and Cheese Wrap"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Creamy coleslaw"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Croissant, choc, Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-17": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Spaghetti with roasted garlic and olive oil"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Meat/meat alternative",
+     "item": "Cheese, string, 1 oz serving"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Corn, canned"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Strawberries, 1 c"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-18": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Pizza, house with Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Peas, frozen"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-21": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Baked tofu"
+    },
+    {
+     "cat": "Meat/meat alternative",
+     "item": "Cheddar cheese, shredded, 2 oz"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Baked potato, russet, 70 ct, .75 C starchy"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Strawberries, 1 c"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    },
+    {
+     "cat": "Condiments",
+     "item": "Sour cream, serving"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Bagel, WG, Dos Pisano"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, 1 cup"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-22": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Shredded chicken tacos"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Beans, refried, 1/2 cup serving"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Breakfast Burrito"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-23": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Carrot, baby"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Banana"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Croissant, choc, Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-24": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Macaroni and cheese, 2 M/MA, 1 WG"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Celery sticks, 1/4 cup serving"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-25": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Pizza, house with Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Harmony Kale Salad"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-28": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Plant based patty on whole wheat bun"
+    },
+    {
+     "cat": "Meat/meat alternative",
+     "item": "Cheddar cheese, shredded, 2 oz"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Baked potato, russet, 70 ct, .75 C starchy"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    },
+    {
+     "cat": "Condiments",
+     "item": "Sour cream, serving"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Bagel, WG, Dos Pisano"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-29": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Beef taco"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Grain",
+     "item": "Brown Rice"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Beans, Black, canned"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Breakfast Burrito"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-09-30": {
+   "lunch": [
+    {
+     "cat": "Main Entree",
+     "item": "Grilled Cheese, Whole Grain"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Yogurt and Seasonal Fruit Parfait"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "SunButter and Jam Brown Bag Lunch"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Salad Bar"
+    },
+    {
+     "cat": "Vegetable",
+     "item": "Creamy Tomato Soup"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Strawberries, 1 c"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, FF Chocolate, HPT, Crystal"
+    }
+   ],
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Croissant, choc, Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-01": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-02": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-05": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Bagel, WG, Dos Pisano"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-06": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Breakfast Burrito"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-07": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Croissant, choc, Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-08": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-09": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-13": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Bagel, WG, Dos Pisano"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-14": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Croissant, choc, Dos Pisano's"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-15": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-16": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  }
+ }
+}

@@ -225,6 +225,7 @@ function countdown(events, yearCal){
 function renderLunch(menu){
   const now = new Date();
   const dow = now.getDay();
+  const dow = now.getDay();
   const iso = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
   const day = (menu.menu && menu.menu.lunch && menu.menu.lunch[iso]) || null;
   const linq = menu.menu_linq && menu.menu_linq[iso];
@@ -240,10 +241,21 @@ function renderLunch(menu){
   const alts = (menu.menu && menu.menu.daily_options) || [];
   const bk = menu.menu && menu.menu.breakfast_weekly ? menu.menu.breakfast_weekly[["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dow]] : null;
   html += `<div class="lunch-alt">Always: ${alts.join(" · ")}${bk?`<br>Breakfast: ${bk}`:""}</div>`;
+  // tomorrow's entrée sub-card
+  const tISO = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()+1).padStart(2,"0");
+  const tDay = (menu.menu && menu.menu.lunch && menu.menu.lunch[tISO]) || null;
+  const tLinQ = (menu.menu_linq && menu.menu_linq[tISO] && menu.menu_linq[tISO].lunch) ? menu.menu_linq[tISO].lunch.filter(m=>m.cat==="Main Entree").map(m=>m.item).join(" or ") : null;
+  const tMain = tDay ? tDay.main : tLinQ;
+  const dowNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  if (tMain) {
+    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft)"><div class="kicker">Tomorrow · ${dowNames[(dow+1)%7]}</div><div style="font-family:'Baloo 2';font-size:17px;font-weight:700">${EMOJI(tMain)} ${tMain}</div></div>`;
+  }
   $("lunch-card").innerHTML = html;
-  // theme callout: pizza friday
+  // theme callout: pizza friday today OR tomorrow
   if (dow === 5 && /pizza/i.test(main||"")) {
     $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Today is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
+  } else if (dow === 4 && tMain && /pizza/i.test(tMain)) {
+    $("theme-callout").innerHTML = `<div class="theme-callout"><div class="kicker">Tomorrow is</div><div class="line">🍕 Pizza Friday — house-made Dos Pisano's!</div></div>`;
   }
 }
 

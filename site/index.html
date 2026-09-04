@@ -137,7 +137,7 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
     </div>
   </div>
 </header>
-<div class="chip-row"><span class="chip" id="countdown">⏳ …</span></div>
+<div class="chip-row"><span class="chip" id="countdown">⏳ …</span> <span class="chip" id="summer-chip" style="background:var(--garden-pale);color:var(--garden-deep)">☀️ …</span></div>
 
 <div class="grid">
   <div class="section">
@@ -215,6 +215,11 @@ function countdown(events, yearCal){
     const icon = target.kind === "break" ? "🌴" : target.kind === "holiday" ? "🎉" : "📚";
     $("countdown").textContent = `${icon} ${target.label.replace(/ — No School.*/,"")}: ${days} day${days===1?"":"s"}`;
   }
+  // summer counter chip
+  if (lastDay) {
+    const days = Math.round((fmt(lastDay.date) - now) / 86400000);
+    $("summer-chip").textContent = `☀️ ${days} days until summer`;
+  }
 }
 
 function renderLunch(menu){
@@ -223,7 +228,7 @@ function renderLunch(menu){
   const iso = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
   const day = (menu.menu && menu.menu.lunch && menu.menu.lunch[iso]) || null;
   const linq = menu.menu_linq && menu.menu_linq[iso];
-  $("lunch-prov").textContent = "menu-and-events.json + menu-linq.json";
+  $("lunch-prov").textContent = "";
   if (!day && !linq) {
     if (dow === 0 || dow === 6) { $("lunch-card").innerHTML = '<div class="no-school">🏖️ Weekend<br><span class="sub">No school — see you ' + (dow===6?"Monday":"Tuesday") + '!</span></div>'; return; }
     $("lunch-card").innerHTML = '<div class="empty-note">Menu not published yet</div>'; return;
@@ -261,10 +266,20 @@ function renderEvents(){
       for (const d of (yc.keyDates||[])) {
         items.push({date:fmt(d.date), title:d.label, kind:d.kind, range:d.range});
       }
-      items.sort((a,b)=>a.date-b.date);
+      // shARK events (merged: calendar answers when, card answers why)
+      return fetch("data/shark.json").then(r=>r.json()).then(sk=>{
+        const sharkNames = ["Glow Party","Autumn Gather","Fall Festival","Move-a-thon","Tree Lighting","Pancake Breakfast","Winter Festival"];
+        for (const e of (sk.events||[])) {
+          if (!sharkNames.some(n => e.title && e.title.includes(n))) continue;
+          // parse dates like "Sep 18", "Oct 3" from fetched titles context if present; shARK fetch only grabs titles, so use known dates map
+          const dates = {"Glow Party":"2026-09-18","Autumn Gather":"2026-10-03","Fall Festival":"2026-10-16","Move-a-thon":"2026-11-13","Tree Lighting":"2026-12-03","Pancake Breakfast":"2026-12-05","Winter Festival":"2026-12-10"};
+          const name = sharkNames.find(n => e.title && e.title.includes(n));
+          if (name && dates[name]) items.push({date:fmt(dates[name]), title:name, kind:"event", src:"shARK"});
+        }
+        items.sort((a,b)=>a.date-b.date);
       const upcoming = items.filter(i=>i.date>=now);
       const todayItems = upcoming.filter(i=>i.date.toDateString()===new Date().toDateString());
-      const week = upcoming.filter(i=>i.date>new Date() && i.date<=new Date(Date.now()+7*86400000)).slice(0,5);
+      const week = upcoming.filter(i=>i.date>new Date()).slice(0,7);
       const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};
       let html = "";
       if (todayItems.length) {

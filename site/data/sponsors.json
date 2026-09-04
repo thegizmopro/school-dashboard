@@ -1,1 +1,7 @@
-{"sponsors": []}
+{
+ "sponsors": [
+  {"name": "Howard Station Cafe", "image": "sponsors/howard-station-cafe.jpg", "link": "https://howardstationcafe.com/", "active": true},
+  {"name": "Freestone Lounge", "image": "sponsors/freestone-lounge.jpg", "active": true},
+  {"name": "LandPaths", "image": "sponsors/land-paths.jpg", "link": "https://landpaths.org", "active": true}
+ ]
+}

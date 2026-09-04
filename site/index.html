@@ -117,7 +117,8 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .footer-zone .kicker{margin-bottom:10px}
 .sponsor-slots{display:flex;gap:12px;flex-wrap:wrap}
 .sponsor-slot{flex:1;min-width:140px;aspect-ratio:3/1;border:2px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--ink-ghost);font-size:13px}
-.sponsor-slot.filled{border-style:solid;color:var(--ink)}
+.sponsor-slot.filled{border-style:solid;border-color:var(--line);color:var(--ink);aspect-ratio:auto;height:120px;background:#fff;padding:8px}
+.sponsor-slot.filled img{max-height:100%;max-width:100%;object-fit:contain;display:block}
 a.sponsor-slot.filled{text-decoration:none}
 .involved{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 .involved a{display:inline-block;background:var(--garden);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:8px 18px;border-radius:999px}
@@ -459,7 +460,7 @@ function renderSponsors(){
     const active = (s.sponsors||[]).filter(x=>x.active);
     if (active.length) {
       $("sponsors").innerHTML = active.map(x=>{
-        const inner = x.image ? `<img src="${esc(x.image)}" alt="${esc(x.name)}" style="max-height:100%">` : esc(x.name);
+        const inner = x.image ? `<img src="${esc(x.image)}" alt="${esc(x.name)}" loading="lazy">` : esc(x.name);
         const open = safeUrl(x.link) ? `<a class="sponsor-slot filled" href="${esc(x.link)}" target="_blank" rel="noopener">` : `<div class="sponsor-slot filled">`;
         const close = safeUrl(x.link) ? `</a>` : `</div>`;
         return open + inner + close;

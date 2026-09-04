@@ -1,0 +1,27 @@
+{
+  "district": "Harmony Union School District",
+  "schoolYear": "2026-2027",
+  "source": "husd_calendar_2026-2027_1.pdf",
+  "captured": "2026-09-03",
+  "keyDates": [
+    {"date": "2026-08-13", "label": "First Day of School", "kind": "milestone"},
+    {"date": "2026-09-07", "label": "Labor Day — No School", "kind": "holiday"},
+    {"date": "2026-10-05", "label": "Conference Week (through Oct 9)", "kind": "conference", "range": ["2026-10-05", "2026-10-09"]},
+    {"date": "2026-10-12", "label": "Teacher In-Service — No School", "kind": "no_school"},
+    {"date": "2026-11-11", "label": "Veterans Day — No School", "kind": "holiday"},
+    {"date": "2026-11-23", "label": "Thanksgiving Break (through Nov 27)", "kind": "break", "range": ["2026-11-23", "2026-11-27"]},
+    {"date": "2026-12-18", "label": "Early Release — 1:10 PM dismissal", "kind": "early_release"},
+    {"date": "2026-12-21", "label": "Winter Break (through Jan 1)", "kind": "break", "range": ["2026-12-21", "2027-01-01"]},
+    {"date": "2027-01-04", "label": "Teacher In-Service — No School", "kind": "no_school"},
+    {"date": "2027-01-18", "label": "MLK Day — No School", "kind": "holiday"},
+    {"date": "2027-02-08", "label": "Conference Week (through Feb 11)", "kind": "conference", "range": ["2027-02-08", "2027-02-11"]},
+    {"date": "2027-02-12", "label": "Lincoln's Day — No School", "kind": "holiday"},
+    {"date": "2027-02-15", "label": "Presidents Day — No School", "kind": "holiday"},
+    {"date": "2027-03-22", "label": "Spring Break (through Mar 26)", "kind": "break", "range": ["2027-03-22", "2027-03-26"]},
+    {"date": "2027-04-23", "label": "Emergency Day (off unless needed)", "kind": "no_school"},
+    {"date": "2027-04-26", "label": "Emergency Day (off unless needed)", "kind": "no_school"},
+    {"date": "2027-05-31", "label": "Memorial Day — No School", "kind": "holiday"},
+    {"date": "2027-06-02", "label": "Last Day of School", "kind": "milestone"},
+    {"date": "2027-06-03", "label": "Teacher Work Day", "kind": "no_school"}
+  ]
+}

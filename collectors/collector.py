@@ -182,7 +182,7 @@ def fetch_shark():
                 events.append({"title": t})
     out = {"fetched": datetime.datetime.now().isoformat(timespec="seconds"),
            "url": SHARK_URL,
-           "campaign": "shARK raises ~$75K/yr: $50K block grants to the school, rest to events, classroom requests, staff appreciation",
+           "campaign": "Parent-run since 1989, shARK turns ~$75K a year into $50K in school grants, classroom wishes, community events, and appreciation for our teachers. Thank you, shARK families! 💚",
            "events": events}
     write_json(DATA / "shark.json", out)
     return f"shark: {len(events)} events (dated: {sum(1 for e in events if e.get('date'))})"

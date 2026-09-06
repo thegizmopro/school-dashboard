@@ -2,6 +2,7 @@
 //
 // WIRING (when the domain + Resend account are ready):
 //   1. vercel env add RESEND_API_KEY <key from resend.com → API keys>  (production + preview)
+//      (RESEND_KEY is also accepted — the key was saved under that name)
 //   2. vercel env add SUBMIT_TO <inbox that receives submissions, e.g. the family gmail>
 //   3. vercel env add SUBMIT_FROM <sender on your VERIFIED resend domain, e.g. hello@yourdomain>
 //      (unset → falls back to resend's testing sender onboarding@resend.dev,
@@ -38,7 +39,7 @@ export default async function handler(req, res) {
     return res.json({ error: "A headline and some details, please!" });
   }
 
-  const key = process.env.RESEND_API_KEY;
+  const key = process.env.RESEND_API_KEY || process.env.RESEND_KEY;
   const to = process.env.SUBMIT_TO;
   const from = process.env.SUBMIT_FROM || "onboarding@resend.dev";
   if (!key || !to) {

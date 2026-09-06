@@ -1,0 +1,102 @@
+{
+  "name": "Harmony Today — earthy / outdoor-ed, DARK",
+  "version": "1.0-dark",
+  "date": "2026-09-04",
+  "note": "Dark alternate of tokens.json, matching board 3a in School Dashboard.dc.html exactly. Same role names, same hue families — only the lightness order is inverted: the page is deep forest ink, cards sit a step lighter, accents rise so they hold on a dark ground. `maps_to` names the light token each value replaces, so a theme swap is key-for-key by NAME, not by hex.",
+  "pairs_with": "tokens.json",
+  "swap_rule": "Every name in tokens.json.color exists here. No geometry, spacing, radius, or type value changes between themes.",
+
+  "color": {
+    "paper":        { "hex": "#1C231A", "maps_to": "paper",        "use": "page background" },
+    "card":         { "hex": "#2C3B29", "maps_to": "card",         "use": "raised card background" },
+    "card-alt":     { "hex": "#151B14", "maps_to": "card-alt",     "use": "footer zone — darker than paper, not lighter" },
+    "card-sunken":  { "hex": "#232D20", "maps_to": "paper",        "use": "chip fills inside a card (the light theme uses paper here)" },
+    "ink":          { "hex": "#EDF2E7", "maps_to": "ink",          "use": "primary text, headings" },
+    "ink-body":     { "hex": "#C6D4C0", "maps_to": "ink-body",     "use": "body text on tinted fills" },
+    "ink-soft":     { "hex": "#B7C8B1", "maps_to": "ink-soft",     "use": "secondary text, notice bodies" },
+    "ink-muted":    { "hex": "#8FA388", "maps_to": "ink-muted",    "use": "captions, event times" },
+    "ink-faint":    { "hex": "#7E9077", "maps_to": "ink-faint",    "use": "timestamps, kickers" },
+    "ink-dim":      { "hex": "#6D8267", "maps_to": "ink-faint",    "use": "mono kickers on card fills" },
+    "ink-ghost":    { "hex": "#5F7059", "maps_to": "ink-ghost",    "use": "update stamp, expired listings" },
+    "garden":       { "hex": "#72B36E", "maps_to": "garden",       "use": "primary action fill, links, accent bars" },
+    "garden-deep":  { "hex": "#9BD094", "maps_to": "garden-deep",  "use": "wordmark, card headings — INVERTED ROLE: on dark this is the lighter of the pair" },
+    "garden-bright":{ "hex": "#CFE3C8", "maps_to": "garden-deep",  "use": "heading text on garden-pale fills" },
+    "garden-pale":  { "hex": "#243021", "maps_to": "garden-pale",  "use": "info fills, community/shARK cards" },
+    "garden-line":  { "hex": "#3A4A36", "maps_to": "garden-line",  "use": "border on garden-pale fills" },
+    "garden-hero-a":{ "hex": "#255030", "maps_to": "garden",       "use": "hero gradient start" },
+    "garden-hero-b":{ "hex": "#1B241A", "maps_to": "garden-deep",  "use": "hero gradient end" },
+    "on-garden":    { "hex": "#101510", "maps_to": "card",         "use": "text on a garden fill (buttons)" },
+    "clay":         { "hex": "#C2643B", "maps_to": "clay",         "use": "alerts, theme-day callout" },
+    "clay-lift":    { "hex": "#D3754A", "maps_to": "clay",         "use": "accent bar / tag stroke where clay must read against a dark card" },
+    "clay-pale":    { "hex": "#332318", "maps_to": "clay-pale",    "use": "WhatsApp source chip fill" },
+    "clay-line":    { "hex": "#5A3A28", "maps_to": "clay-line",    "use": "shARK tag border" },
+    "clay-ink":     { "hex": "#E29A6E", "maps_to": "clay-ink",     "use": "WhatsApp chip text, shARK tag text" },
+    "on-clay":      { "hex": "#FFF6EF", "maps_to": "ink",          "use": "text on a clay fill — stays near-white in both themes" },
+    "sun":          { "hex": "#E8A33D", "maps_to": "sun",          "use": "countdown chip, no-school accent bar" },
+    "sun-ink":      { "hex": "#33260C", "maps_to": "sun-ink",      "use": "text on sun — unchanged; sun stays a light fill" },
+    "oat":          { "hex": "#2A2717", "maps_to": "oat",          "use": "no-school day cards" },
+    "oat-line":     { "hex": "#453F23", "maps_to": "oat-line",     "use": "border on oat" },
+    "oat-ink":      { "hex": "#F2E4C8", "maps_to": "oat-ink",      "use": "text on oat" },
+    "oat-ink-soft": { "hex": "#A8935E", "maps_to": "oat-ink-soft", "use": "secondary text on oat" },
+    "sky":          { "hex": "#6E9BC2", "maps_to": "sky",          "use": "event accent bar" },
+    "sky-pale":     { "hex": "#1D2833", "maps_to": "sky-pale",     "use": "Email source chip fill" },
+    "sky-ink":      { "hex": "#8FB4D6", "maps_to": "sky-ink",      "use": "Email source chip text" },
+    "iris":         { "hex": "#8E7CB0", "maps_to": "iris",         "use": "conference / school-business accent bar" },
+    "line":         { "hex": "#35492F", "maps_to": "line",         "use": "card borders, dividers on paper" },
+    "line-soft":    { "hex": "#1E2A1C", "maps_to": "line-soft",    "use": "in-card dividers" },
+    "placeholder-line": { "hex": "#4F5F4A", "maps_to": "placeholder-line", "use": "dashed sponsor slot border" },
+    "bezel":        { "hex": "#0C100B", "maps_to": "bezel",        "use": "device frame only, not part of the UI" }
+  },
+
+  "gradient": {
+    "hero": "linear-gradient(150deg, #255030, #1B241A)",
+    "hero-phone": "linear-gradient(170deg, #255030, #1B241A)",
+    "sponsor-slot": "repeating-linear-gradient(135deg, #1B221A 0 6px, #161C15 6px 12px)",
+    "note": "The hero deepens rather than brightens on dark; its near-white text carries the emphasis."
+  },
+
+  "role_inversions": [
+    "garden-deep and garden swap perceptual position: on light, garden-deep is the darker emphasis; on dark it is the lighter. Keep garden-deep for wordmark and headings and garden for fills and actions — the names describe role, not lightness.",
+    "card-alt is DARKER than paper on dark (#151B14 vs #1C231A). The footer zone recedes in both themes; it just changes direction.",
+    "Chip fills invert too: the light theme drops chips onto `paper` inside a `card`; the dark theme needs the extra `card-sunken` step because paper is now darker than card.",
+    "sun and clay keep their light-theme hex values. Both stay light fills with dark or near-white text, which is what keeps alerts reading identically across themes. clay-lift and clay-ink exist only for the cases where clay is a 3px bar or small text on a dark card.",
+    "sky and iris also keep their light-theme hex as accent bars; their chip fills and text invert."
+  ],
+
+  "contrast": {
+    "standard": "WCAG AA for text (4.5:1 body, 3:1 for display >= 24px)",
+    "notes": [
+      "ink #EDF2E7 on card #2C3B29 — comfortable AA for body and display.",
+      "ink-muted #8FA388 on card is the floor for captions; do not use it for body copy.",
+      "ink-ghost #5F7059 is decorative only — struck-through listings and the update stamp, never load-bearing text.",
+      "garden #3F7A43 from the light theme FAILS on a dark card. It is replaced by #72B36E for links/actions and #9BD094 for headings. Never carry the light green across."
+    ]
+  },
+
+  "unchanged_from_light": {
+    "font": "identical",
+    "type": "identical — no size or weight changes between themes",
+    "space": "identical",
+    "radius": "identical",
+    "border": {
+      "hairline": "1px solid #1E2A1C",
+      "card": "1px solid #35492F",
+      "card-on-green": "1px solid #3A4A36",
+      "emphasis": "2px solid #D3754A",
+      "note": "Widths and roles identical; only the color tokens resolve differently."
+    },
+    "shadow": "still none — separation stays border plus fill. Dark themes invite glow; do not add it.",
+    "accent-bar": "identical geometry (3px, 4px large, 30px tall, radius 2)",
+    "event-kind-color": "identical mapping (break/holiday/no_school → sun, early_release → clay, conference → iris, event → sky, shark → clay, milestone → garden)",
+    "source-chip": "identical mapping and geometry; fills and text resolve to the dark values above",
+    "target": "tap-min 44",
+    "breakpoint": "identical"
+  },
+
+  "usage": {
+    "selection": "Theme is a per-display build choice, not a user toggle. Suggested: wall tablet runs dark (it lives on a wall through the evening); phone and laptop follow prefers-color-scheme.",
+    "emoji": "Unchanged and untreated — they carry their own color and read on both grounds.",
+    "sponsor_logos": "Logos supplied for the light theme may need a light plate behind them on dark. Add `logo_needs_plate: true` per entry in sponsors.json rather than filtering the image.",
+    "reference_board": "School Dashboard.dc.html → board 3a (phone Today, dark)"
+  }
+}

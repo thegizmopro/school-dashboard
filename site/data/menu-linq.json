@@ -1,68 +1,6 @@
 {
- "fetched": "2026-09-04T18:03:10",
+ "fetched": "2026-09-05T18:03:37",
  "days": {
-  "2026-09-02": {
-   "lunch": [
-    {
-     "cat": "Main Entree",
-     "item": "Grilled Cheese, Whole Grain"
-    },
-    {
-     "cat": "Main Entree",
-     "item": "Yogurt and Seasonal Fruit Parfait"
-    },
-    {
-     "cat": "Main Entree",
-     "item": "SunButter and Jam Brown Bag Lunch"
-    },
-    {
-     "cat": "Vegetable",
-     "item": "Salad Bar"
-    },
-    {
-     "cat": "Vegetable",
-     "item": "Creamy Tomato Soup"
-    },
-    {
-     "cat": "Fruit",
-     "item": "Banana"
-    },
-    {
-     "cat": "Milk",
-     "item": "Milk, 1% HPT, Crystal"
-    },
-    {
-     "cat": "Milk",
-     "item": "Milk, FF Chocolate, HPT, Crystal"
-    }
-   ],
-   "breakfast": [
-    {
-     "cat": "Main Entree",
-     "item": "Croissant, choc, Dos Pisano's"
-    },
-    {
-     "cat": "Main Entree",
-     "item": "Cinnamon Toast Crunch, reduced sugar"
-    },
-    {
-     "cat": "Main Entree",
-     "item": "Oatmeal bar and string cheese"
-    },
-    {
-     "cat": "Fruit",
-     "item": "Apple"
-    },
-    {
-     "cat": "Fruit",
-     "item": "Orange, sliced, 1/2 cup serving"
-    },
-    {
-     "cat": "Milk",
-     "item": "Milk, 1% HPT, Crystal"
-    }
-   ]
-  },
   "2026-09-03": {
    "lunch": [
     {
@@ -1622,6 +1560,35 @@
     {
      "cat": "Fruit",
      "item": "Orange, 1 cup"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-20": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Breakfast Burrito"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
     },
     {
      "cat": "Milk",

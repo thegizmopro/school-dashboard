@@ -40,7 +40,7 @@ Consequence: the "morning run does LINQ/shARK" idea from the original spec is su
 collector cron → JSON updates → git add data/ + commit + push (origin/main) → Vercel auto-deploy (~30s)
 ```
 
-- **Hosting (canonical): Vercel** — `school-dashboard-zeta-ebon.vercel.app`. Git-integrated with this repo; `vercel.json` sets `outputDirectory: site`. Every push (cron or human) auto-deploys.
+- **Hosting (canonical): Vercel** — `https://harmony.justsoyouknow.site` (custom domain, live 2026-09-06; DNS: CNAME `harmony` → `5b0ba3f3c86fa13e.vercel-dns-017.com` at Namecheap). Old URL `school-dashboard-zeta-ebon.vercel.app` still works — new home-screen installs should be made from the canonical domain. Git-integrated with this repo; `vercel.json` sets `outputDirectory: site`. Every push (cron or human) auto-deploys.
 - **GitHub Pages is FROZEN** as of commit `c3a023c` (2026-09-03): the dual-deploy workflow `.github/workflows/deploy-pages.yml` was deliberately removed — Vercel is the single target. `https://thegizmopro.github.io/school-dashboard/` still serves the last Pages snapshot and will NOT update. If anyone bookmarked it, either share the Vercel link or re-add the workflow.
 - Privacy: raw WhatsApp feed is gitignored (`data/` is local-only); only derived/curated JSON deploys.
 

@@ -44,9 +44,11 @@ collector cron → JSON updates → git add data/ + commit + push (origin/main) 
 - **GitHub Pages is FROZEN** as of commit `c3a023c` (2026-09-03): the dual-deploy workflow `.github/workflows/deploy-pages.yml` was deliberately removed — Vercel is the single target. `https://thegizmopro.github.io/school-dashboard/` still serves the last Pages snapshot and will NOT update. If anyone bookmarked it, either share the Vercel link or re-add the workflow.
 - Privacy: raw WhatsApp feed is gitignored (`data/` is local-only); only derived/curated JSON deploys.
 
-## Cron 2: School Dashboard Digest (created 2026-09-04)
+## Cron 2: School Dashboard Digest (created 2026-09-04; schedule changed to daily 2026-09-06)
 
-**OpenClaw automation id:** `325717d2` · **Schedule:** `0 7 * * 2,5` America/Los_Angeles (Tuesday & Friday 7am — listings fresh going into the school week and the weekend)
+**OpenClaw automation id:** `325717d2` · **Schedule:** `0 7 * * *` America/Los_Angeles (daily 7am)
+
+Two clocks, one cron: the daily run refreshes LISTINGS only (merge + 14-day expiry — it never touches prose). Under the old Tue/Fri schedule, weekend buy/sell traffic waited until Tuesday; worst-case listing staleness is now 1 day. The PROSE stays on an agent/human writing rhythm of 1–2×/week — the cron never passes prose text.
 **What it runs:**
 
 ```
@@ -68,7 +70,7 @@ Rules that make this safe unattended:
 
 | Job | Schedule | Role |
 |---|---|---|
-| `School Dashboard Digest` (id `325717d2`, live since 2026-09-04) | Tue & Fri 7am | refreshes listings in `site/data/community-digest.json` via `gen_digest.py --write` (merge semantics; prose untouched) |
+| `School Dashboard Digest` (id `325717d2`, live since 2026-09-04) | Daily 7am | refreshes listings in `site/data/community-digest.json` via `gen_digest.py --write` (merge semantics; prose untouched, stays 1–2×/week agent-written) |
 | Grants check (Daisy Bakery — separate but related) | Monthly, 1st @ 9am | verifies grant deadlines, emails kenbradbury@gmail.com |
 
 ## Change-history note for the dev
@@ -86,4 +88,4 @@ If the cron message text and `collector.py` docstring ever disagree, **trust the
 ## Validation status (2026-09-04)
 - Collector cron: live since Sep 3, verified across update-day boundary (staleness self-heal exercised Sep 4 00:03 + 06:03 runs).
 - Digest cron: implemented Sep 4 (id 325717d2). Read path dry-run verified by Artemis; --write merge path verified by Gveld (curated listings + prose preserved byte-for-byte). Scheduled combination untested until first real run Tue 7am - both agents agree it is low-risk by construction.
-- Expected behavior: gen_digest --write always refreshes the generated timestamp, so Tue/Fri runs produce a small commit even with no listing changes. This is intentional provenance stamping, not churn.
+- Expected behavior: gen_digest --write always refreshes the generated timestamp, so daily runs produce a small commit even with no listing changes. This is intentional provenance stamping, not churn.

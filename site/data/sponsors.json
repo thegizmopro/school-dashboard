@@ -16,12 +16,6 @@
    "image": "sponsors/land-paths.jpg",
    "link": "https://landpaths.org",
    "active": true
-  },
-  {
-   "name": "Test Sponsor",
-   "image": "sponsors/test-sponsor.jpg",
-   "active": true,
-   "link": "https://example.com"
   }
  ]
 }

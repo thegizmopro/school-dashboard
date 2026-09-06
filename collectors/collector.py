@@ -50,6 +50,10 @@ def first_url(text):
 
 # ---------------- WhatsApp scan ----------------
 KEYWORDS = re.compile(r"no school|reminder|due|early release|half day|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancelled|canceled|sold|free|for sale|iso|looking for|heads up|alert", re.I)
+# listing detection mirrors gen_digest.py: strong sale verbs everywhere; bare
+# "$N"/"free" only in the free-trade group ("free" outside it must not be an event)
+SALE_STRONG = re.compile(r"for sale|iso\b|selling|give ?away|giveaway|wtb", re.I)
+SALE_EVENTISH = re.compile(r"\b(event|potluck|activity|class|workshop|program|gathering|webinar|community|parade|festival|performance|movie)\b", re.I)
 LOGS = [
     pathlib.Path(r"C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-salmon-creek.md"),
     pathlib.Path(r"C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-harmony-sc-free-trade-sell.md"),
@@ -68,9 +72,9 @@ def scan_whatsapp():
             m = re.match(r"\[(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})\] \[([^\]]+)\] ([^:]+): (.*)", line)
             if not m: continue
             date, time, g, sender, text = m.groups()
-            # bare "free" only counts in the free-trade group — in salmon-creek it's
-            # usually a free event/activity announcement, not a for-sale listing
-            if group == "harmony-sc" or re.search(r"for sale|\$\d|iso\b|selling|give ?away|giveaway|wtb", text, re.I):
+            is_sale = bool(group == "harmony-sc" or SALE_STRONG.search(text)
+                           or (re.search(r"\bfree\b", text, re.I) and not SALE_EVENTISH.search(text)))
+            if is_sale:
                 listings.append({"date": date, "group": g, "who": sender.strip(),
                                  "text": text.strip()[:200],
                                  "url": first_url(text),

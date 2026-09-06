@@ -27,10 +27,15 @@ logs = [
     r'C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-harmony-sc-free-trade-sell.md'
 ]
 KW = re.compile(r'no school|reminder|due|early release|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancel|heads up|alert|workshop|pizza|menu', re.I)
-# salmon-creek chatter often says "free event/activity" — that's not a listing.
-# Strong markers everywhere; bare "free"/"trade" only count in the free-trade group.
-SALE_STRONG = re.compile(r'\$\d|for sale|iso\b|selling|give\s?away|giveaway|wtb', re.I)
-SALE_LOOSE = re.compile(SALE_STRONG.pattern + r'|free\b|trade\b', re.I)
+# salmon-creek chatter often says "free event/activity" or discusses "$10 pricing"
+# for programs — neither is a for-sale listing. Strong sale verbs everywhere;
+# bare "free"/"trade"/"$N" only count in the free-trade group; "free" outside it
+# must not be an event-ish noun phrase (potluck/class/workshop/...).
+SALE_STRONG = re.compile(r'for sale|iso\b|selling|give\s?away|giveaway|wtb', re.I)
+SALE_LOOSE = re.compile(r'\$\d|for sale|iso\b|selling|give\s?away|giveaway|wtb|free\b|trade\b|\bgive\b', re.I)
+EVENTISH = re.compile(r'\b(event|potluck|activity|class|workshop|program|gathering|webinar|community|parade|festival|performance|movie)\b', re.I)
+INVITEISH = re.compile(r'\b(join|sign\s?up|rsvp|drop-?in|meets|monthly|please join|welcome)\b', re.I)
+MERGE_WINDOW_MIN = 15   # consecutive messages from one sender = one multi-item giveaway
 EXPIRE_DAYS = 14
 
 def first_url(text):
@@ -47,33 +52,56 @@ for lp in logs:
     p = pathlib.Path(lp)
     if not p.exists():
         continue
-    sale_re = SALE_LOOSE if ('harmony' in lp.lower() or 'trade' in lp.lower()) else SALE_STRONG
+    is_trade = ('harmony' in lp.lower() or 'trade' in lp.lower())
+    sale_re = SALE_LOOSE if is_trade else SALE_STRONG
+    last_who, last_dt, merged_extra = None, None, 0
     for line in p.read_text(encoding='utf-8', errors='replace').splitlines():
         m = re.match(r'\[(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})\] \[([^\]]+)\] ([^:]+): (.*)', line)
         if not m:
             continue
         d, t, g, who, text = m.groups()
+        who = who.strip()
         try:
             if datetime.date.fromisoformat(d) < cutoff:
                 continue
+            dt = datetime.datetime.strptime(f'{d} {t}', '%Y-%m-%d %H:%M')
         except ValueError:
             continue
-        key = (d, who.strip(), text.strip()[:60])
+        key = (d, who, text.strip()[:60])
         if key in seen:
             continue
         seen.add(key)
-        if sale_re.search(text):
+
+        marker_sale = bool(sale_re.search(text)) or (not is_trade and re.search(r'\bfree\b', text, re.I)
+                        and not EVENTISH.search(text) and not INVITEISH.search(text))
+        trivial = text.strip() in ('[image]', '[image removed]') or len(text.strip()) < 5
+        # a claim/reply from another sender never updates last_*, so only the
+        # OFFERER's own follow-up posts fold into their open giveaway listing
+        continuation = (last_who == who and last_dt is not None
+                        and 0 <= (dt - last_dt).total_seconds() <= MERGE_WINDOW_MIN * 60
+                        and listings and listings[-1].get('who') == who)
+        if marker_sale and not trivial:
             price_m = re.search(r'\$\d+[\d,\.]*', text)
             item = strip_urls(text)[:100] or text.strip()[:100]
-            if len(item) < 5:
-                continue  # bare "ISO"/"free" with no item named isn't a publishable listing
-            listings.append({'posted': d, 'who': who.strip(),
-                             'item': item,
-                             'price': price_m.group(0) if price_m else
-                                      'Free' if re.search(r'\bfree\b', text, re.I) else '—',
-                             'url': first_url(text)})
+            if continuation:
+                merged_extra += 1
+                listings[-1]['item'] = re.sub(r' — \+\d+ more items$', '', listings[-1]['item']) \
+                                       + f' — +{merged_extra} more items'
+            else:
+                merged_extra = 0
+                listings.append({'posted': d, 'who': who,
+                                 'item': item,
+                                 'price': price_m.group(0) if price_m else
+                                          'Free' if re.search(r'\bfree\b|\bgive\b', text, re.I) else '—',
+                                 'url': first_url(text)})
+            last_who, last_dt = who, dt
+        elif continuation and not trivial:
+            merged_extra += 1
+            listings[-1]['item'] = re.sub(r' — \+\d+ more items$', '', listings[-1]['item']) \
+                                   + f' — +{merged_extra} more items'
+            last_who, last_dt = who, dt
         if KW.search(text):
-            items.append({'date': d, 'who': who.strip(), 'text': strip_urls(text)[:200], 'url': first_url(text)})
+            items.append({'date': d, 'who': who, 'text': strip_urls(text)[:200], 'url': first_url(text)})
 
 listings = listings[-12:]
 

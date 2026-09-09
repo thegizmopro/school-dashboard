@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-07T18:03:10",
+ "fetched": "2026-09-08T18:03:10",
  "days": {
   "2026-09-08": {
    "lunch": [
@@ -1503,6 +1503,35 @@
     {
      "cat": "Main Entree",
      "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-23": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
     },
     {
      "cat": "Main Entree",

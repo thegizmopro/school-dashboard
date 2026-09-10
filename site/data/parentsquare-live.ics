@@ -22,50 +22,61 @@ TZNAME:PST
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-DTSTAMP:20260909T190307Z
+DTSTAMP:20260910T010307Z
 UID:84608866@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260910T180000
 DTEND;TZID=America/Los_Angeles:20260910T220000
 CLASS:PUBLIC
+DESCRIPTION:
 SUMMARY:HUSD Board Meeting
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260909T190307Z
-UID:86474286@parentsquare.com
+DTSTAMP:20260910T010307Z
+UID:86490777@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
-DESCRIPTION:Parenting Through AdversityTurning Challenges into ResiliencyAl
- l parents naturally seek to do all...
+DESCRIPTION:\nParenting Through Adversity\n\nTurning Challenges into Resili
+ ency\n\nAll parents naturally seek to d...
 SUMMARY:Parenting through Adversity Parent Workshop Friday Morning Septembe
  r 11th 8:30AM in library
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260909T190307Z
+DTSTAMP:20260910T010307Z
+UID:86474286@parentsquare.com
+DTSTART;TZID=America/Los_Angeles:20260911T083000
+CLASS:PUBLIC
+DESCRIPTION:\nParenting Through Adversity\n\nTurning Challenges into Resili
+ ency\n\nAll parents naturally seek to d...
+SUMMARY:Parenting through Adversity Parent Workshop Friday Morning Septembe
+ r 11th 8:30AM in library
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20260910T010307Z
 UID:86474007@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
-DESCRIPTION:Parenting Through AdversityTurning Challenges into ResiliencyAl
- l parents naturally seek to do all...
+DESCRIPTION:\nParenting Through Adversity\n\nTurning Challenges into Resili
+ ency\n\nAll parents naturally seek to d...
 SUMMARY:Copy of Parenting through Adversity Parent Workshop Friday Morning 
  September 11th 8:30AM in library
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260909T190307Z
+DTSTAMP:20260910T010307Z
 UID:86473582@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
-DESCRIPTION:Parenting Through AdversityTurning Challenges into ResiliencyAl
- l parents naturally seek to do all...
+DESCRIPTION:\nParenting Through Adversity\n\nTurning Challenges into Resili
+ ency\n\nAll parents naturally seek to d...
 SUMMARY:Copy of Parenting through Adversity Parent Workshop Friday Morning 
  September 11th 8:30AM in library
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260909T190307Z
+DTSTAMP:20260910T010307Z
 UID:86390287@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
-DESCRIPTION:Parenting Through AdversityTurning Challenges into ResiliencyAl
- l parents naturally seek to do all...
+DESCRIPTION:\nParenting Through Adversity\n\nTurning Challenges into Resili
+ ency\n\nAll parents naturally seek to d...
 SUMMARY:Parenting through Adversity Parent Workshop Friday Morning Septembe
  r 11th 8:30AM in library
 END:VEVENT

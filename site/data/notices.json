@@ -1,16 +1,34 @@
-{
-  "notices": [
-    {
-      "posted": "2026-09-03",
-      "source": "parentsquare",
-      "title": "Hand In Hand Parenting Workshops starting Oct 14",
-      "text": "Five-week parenting class for Salmon Creek parents, led by parent educator Kristan Childs."
-    },
-    {
-      "posted": "2026-09-02",
-      "source": "parentsquare",
-      "title": "Parenting Through Adversity workshop — Sep 11, 8:30am, library",
-      "text": "Turning challenges into resiliency. All parents welcome."
-    }
-  ]
+﻿{
+    "notices":  [
+                    {
+                        "posted":  "2026-09-09",
+                        "source":  "parentsquare",
+                        "title":  "Save the Date! Saturday, October 3rd",
+                        "text":  "Harmony Union School District community event — posted by Lindsey Perez. Details to follow."
+                    },
+                    {
+                        "posted":  "2026-09-09",
+                        "source":  "parentsquare",
+                        "title":  "SCOE Virtual Mental Health Workshops for Families (starts Sep 10)",
+                        "text":  "Free bilingual virtual workshops on select Thursdays 4-5pm: QPR Suicide Prevention Gatekeeper Training Sep 10; Understanding and Supporting Youth with Anxiety and School Avoidance Nov 5. Register via the SCOE link in the ParentSquare post or call 707-522-3241."
+                    },
+                    {
+                        "posted":  "2026-09-09",
+                        "source":  "parentsquare",
+                        "title":  "Harmony Writers\u0027 Workshop — after-school club, starts Sep 10",
+                        "text":  "Grades 3-8, Thursdays 1:20-2:20pm at Harmony Salmon Creek. Sep 10, 17, 24; Oct 1, 8, 15, 22, 29. Free. Led by writer and Harmony parent Charles Spano — sign up at charlesspano@gmail.com."
+                    },
+                    {
+                        "posted":  "2026-09-03",
+                        "source":  "parentsquare",
+                        "title":  "Hand In Hand Parenting Workshops starting Oct 14",
+                        "text":  "Five-week parenting class for Salmon Creek parents, led by parent educator Kristan Childs."
+                    },
+                    {
+                        "posted":  "2026-09-02",
+                        "source":  "parentsquare",
+                        "title":  "Parenting Through Adversity workshop â€” Sep 11, 8:30am, library",
+                        "text":  "Turning challenges into resiliency. All parents welcome."
+                    }
+                ]
 }

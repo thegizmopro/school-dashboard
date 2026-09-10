@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-03T23:29:01",
+ "fetched": "2026-09-10T00:03:09",
  "url": "https://www.harmonyark.org/",
  "campaign": "Parent-run since 1989, shARK's ~$75K a year all stays right here: $50K in school grants, the rest as classroom wishes, community events, and appreciation for our teachers. Thank you, shARK families! 💚",
  "events": [
@@ -13,9 +13,9 @@
   {
    "date": "2026-10-03",
    "title": "Autumn Gather",
-   "time": "from 6pm",
+   "time": "6–10pm",
    "location": "Harmony Salmon Creek School",
-   "url": "https://docs.google.com/forms/d/12E4kPtgJKlld23SONsHcC23UeIZ7kEV57Vn41YVu0HA/viewform"
+   "url": null
   },
   {
    "date": "2026-10-16",
@@ -50,20 +50,6 @@
    "title": "Winter Festival",
    "time": null,
    "location": "Harmony Salmon Creek School",
-   "url": null
-  },
-  {
-   "date": "2026-08-28",
-   "title": "Welcome Back Dinner",
-   "time": "5–7pm",
-   "location": "Harmony Salmon Creek campus",
-   "url": null
-  },
-  {
-   "date": "2026-10-08",
-   "title": "Pledge forms are due",
-   "time": null,
-   "location": null,
    "url": null
   }
  ]

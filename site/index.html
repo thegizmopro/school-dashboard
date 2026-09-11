@@ -147,6 +147,14 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
 .submission .send:disabled{opacity:.6;cursor:default}
 .submission .cancel{background:none;border:none;color:var(--ink-muted);font-size:14px;cursor:pointer;font-family:Karla}
 .submission .status{font-size:13.5px;margin-top:10px;min-height:18px;color:var(--ink-soft)}
+.menu-week{max-width:560px}
+.menu-week .wk-day{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
+.menu-week .wk-day:last-child{border-bottom:none}
+.menu-week .wk-date{min-width:86px;font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);padding-top:3px}
+.menu-week .wk-meal{font-size:14.5px}
+.menu-week .wk-meal + .wk-meal{margin-top:3px}
+.sub-link{margin-top:10px;padding-top:8px;border-top:1px solid var(--line-soft);font-size:12.5px}
+.sub-link .lnk{font-weight:500}
 .footer-note{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-muted)}
 
 /* Data-driven links */
@@ -176,7 +184,7 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
 
 <div class="grid">
   <div class="section">
-    <div class="section-title">🍽️ Today's Lunch <span class="prov" id="lunch-prov"></span></div>
+    <div class="section-title">🍽️ Today's Lunch <span class="prov" id="lunch-prov"></span> <span class="lnk" id="week-link" style="cursor:pointer;font-size:13px;font-weight:500">week's menus →</span></div>
     <div class="card" id="lunch-card">Loading…</div>
     <div id="theme-callout"></div>
   </div>
@@ -236,6 +244,15 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
       </div>
       <div class="status" id="sd-status"></div>
     </form>
+  </div>
+</dialog>
+
+<dialog class="submission menu-week" id="week-dialog">
+  <div class="body">
+    <h3>🗂️ This week's menus</h3>
+    <div class="sub">Breakfast &amp; lunch for every school day</div>
+    <div id="week-body"></div>
+    <div class="actions"><button class="cancel" type="button" id="week-close">Close</button></div>
   </div>
 </dialog>
 
@@ -446,17 +463,28 @@ function renderEvents(){
         html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${link(i.title, i.url)}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div>${i.detail?`<div class="event-detail">${esc(i.detail)}</div>`:""}</div></div>`;
       }
     }
-    $("events-card").innerHTML = html || '<div class="empty-note">Nothing scheduled this week</div>';
+    html += `<div class="sub-link"><a class="lnk" href="data/all-events.ics">📅 Subscribe — all these dates in your calendar app</a></div>`;
+    $("events-card").innerHTML = html;
     countdown(yc);
   });
 }
 
+// Occidental, CA — same call the collector makes, fetched client-side so
+// "current" temp is actually current (the 4x-daily JSON snapshot used to sit
+// at the noon high for hours)
+const WX_URL = "https://api.open-meteo.com/v1/forecast?latitude=38.4053&longitude=-122.9424&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=5";
 function renderWeather(){
-  J("data/weather.json").then(w=>{
-    $("wx-glyph").textContent = WMO(w.code);
-    $("wx-temp").textContent = Math.round(w.temp) + "°";
-    if (w.daily && w.daily[0]) $("wx-hilo").textContent = `H ${Math.round(w.daily[0].hi)}° · L ${Math.round(w.daily[0].lo)}°`;
-  }).catch(()=>{});
+  const paint = (temp, code, hi, lo) => {
+    $("wx-glyph").textContent = WMO(code);
+    $("wx-temp").textContent = Math.round(temp) + "°";
+    if (hi != null) $("wx-hilo").textContent = `H ${Math.round(hi)}° · L ${Math.round(lo)}°`;
+  };
+  J("data/weather.json")
+    .then(w => paint(w.temp, w.code, w.daily && w.daily[0] && w.daily[0].hi, w.daily && w.daily[0] && w.daily[0].lo))
+    .catch(()=>{});
+  fetch(WX_URL).then(r=>r.json())
+    .then(m => paint(m.current.temperature_2m, m.current.weather_code, m.daily.temperature_2m_max[0], m.daily.temperature_2m_min[0]))
+    .catch(()=>{});
 }
 
 function renderCommunity(){
@@ -519,6 +547,45 @@ function renderNotices(){
   }).catch(()=>{ $("notices-card").innerHTML = '<div class="empty-note">No notices yet</div>'; });
 }
 
+// breakfast: LINQ's hot main (skip cereal/oatmeal-bar alternates), PDF weekly rotation as fallback
+function breakfastFor(day, menu, date){
+  const mains = (((day && day.breakfast) || []).filter(m => m.cat === "Main Entree").map(m => cleanItem(m.item))).filter(Boolean);
+  const hot = mains.find(m => !/cereal|toast crunch|oatmeal|string cheese/i.test(m));
+  if (hot || mains.length) return hot || mains[0];
+  const weekly = menu.menu && menu.menu.breakfast_weekly;
+  const name = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][date.getDay()];
+  return (weekly && weekly[name]) || null;
+}
+
+let MENU_CACHE = null;   // {menu, linq, yc} — refreshed with every render cycle
+function openWeek(){
+  if (!MENU_CACHE) return;
+  const {menu, linq, yc} = MENU_CACHE;
+  const noSchool = noSchoolMap(yc);
+  const alts = (menu.menu && menu.menu.daily_options) || [];
+  const now = new Date();
+  const dow = now.getDay();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - ((dow + 6) % 7));           // Monday of this week
+  if (dow === 0 || dow === 6) monday.setDate(monday.getDate() + 7);   // weekend → next week
+  let html = "";
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(monday); d.setDate(monday.getDate() + i);
+    const iso = isoOf(d);
+    const ns = noSchool.get(iso);
+    const label = d.toLocaleDateString("en-US", {weekday:"short", month:"short", day:"numeric"});
+    if (ns) {
+      html += `<div class="wk-day"><div class="wk-date">${label}</div><div class="wk-meal">🚫 ${esc(ns.replace(/ — No School.*/,""))}</div></div>`;
+      continue;
+    }
+    const lunch = linqMeal(linq[iso], alts) || (menu.menu && menu.menu.lunch && menu.menu.lunch[iso] ? {main: menu.menu.lunch[iso].main} : null);
+    const bk = breakfastFor(linq[iso], menu, d);
+    html += `<div class="wk-day"><div class="wk-date">${label}</div><div><div class="wk-meal">🍳 ${esc(bk || "not published")}</div><div class="wk-meal">🍽️ ${esc(lunch ? lunch.main : "not published")}</div></div></div>`;
+  }
+  $("week-body").innerHTML = html;
+  $("week-dialog").showModal();
+}
+
 function renderLunchCard(){
   Promise.all([
     J("data/menu-and-events.json").catch(()=>null),
@@ -526,7 +593,8 @@ function renderLunchCard(){
     J("data/calendar-year.json").catch(()=>null)
   ]).then(([menu, linq, yc])=>{
     if (!menu) { $("lunch-card").innerHTML = '<div class="empty-note">Menu unavailable</div>'; return; }
-    renderLunch(menu, (linq && linq.days) || {}, yc ? noSchoolMap(yc) : new Map());
+    MENU_CACHE = {menu, linq: (linq && linq.days) || {}, yc};
+    renderLunch(menu, MENU_CACHE.linq, yc ? noSchoolMap(yc) : new Map());
   });
 }
 
@@ -551,6 +619,9 @@ function openSubmit(type){
 document.querySelectorAll("[data-submit]").forEach(b => b.addEventListener("click", () => openSubmit(b.dataset.submit)));
 $("sd-cancel").addEventListener("click", () => $("submit-dialog").close());
 $("submit-dialog").addEventListener("click", e => { if (e.target === $("submit-dialog")) $("submit-dialog").close(); });
+$("week-link").addEventListener("click", openWeek);
+$("week-close").addEventListener("click", () => $("week-dialog").close());
+$("week-dialog").addEventListener("click", e => { if (e.target === $("week-dialog")) $("week-dialog").close(); });
 $("submit-form").addEventListener("submit", async e => {
   e.preventDefault();
   if ($("sd-hp").value) return;   // honeypot — quietly drop bots

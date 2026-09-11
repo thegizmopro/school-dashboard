@@ -191,11 +191,110 @@ def fetch_shark():
     write_json(DATA / "shark.json", out)
     return f"shark: {len(events)} events (dated: {sum(1 for e in events if e.get('date'))})"
 
+# ---------------- Merged calendar feed ----------------
+# one subscribable .ics: school-year dates + shARK events + ParentSquare feed
+# + dated notices. Regenerated every run; UIDs are stable so subscribers see
+# updates instead of duplicates.
+def _ics_escape(s):
+    return (s.replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,")
+             .replace("\r", "").replace("\n", "\\n"))
+
+def _fold(line):
+    # RFC5545: lines wrap at 75 octets, continuations start with a space
+    b = line.encode("utf-8")
+    parts = []
+    while len(b) > 73:
+        cut = 73
+        while cut > 0 and (b[cut] & 0xC0) == 0x80:
+            cut -= 1
+        parts.append(b[:cut].decode("utf-8"))
+        b = b[cut:]
+    parts.append(b.decode("utf-8"))
+    return "\r\n ".join(parts)
+
+def write_calendar_ics():
+    now = datetime.datetime.now().strftime("%Y%m%dT%H%M%SZ")
+    evs = {}
+    def add(uid, date, summary, time=None):
+        evs[uid] = (date, summary, time)
+
+    try:
+        yc = json.loads((DATA / "calendar-year.json").read_text(encoding="utf-8"))
+        for d in yc.get("keyDates", []):
+            if d.get("date"):
+                add(f"husd-{d['date']}-{d.get('kind','x')}", d["date"], d["label"])
+    except Exception:
+        pass
+
+    try:
+        sk = json.loads((DATA / "shark.json").read_text(encoding="utf-8"))
+        for e in sk.get("events", []):
+            if e.get("date") and e.get("title"):
+                slug = re.sub(r"[^a-z0-9]+", "-", e["title"].lower())[:30]
+                add(f"shark-{e['date']}-{slug}", e["date"], f"shARK: {e['title']}")
+    except Exception:
+        pass
+
+    # notices that name a date (e.g. "workshop — Sep 11") become all-day events
+    months = "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec"
+    try:
+        nz = json.loads((DATA / "notices.json").read_text(encoding="utf-8"))
+        for n in nz.get("notices", []):
+            blob = f"{n.get('title','')} {n.get('text','')}"
+            m = re.search(rf"\b({months})[a-z]*\.?\s+(\d{{1,2}})\b", blob)
+            if not m:
+                continue
+            try:
+                y = datetime.date.today().year
+                dt = datetime.datetime.strptime(f"{m.group(1)} {m.group(2)} {y}", "%b %d %Y").date()
+                if dt < datetime.date.today():
+                    dt = dt.replace(year=y + 1)   # "May 5" mentioned in Sept -> next May
+            except ValueError:
+                continue
+            slug = re.sub(r"[^a-z0-9]+", "-", (n.get("title") or "notice").lower())[:40]
+            add(f"notice-{slug}", dt.isoformat(), n.get("title", "Notice"))
+    except Exception:
+        pass
+
+    # ParentSquare feed (timed events keep their clock time, floating local)
+    try:
+        flat = re.sub(r"\r?\n[ \t]", "", (DATA / "parentsquare-live.ics").read_text(encoding="utf-8", errors="replace"))
+        for b in flat.split("BEGIN:VEVENT")[1:]:
+            dt = re.search(r"DTSTART[^:\n]*:(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2}))?", b)
+            sm = re.search(r"SUMMARY:([^\r\n]+)", b)
+            if not dt or not sm:
+                continue
+            title = re.sub(r"^Copy of ", "", sm.group(1).strip())
+            slug = re.sub(r"[^a-z0-9]+", "-", title.lower())[:40]
+            add(f"ps-{dt[1]}-{dt[2]}-{dt[3]}-{slug}", f"{dt[1]}-{dt[2]}-{dt[3]}", title,
+                time=f"{dt[4]}{dt[5]}" if dt[4] else None)
+    except Exception:
+        pass
+
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0",
+             "PRODID:-//Harmony Today//Family Dashboard//EN",
+             "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+             "X-WR-CALNAME:Harmony Today",
+             f"DTSTAMP:{now}"]
+    for uid, (date, summary, time) in sorted(evs.items(), key=lambda kv: (kv[1][0], kv[1][2] or "")):
+        lines += ["BEGIN:VEVENT",
+                  f"UID:{uid}@harmony-today",
+                  f"DTSTAMP:{now}",
+                  f"DTSTART;VALUE=DATE:{date.replace('-', '')}" if not time
+                  else f"DTSTART:{date.replace('-', '')}T{time}00",
+                  f"SUMMARY:{_ics_escape(summary)}",
+                  "END:VEVENT"]
+    lines.append("END:VCALENDAR")
+    with open(DATA / "all-events.ics", "w", encoding="utf-8", newline="") as f:   # newline="": no CRLF translation on Windows
+        f.write("\r\n".join(_fold(l) for l in lines) + "\r\n")
+    return f"calendar ics: {len(evs)} events"
+
 # ---------------- Runner ----------------
 def main():
     results = []
     results.append(scan_whatsapp())
     results.append(fetch_ical())
+    results.append(write_calendar_ics())
     results.append(fetch_weather())
     if stale("menu-linq.json", 20):
         results.append(fetch_linq())

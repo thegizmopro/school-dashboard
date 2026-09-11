@@ -22,7 +22,7 @@ TZNAME:PST
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-DTSTAMP:20260911T070307Z
+DTSTAMP:20260911T130307Z
 UID:86490777@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
@@ -32,7 +32,7 @@ SUMMARY:Parenting through Adversity Parent Workshop Friday Morning Septembe
  r 11th 8:30AM in library
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260911T070307Z
+DTSTAMP:20260911T130307Z
 UID:86474286@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
@@ -42,7 +42,7 @@ SUMMARY:Parenting through Adversity Parent Workshop Friday Morning Septembe
  r 11th 8:30AM in library
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260911T070307Z
+DTSTAMP:20260911T130307Z
 UID:86474007@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
@@ -52,7 +52,7 @@ SUMMARY:Copy of Parenting through Adversity Parent Workshop Friday Morning
  September 11th 8:30AM in library
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260911T070307Z
+DTSTAMP:20260911T130307Z
 UID:86473582@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC
@@ -62,7 +62,7 @@ SUMMARY:Copy of Parenting through Adversity Parent Workshop Friday Morning
  September 11th 8:30AM in library
 END:VEVENT
 BEGIN:VEVENT
-DTSTAMP:20260911T070307Z
+DTSTAMP:20260911T130307Z
 UID:86390287@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20260911T083000
 CLASS:PUBLIC

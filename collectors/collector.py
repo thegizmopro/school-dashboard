@@ -212,17 +212,51 @@ def _fold(line):
     parts.append(b.decode("utf-8"))
     return "\r\n ".join(parts)
 
+def _canon(t):
+    """Canonical event-family token so the same event under different names
+    across sources dedupes ("Harvest Gather TBD" == "Autumn Gather")."""
+    s = t.lower()
+    if "break" in s and "winter" in s: return "winter break"
+    if "break" in s and "thanksgiving" in s: return "thanksgiving break"
+    if "break" in s and "spring" in s: return "spring break"
+    if "board meeting" in s: return "board meeting"
+    if re.search(r"no school|staff development|in-?service", s): return "no-school-day"
+    if "gather" in s: return "gather"
+    if "festiv" in s and re.search(r"autumn|fall|harvest", s): return "fall festival"
+    if "festiv" in s and "spring" in s: return "spring festival"
+    if re.search(r"move\s*-?\s*a\s*-?\s*thon", s): return "move-a-thon"
+    if "pancake" in s: return "pancake breakfast"
+    if "tree lighting" in s: return "tree lighting"
+    if "winter" in s and re.search(r"lantern|concert|festival|walk", s): return "winter festival"
+    return s
+
 def write_calendar_ics():
     now = datetime.datetime.now().strftime("%Y%m%dT%H%M%SZ")
     evs = {}
+    seen = set()          # (date, canon) — first source wins: yc -> shARK -> notices -> PS -> district
+    ns_dates = set()      # every date the structural calendar says has no school
+
     def add(uid, date, summary, time=None, url=None):
+        key = (date, _canon(summary))
+        if key in seen:
+            return
+        seen.add(key)
         evs[uid] = (date, summary, time, url)
 
     try:
         yc = json.loads((DATA / "calendar-year.json").read_text(encoding="utf-8"))
         for d in yc.get("keyDates", []):
-            if d.get("date"):
-                add(f"husd-{d['date']}-{d.get('kind','x')}", d["date"], d["label"])
+            if not d.get("date"):
+                continue
+            add(f"husd-{d['date']}-{d.get('kind','x')}", d["date"], d["label"])
+            if d.get("kind") in ("holiday", "no_school"):
+                ns_dates.add(d["date"])
+            if d.get("kind") == "break" and isinstance(d.get("range"), list):
+                start = datetime.date.fromisoformat(d["range"][0])
+                end = datetime.date.fromisoformat(d["range"][1])
+                while start <= end:
+                    ns_dates.add(start.isoformat())
+                    start += datetime.timedelta(days=1)
     except Exception:
         pass
 
@@ -231,7 +265,7 @@ def write_calendar_ics():
         for e in sk.get("events", []):
             if e.get("date") and e.get("title"):
                 slug = re.sub(r"[^a-z0-9]+", "-", e["title"].lower())[:30]
-                add(f"shark-{e['date']}-{slug}", e["date"], f"shARK: {e['title']}")
+                add(f"shark-{e['date']}-{slug}", e["date"], e["title"])
     except Exception:
         pass
 
@@ -279,6 +313,26 @@ def write_calendar_ics():
     except Exception:
         pass
 
+    # district master calendar — full-year events; structural-calendar duplicates
+    # (per-day no-school/break entries) are suppressed since yc already covers them
+    try:
+        flatd = re.sub(r"\r?\n[ \t]", "", (DATA / "district-calendar.ics").read_text(encoding="utf-8", errors="replace"))
+        for b in flatd.split("BEGIN:VEVENT")[1:]:
+            dt = re.search(r"DTSTART[^:\n]*:(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2}))?", b)
+            sm = re.search(r"SUMMARY:([^\r\n]*)", b)
+            if not dt or not sm:
+                continue
+            date = f"{dt[1]}-{dt[2]}-{dt[3]}"
+            title = sm.group(1).strip()
+            if _canon(title) in ("no-school-day", "winter break", "thanksgiving break", "spring break") and date in ns_dates:
+                continue
+            slug = re.sub(r"[^a-z0-9]+", "-", title.lower())[:40]
+            url = board_url if re.search(r"board meeting", title, re.I) else None
+            add(f"district-{date}-{slug}", date, title,
+                time=f"{dt[4]}{dt[5]}" if dt[4] else None, url=url)
+    except Exception:
+        pass
+
     lines = ["BEGIN:VCALENDAR", "VERSION:2.0",
              "PRODID:-//Harmony Today//Family Dashboard//EN",
              "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
@@ -318,11 +372,24 @@ def fetch_board():
                                      "meeting_url": meeting_url, "listing_url": SIMBLI_LISTING})
     return f"board: {'meeting link ok' if meeting_url else 'listing only (homepage link not found)'}"
 
+# ---------------- District master calendar ----------------
+# the district's own full-year feed (80+ events): the authoritative EVENTS layer.
+# calendar-year.json stays the structural layer (breaks/kinds/ranges); shARK keeps
+# its curated linked events; ParentSquare adds near-term items this feed misses.
+DISTRICT_CAL = "https://harmonyusd.org/sndreq/generateCalendarICS.php?calendar_id=136424"
+
+def fetch_district_cal():
+    data = fetch(DISTRICT_CAL).decode("utf-8", errors="replace")
+    (DATA / "district-calendar.ics").write_text(data, encoding="utf-8")
+    n = data.count("BEGIN:VEVENT")
+    return f"district cal: {n} events"
+
 # ---------------- Runner ----------------
 def main():
     results = []
     results.append(scan_whatsapp())
     results.append(fetch_ical())
+    results.append(fetch_district_cal())
     results.append(fetch_board())
     results.append(write_calendar_ics())
     results.append(fetch_weather())

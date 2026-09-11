@@ -360,6 +360,25 @@ function linqMeal(day, dailyOptions){
   return {main, sides};
 }
 
+// canonical event-family token: the same event arrives under different names
+// across sources ("Harvest Gather TBD" vs "Autumn Gather") — dedupe on this
+const canonTitle = t => {
+  const s = String(t).toLowerCase();
+  if (/break/.test(s) && /winter/.test(s)) return "winter break";
+  if (/break/.test(s) && /thanksgiving/.test(s)) return "thanksgiving break";
+  if (/break/.test(s) && /spring/.test(s)) return "spring break";
+  if (/board meeting/.test(s)) return "board meeting";
+  if (/no school|staff development|in-?service/.test(s)) return "no-school-day";
+  if (/gather/.test(s)) return "gather";
+  if (/festiv/.test(s) && /autumn|fall|harvest/.test(s)) return "fall festival";
+  if (/festiv/.test(s) && /spring/.test(s)) return "spring festival";
+  if (/move\s*-?\s*a\s*-?\s*thon/.test(s)) return "move-a-thon";
+  if (/pancake/.test(s)) return "pancake breakfast";
+  if (/tree lighting/.test(s)) return "tree lighting";
+  if (/winter/.test(s) && /lantern|concert|festival|walk/.test(s)) return "winter festival";
+  return s;
+};
+
 // next actual school day after `from` — skips weekends AND calendar no-school days
 function nextSchoolDay(from, noSchool){
   const d = new Date(from);
@@ -432,10 +451,12 @@ function renderEvents(){
     T("data/parentsquare-live.ics").catch(()=>null),
     J("data/calendar-year.json").catch(()=>null),
     J("data/shark.json").catch(()=>null),
-    J("data/board.json").catch(()=>null)
-  ]).then(([icsText, yc, sk, bd])=>{
+    J("data/board.json").catch(()=>null),
+    T("data/district-calendar.ics").catch(()=>null)
+  ]).then(([icsText, yc, sk, bd, districtText])=>{
     if (!yc) { $("events-card").innerHTML = '<div class="empty-note">Calendar unavailable</div>'; return; }
     const boardUrl = bd && (bd.meeting_url || bd.listing_url);
+    const nsDates = noSchoolMap(yc);   // structural no-school dates (Map<iso,label>)
     const items = [];
 
     // shARK first so its linked/detail rows win any dedupe tie with a bare ParentSquare twin
@@ -465,11 +486,30 @@ function renderEvents(){
 
     for (const d of (yc.keyDates||[])) items.push({date:fmt(d.date), title:d.label, kind:d.kind});
 
+    // district master calendar — full-year events; per-day no-school/break entries
+    // already covered by the structural calendar are skipped
+    if (districtText) {
+      const flatD = districtText.replace(/\r?\n[ \t]/g, "");
+      for (const b of flatD.split("BEGIN:VEVENT").slice(1)) {
+        const dt = b.match(/DTSTART[^:\n]*:(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2}))?/);
+        const sum = (b.match(/SUMMARY:([^\r\n]+)/)||[])[1];
+        if (!dt || !sum) continue;
+        const iso = `${dt[1]}-${dt[2]}-${dt[3]}`;
+        const title = sum.trim();
+        const c = canonTitle(title);
+        if ((c === "no-school-day" || c.endsWith(" break")) && nsDates.has(iso)) continue;
+        const d = dt[4] ? new Date(+dt[1], +dt[2]-1, +dt[3], +dt[4], +dt[5]) : new Date(+dt[1], +dt[2]-1, +dt[3]);
+        items.push({date:d, title, kind:"event",
+                    url:boardUrl && /board meeting/i.test(title) ? boardUrl : null});
+      }
+    }
+
     items.sort((a,b)=>a.date-b.date);
-    // dedupe: same date + normalized title = one row (ParentSquare "Copy of" twins, shARK double-listing)
+    // dedupe: same date + CANONICAL title family = one row (cross-source twins
+    // under different names, ParentSquare "Copy of" duplicates)
     const seen = new Set();
     const deduped = items.filter(i => {
-      const key = i.date.toDateString() + "|" + i.title.toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,40);
+      const key = i.date.toDateString() + "|" + canonTitle(i.title).replace(/[^a-z0-9]/g,"").slice(0,40);
       if (seen.has(key)) return false;
       seen.add(key); return true;
     });

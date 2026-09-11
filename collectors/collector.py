@@ -215,8 +215,8 @@ def _fold(line):
 def write_calendar_ics():
     now = datetime.datetime.now().strftime("%Y%m%dT%H%M%SZ")
     evs = {}
-    def add(uid, date, summary, time=None):
-        evs[uid] = (date, summary, time)
+    def add(uid, date, summary, time=None, url=None):
+        evs[uid] = (date, summary, time, url)
 
     try:
         yc = json.loads((DATA / "calendar-year.json").read_text(encoding="utf-8"))
@@ -256,7 +256,14 @@ def write_calendar_ics():
     except Exception:
         pass
 
-    # ParentSquare feed (timed events keep their clock time, floating local)
+    # ParentSquare feed (timed events keep their clock time, floating local);
+    # board meetings carry the live meeting link so calendar subscribers get it too
+    board_url = None
+    try:
+        bd = json.loads((DATA / "board.json").read_text(encoding="utf-8"))
+        board_url = bd.get("meeting_url") or bd.get("listing_url")
+    except Exception:
+        pass
     try:
         flat = re.sub(r"\r?\n[ \t]", "", (DATA / "parentsquare-live.ics").read_text(encoding="utf-8", errors="replace"))
         for b in flat.split("BEGIN:VEVENT")[1:]:
@@ -266,8 +273,9 @@ def write_calendar_ics():
                 continue
             title = re.sub(r"^Copy of ", "", sm.group(1).strip())
             slug = re.sub(r"[^a-z0-9]+", "-", title.lower())[:40]
+            url = board_url if re.search(r"board meeting", title, re.I) else None
             add(f"ps-{dt[1]}-{dt[2]}-{dt[3]}-{slug}", f"{dt[1]}-{dt[2]}-{dt[3]}", title,
-                time=f"{dt[4]}{dt[5]}" if dt[4] else None)
+                time=f"{dt[4]}{dt[5]}" if dt[4] else None, url=url)
     except Exception:
         pass
 
@@ -276,24 +284,46 @@ def write_calendar_ics():
              "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
              "X-WR-CALNAME:Harmony Today",
              f"DTSTAMP:{now}"]
-    for uid, (date, summary, time) in sorted(evs.items(), key=lambda kv: (kv[1][0], kv[1][2] or "")):
+    for uid, (date, summary, time, url) in sorted(evs.items(), key=lambda kv: (kv[1][0], kv[1][2] or "")):
         lines += ["BEGIN:VEVENT",
                   f"UID:{uid}@harmony-today",
                   f"DTSTAMP:{now}",
                   f"DTSTART;VALUE=DATE:{date.replace('-', '')}" if not time
                   else f"DTSTART:{date.replace('-', '')}T{time}00",
-                  f"SUMMARY:{_ics_escape(summary)}",
-                  "END:VEVENT"]
+                  f"SUMMARY:{_ics_escape(summary)}"]
+        if url:
+            lines.append(f"URL:{_ics_escape(url)}")
+        lines.append("END:VEVENT")
     lines.append("END:VCALENDAR")
     with open(DATA / "all-events.ics", "w", encoding="utf-8", newline="") as f:   # newline="": no CRLF translation on Windows
         f.write("\r\n".join(_fold(l) for l in lines) + "\r\n")
     return f"calendar ics: {len(evs)} events"
+
+# ---------------- Board meetings ----------------
+# the district homepage carries a standing "Board Meeting Link" (updated per
+# meeting) — scrape it so dashboard rows deep-link into the live meeting,
+# with the Simbli meeting listing as fallback/agenda archive.
+SIMBLI_LISTING = "https://simbli.eboardsolutions.com/SB_Meetings/SB_MeetingListing.aspx?S=36030644"
+
+def fetch_board():
+    meeting_url = None
+    try:
+        raw = fetch("https://www.harmonyusd.org/", timeout=20).decode("utf-8", errors="replace")
+        m = re.search(r'Board Meeting Link:.*?<a[^>]+href="(https?://[^"]+)"', raw, re.I | re.S)
+        if m:
+            meeting_url = m.group(1)
+    except Exception:
+        pass
+    write_json(DATA / "board.json", {"fetched": datetime.datetime.now().isoformat(timespec="seconds"),
+                                     "meeting_url": meeting_url, "listing_url": SIMBLI_LISTING})
+    return f"board: {'meeting link ok' if meeting_url else 'listing only (homepage link not found)'}"
 
 # ---------------- Runner ----------------
 def main():
     results = []
     results.append(scan_whatsapp())
     results.append(fetch_ical())
+    results.append(fetch_board())
     results.append(write_calendar_ics())
     results.append(fetch_weather())
     if stale("menu-linq.json", 20):

@@ -431,9 +431,11 @@ function renderEvents(){
   Promise.all([
     T("data/parentsquare-live.ics").catch(()=>null),
     J("data/calendar-year.json").catch(()=>null),
-    J("data/shark.json").catch(()=>null)
-  ]).then(([icsText, yc, sk])=>{
+    J("data/shark.json").catch(()=>null),
+    J("data/board.json").catch(()=>null)
+  ]).then(([icsText, yc, sk, bd])=>{
     if (!yc) { $("events-card").innerHTML = '<div class="empty-note">Calendar unavailable</div>'; return; }
+    const boardUrl = bd && (bd.meeting_url || bd.listing_url);
     const items = [];
 
     // shARK first so its linked/detail rows win any dedupe tie with a bare ParentSquare twin
@@ -454,8 +456,10 @@ function renderEvents(){
                         : new Date(+dt[1], +dt[2]-1, +dt[3]);   // TZID times read as local (family is in-district)
         const urlProp = (b.match(/^URL:([^\r\n]+)/m)||[])[1];
         const desc = (b.match(/DESCRIPTION:([^\r\n]+)/)||[])[1];
-        items.push({date:d, title:sum.trim().replace(/^Copy of /,""), src:"ParentSquare",
-                    url:urlProp || (desc && (desc.match(/https?:\/\/[^\s,]+/)||[])[0])});
+        const title = sum.trim().replace(/^Copy of /,"");
+        items.push({date:d, title, src:"ParentSquare",
+                    url:urlProp || (boardUrl && /board meeting/i.test(title) ? boardUrl : null)
+                        || (desc && (desc.match(/https?:\/\/[^\s,]+/)||[])[0])});
       }
     }
 

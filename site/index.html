@@ -517,9 +517,12 @@ function renderEvents(){
     const todayItems = deduped.filter(i=>i.date.toDateString()===new Date().toDateString());
     const week = deduped.filter(i=>i.date>new Date()).slice(0,7);
     const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};
+    // timed events (constructed with hours) show a small time line; all-day ones (midnight) don't
+    const timeOf = d => (d.getHours() || d.getMinutes()) ? d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}).toLowerCase() : null;
     let html = "";
     if (todayItems.length) {
-      html += todayItems.map(i=>`<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${link(i.title, i.url)}</div>${i.detail?`<div class="event-detail">${esc(i.detail)}</div>`:""}</div></div>`).join("");
+      html += todayItems.map(i=>{ const det = i.detail || timeOf(i.date);
+        return `<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${link(i.title, i.url)}</div>${det?`<div class="event-detail">${esc(det)}</div>`:""}</div></div>`; }).join("");
     } else {
       html += `<div class="event-row"><span style="font-size:20px">🏫</span><div><div class="event-title">Regular school day</div><div class="event-detail">No special events today</div></div></div>`;
     }
@@ -530,7 +533,8 @@ function renderEvents(){
       if (i.kind === "no_school" || i.kind === "holiday") {
         html += `<div class="no-school-row">🚫 ${i.date.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})} — ${esc(i.title.replace(/ — No School.*/,""))}</div>`;
       } else {
-        html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${link(i.title, i.url)}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div>${i.detail?`<div class="event-detail">${esc(i.detail)}</div>`:""}</div></div>`;
+        const det = i.detail || timeOf(i.date);
+        html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${link(i.title, i.url)}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div>${det?`<div class="event-detail">${esc(det)}</div>`:""}</div></div>`;
       }
     }
     html += `<div class="sub-link"><a class="lnk" href="data/all-events.ics">📅 Subscribe — all these dates in your calendar app</a></div>`;

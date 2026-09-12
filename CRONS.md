@@ -46,7 +46,8 @@ collector cron → JSON updates → git add data/ + commit + push (origin/main) 
 
 ## Cron 2: School Dashboard Digest (created 2026-09-04; upgraded to agent-written prose 2026-09-12)
 
-**OpenClaw automation id:** `325717d2` · **Schedule:** `45 6 * * *` America/Los_Angeles (daily 6:45am — after the 6:03 collector scan, before school)
+**OpenClaw automation id:** `325717d2` · **Schedule:** `0 7 * * *` America/Los_Angeles (daily 7:00am — after the 6:03 collector scan, before school). Has run daily at 7:00 all along; the earlier `45 6 * * *` in this doc was a proposed target, never a change in the live automation.
+**Automation sandbox:** toolsAllow is read + exec only — a confused model run cannot wander.
 
 **This is an AGENT cron** (like the collector): the model reads the morning's WhatsApp highlights and writes the prose. Deterministic parts (listing merge, expiry, dedupe) stay in `gen_digest.py` — the model only produces the prose sentence(s).
 
@@ -82,7 +83,7 @@ Safety rails (in code, not trust):
 
 | Job | Schedule | Role |
 |---|---|---|
-| `School Dashboard Digest` (id `325717d2`) | Daily 6:45am | agent-written prose + listing merge via `gen_digest.py --write` (see spec above — **stopped running ~Sep 9; recreate/verify against this spec**) |
+| `School Dashboard Digest` (id `325717d2`) | Daily 7:00am | agent-written prose + listing merge via `gen_digest.py --write` (see spec above) |
 | Grants check (Daisy Bakery — separate but related) | Monthly, 1st @ 9am | verifies grant deadlines, emails kenbradbury@gmail.com |
 
 ## Change-history note for the dev

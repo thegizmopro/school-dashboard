@@ -26,7 +26,7 @@ logs = [
     r'C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-salmon-creek.md',
     r'C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-harmony-sc-free-trade-sell.md'
 ]
-KW = re.compile(r'no school|reminder|due|early release|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancel|heads up|alert|workshop|pizza|menu', re.I)
+KW = re.compile(r'no school|reminder|due|early release|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancel|heads up|alert|workshop|pizza|menu|tickets?|last weekend|demonstration|open to|invited|season', re.I)
 # salmon-creek chatter often says "free event/activity" or discusses "$10 pricing"
 # for programs — neither is a for-sale listing. Strong sale verbs everywhere;
 # bare "free"/"trade"/"$N" only count in the free-trade group; "free" outside it

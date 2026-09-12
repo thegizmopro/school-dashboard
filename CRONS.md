@@ -44,33 +44,45 @@ collector cron → JSON updates → git add data/ + commit + push (origin/main) 
 - **GitHub Pages is FROZEN** as of commit `c3a023c` (2026-09-03): the dual-deploy workflow `.github/workflows/deploy-pages.yml` was deliberately removed — Vercel is the single target. `https://thegizmopro.github.io/school-dashboard/` still serves the last Pages snapshot and will NOT update. If anyone bookmarked it, either share the Vercel link or re-add the workflow.
 - Privacy: raw WhatsApp feed is gitignored (`data/` is local-only); only derived/curated JSON deploys.
 
-## Cron 2: School Dashboard Digest (created 2026-09-04; schedule changed to daily 2026-09-06)
+## Cron 2: School Dashboard Digest (created 2026-09-04; upgraded to agent-written prose 2026-09-12)
 
-**OpenClaw automation id:** `325717d2` · **Schedule:** `0 7 * * *` America/Los_Angeles (daily 7am)
+**OpenClaw automation id:** `325717d2` · **Schedule:** `45 6 * * *` America/Los_Angeles (daily 6:45am — after the 6:03 collector scan, before school)
 
-Two clocks, one cron: the daily run refreshes LISTINGS only (merge + 14-day expiry — it never touches prose). Under the old Tue/Fri schedule, weekend buy/sell traffic waited until Tuesday; worst-case listing staleness is now 1 day. The PROSE stays on an agent/human writing rhythm of 1–2×/week — the cron never passes prose text.
-**What it runs:**
+**This is an AGENT cron** (like the collector): the model reads the morning's WhatsApp highlights and writes the prose. Deterministic parts (listing merge, expiry, dedupe) stay in `gen_digest.py` — the model only produces the prose sentence(s).
+
+**Prompt for the automation:**
 
 ```
-cd C:\dev\school-dashboard
-python collectors\gen_digest.py --write
-cd C:\dev\school-dashboard\site
-git add data/ && git commit -m "digest <date time>" && git push
+Daily community digest for the Harmony dashboard:
+1. Read C:\dev\school-dashboard\data\community-items.json — notable WhatsApp
+   items from the scans (each has date, who, text, and url where present).
+2. Write 1–3 short, plain sentences for families about what's new. Rules:
+   only facts found in the items; include at most 2 links, formatted as
+   <a href="..." target="_blank" rel="noopener">label</a>; friendly tone;
+   no for-sale minutiae (listings render separately below the prose).
+3. If nothing in the items is newer than the 'generated' timestamp in
+   C:\dev\school-dashboard\site\data\community-digest.json, run WITHOUT prose
+   (yesterday's prose is preserved):
+     python collectors\gen_digest.py --write
+   Otherwise:
+     python collectors\gen_digest.py --write "<new prose>"
+4. cd C:\dev\school-dashboard\site
+   git add data/ && git commit -m "digest <date time>" && git push
 ```
 
 **Model/failure behavior:** same as the collector cron (error reply on failure, silent on success).
 
-Rules that make this safe unattended:
-- `--write` MERGES listings: curated entries are kept, newly detected ones added, entries age out 14 days after posting. It never replaces the list.
-- **Never pass prose text in the cron.** Digest prose changes only in an interactive agent/human session (`python collectors\gen_digest.py --write "new prose"`) or by hand-editing the JSON.
-- If the merge changes nothing, `git commit` fails with "nothing to commit" — treat that as success (no-op), not an error. (In practice `--write` always bumps the `generated` timestamp, so expect a small commit every run; that's by design, not churn.)
-- Extractor limits: it only catches messages with a price or explicit for-sale/ISO/giveaway markers. Keyword-less listings ("3T rain suit, make me an offer") are caught by the agent during prose-writing sessions, and the merge keeps them safe from overwrite.
+Safety rails (in code, not trust):
+- `--write` MERGES listings: curated entries survive, entries age out after 14 days, never replaced.
+- Empty/whitespace or >600-char prose passed by the model is IGNORED — yesterday's prose is kept.
+- Listings still refresh on a no-prose run; "nothing to commit" = success (silent).
+- If the model writes something off, the next human/agent pass overwrites it — nothing is lost.
 
 ## Other scheduled jobs that touch this project
 
 | Job | Schedule | Role |
 |---|---|---|
-| `School Dashboard Digest` (id `325717d2`, live since 2026-09-04) | Daily 7am | refreshes listings in `site/data/community-digest.json` via `gen_digest.py --write` (merge semantics; prose untouched, stays 1–2×/week agent-written) |
+| `School Dashboard Digest` (id `325717d2`) | Daily 6:45am | agent-written prose + listing merge via `gen_digest.py --write` (see spec above — **stopped running ~Sep 9; recreate/verify against this spec**) |
 | Grants check (Daisy Bakery — separate but related) | Monthly, 1st @ 9am | verifies grant deadlines, emails kenbradbury@gmail.com |
 
 ## Change-history note for the dev

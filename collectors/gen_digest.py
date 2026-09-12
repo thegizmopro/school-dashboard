@@ -108,6 +108,11 @@ listings = listings[-12:]
 args = sys.argv[1:]
 write = '--write' in args
 prose_arg = next((a for a in args if a != '--write'), None)
+# unattended-agent guard: empty, whitespace, or runaway prose preserves yesterday's
+# digest instead of blanking/trashing the card
+if prose_arg is not None and (not prose_arg.strip() or len(prose_arg) > 600):
+    print(f'ignoring {"empty" if not prose_arg.strip() else "over-long"} prose arg — preserving existing')
+    prose_arg = None
 
 existing = {}
 if SITE_DIGEST.exists():

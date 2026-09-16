@@ -3,7 +3,7 @@
 The digest PROSE is agent-written and the listings may be agent-curated — this
 script never destroys either. It rescans the WhatsApp logs and MERGES what it
 finds: curated entries stay, newly detected listings are added, everything ages
-out 14 days after its post date. (The regex only catches price/keyword posts;
+out 5 days after its post date. (The regex only catches price/keyword posts;
 listings a human spots by reading the logs are safe from overwrite.)
 
 Usage:
@@ -36,7 +36,7 @@ SALE_LOOSE = re.compile(r'\$\d|for sale|iso\b|selling|give\s?away|giveaway|wtb|f
 EVENTISH = re.compile(r'\b(event|potluck|activity|class|workshop|program|gathering|webinar|community|parade|festival|performance|movie)\b', re.I)
 INVITEISH = re.compile(r'\b(join|sign\s?up|rsvp|drop-?in|meets|monthly|please join|welcome)\b', re.I)
 MERGE_WINDOW_MIN = 15   # consecutive messages from one sender = one multi-item giveaway
-EXPIRE_DAYS = 14
+EXPIRE_DAYS = 5
 
 def first_url(text):
     m = re.search(r'https?://\S+', text or '')

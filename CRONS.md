@@ -74,7 +74,7 @@ Daily community digest for the Harmony dashboard:
 **Model/failure behavior:** same as the collector cron (error reply on failure, silent on success).
 
 Safety rails (in code, not trust):
-- `--write` MERGES listings: curated entries survive, entries age out after 14 days, never replaced.
+- `--write` MERGES listings: curated entries survive, entries age out after 5 days, never replaced.
 - Empty/whitespace or >600-char prose passed by the model is IGNORED — yesterday's prose is kept.
 - Listings still refresh on a no-prose run; "nothing to commit" = success (silent).
 - If the model writes something off, the next human/agent pass overwrites it — nothing is lost.
@@ -91,7 +91,7 @@ Safety rails (in code, not trust):
 Commit `c3a023c` (2026-09-03, "review fixes") substantially rewrote the collector:
 - weather moved to every-run; LINQ/shARK switched to staleness-based refresh
 - WhatsApp feed made local-only (privacy)
-- `gen_digest.py`: dry-run default, `--write` to publish, 14-day listing expiry, dedupe, URL extraction
+- `gen_digest.py`: dry-run default, `--write` to publish, 5-day listing expiry, dedupe, URL extraction
 - ICS unfold + all-day support + URL capture; HTML-escaping of collector-sourced strings
 - dropped the dual GitHub Pages deploy workflow — Vercel is the only deploy target; the Pages URL is frozen at the pre-`c3a023c` snapshot
 - removed stray `data/system.sav`, added `.gitignore`

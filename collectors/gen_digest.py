@@ -35,6 +35,12 @@ SALE_STRONG = re.compile(r'for sale|iso\b|selling|give\s?away|giveaway|wtb', re.
 SALE_LOOSE = re.compile(r'\$\d|for sale|iso\b|selling|give\s?away|giveaway|wtb|free\b|trade\b|\bgive\b', re.I)
 EVENTISH = re.compile(r'\b(event|potluck|activity|class|workshop|program|gathering|webinar|community|parade|festival|performance|movie)\b', re.I)
 INVITEISH = re.compile(r'\b(join|sign\s?up|rsvp|drop-?in|meets|monthly|please join|welcome)\b', re.I)
+# trade group: an OFFER is the default — filter out claims/logistics/replies instead
+CLAIMISH = re.compile(r"^((i|we)[\u2019']?ll\b|i[\u2019']?d (love|take)|i would like|dibs|claimed|taken|mine\b|no[ .!]|maybe|yes please|thanks?\b|sold\b|i could use|we could use|i just grabbed|still available|is this|are these|perfect|interested|that|ok|sounds|awesome|cool|great)", re.I)
+ISO_Q = re.compile(r"\b(have|has|selling|sell|want|use for|give|giving|looking for|need)\b", re.I)
+# non-trade "free" only counts with an offer trigger ("anyone want a free twin bed" yes,
+# "complete the free and reduced lunch application" no)
+FREE_TRIGGER = re.compile(r"\b(anyone|want|take|offer|pick ?up|available)\b", re.I)
 MERGE_WINDOW_MIN = 15   # consecutive messages from one sender = one multi-item giveaway
 EXPIRE_DAYS = 5
 
@@ -72,14 +78,21 @@ for lp in logs:
             continue
         seen.add(key)
 
-        marker_sale = bool(sale_re.search(text)) or (not is_trade and re.search(r'\bfree\b', text, re.I)
-                        and not EVENTISH.search(text) and not INVITEISH.search(text))
         trivial = text.strip() in ('[image]', '[image removed]') or len(text.strip()) < 5
         # a claim/reply from another sender never updates last_*, so only the
         # OFFERER's own follow-up posts fold into their open giveaway listing
         continuation = (last_who == who and last_dt is not None
                         and 0 <= (dt - last_dt).total_seconds() <= MERGE_WINDOW_MIN * 60
                         and listings and listings[-1].get('who') == who)
+        if is_trade:
+            # offer-by-default; questions that aren't ISO-shaped ("does anyone have...?")
+            # and claim/logistics replies are chat, not listings
+            marker_sale = (not trivial and not CLAIMISH.search(text.strip())
+                           and not (text.strip().endswith('?') and not ISO_Q.search(text)))
+        else:
+            marker_sale = (bool(SALE_STRONG.search(text))
+                           or (re.search(r'\bfree\b', text, re.I) and FREE_TRIGGER.search(text)
+                               and not EVENTISH.search(text) and not INVITEISH.search(text)))
         if marker_sale and not trivial:
             price_m = re.search(r'\$\d+[\d,\.]*', text)
             item = strip_urls(text)[:100] or text.strip()[:100]

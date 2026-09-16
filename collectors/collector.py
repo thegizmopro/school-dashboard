@@ -50,10 +50,14 @@ def first_url(text):
 
 # ---------------- WhatsApp scan ----------------
 KEYWORDS = re.compile(r"no school|reminder|due|early release|half day|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancelled|canceled|sold|free|for sale|iso|looking for|heads up|alert", re.I)
-# listing detection mirrors gen_digest.py: strong sale verbs everywhere; bare
-# "$N"/"free" only in the free-trade group ("free" outside it must not be an event)
+# listing detection mirrors gen_digest.py: trade group = offer-by-default minus
+# claims/replies; other groups need strong verbs or a triggered "free"
 SALE_STRONG = re.compile(r"for sale|iso\b|selling|give ?away|giveaway|wtb", re.I)
 SALE_EVENTISH = re.compile(r"\b(event|potluck|activity|class|workshop|program|gathering|webinar|community|parade|festival|performance|movie)\b", re.I)
+SALE_INVITEISH = re.compile(r"\b(join|sign ?up|rsvp|drop-?in|meets|monthly|please join|welcome)\b", re.I)
+SALE_CLAIMISH = re.compile(r"^((i|we)[\u2019']?ll\b|i[\u2019']?d (love|take)|i would like|dibs|claimed|taken|mine\b|no[ .!]|maybe|yes please|thanks?\b|sold\b|i could use|we could use|i just grabbed|still available|is this|are these|perfect|interested|that|ok|sounds|awesome|cool|great)", re.I)
+SALE_ISO_Q = re.compile(r"\b(have|has|selling|sell|want|use for|give|giving|looking for|need)\b", re.I)
+SALE_FREE_TRIGGER = re.compile(r"\b(anyone|want|take|offer|pick ?up|available)\b", re.I)
 LOGS = [
     pathlib.Path(r"C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-salmon-creek.md"),
     pathlib.Path(r"C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-harmony-sc-free-trade-sell.md"),
@@ -72,8 +76,14 @@ def scan_whatsapp():
             m = re.match(r"\[(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})\] \[([^\]]+)\] ([^:]+): (.*)", line)
             if not m: continue
             date, time, g, sender, text = m.groups()
-            is_sale = bool(group == "harmony-sc" or SALE_STRONG.search(text)
-                           or (re.search(r"\bfree\b", text, re.I) and not SALE_EVENTISH.search(text)))
+            trivial = text.strip() in ("[image]", "[image removed]") or len(text.strip()) < 5
+            if group == "harmony-sc":
+                is_sale = (not trivial and not SALE_CLAIMISH.search(text.strip())
+                           and not (text.strip().endswith("?") and not SALE_ISO_Q.search(text)))
+            else:
+                is_sale = (bool(SALE_STRONG.search(text))
+                           or (re.search(r"\bfree\b", text, re.I) and SALE_FREE_TRIGGER.search(text)
+                               and not SALE_EVENTISH.search(text) and not SALE_INVITEISH.search(text)))
             if is_sale:
                 listings.append({"date": date, "group": g, "who": sender.strip(),
                                  "text": text.strip()[:200],

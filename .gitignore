@@ -6,6 +6,7 @@ __pycache__/
 collectors/scan-state.json
 data/community-feed.json
 data/community-items.json
+instructions.md
 
 # scratch
 data/shark-scan.html

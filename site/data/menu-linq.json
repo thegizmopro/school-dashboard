@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-14T18:03:08",
+ "fetched": "2026-09-15T18:03:11",
  "days": {
   "2026-09-14": {
    "lunch": [
@@ -29,7 +29,7 @@
     },
     {
      "cat": "Fruit",
-     "item": "Banana"
+     "item": "Strawberries, 1 c"
     },
     {
      "cat": "Milk",
@@ -128,12 +128,16 @@
      "item": "Oatmeal bar and string cheese"
     },
     {
+     "cat": "Main Entree",
+     "item": "Cinnamon Chex"
+    },
+    {
      "cat": "Fruit",
      "item": "Apple"
     },
     {
      "cat": "Fruit",
-     "item": "Orange, sliced, 1/2 cup serving"
+     "item": "Strawberries, 1 c"
     },
     {
      "cat": "Milk",
@@ -1392,6 +1396,35 @@
     {
      "cat": "Main Entree",
      "item": "Oatmeal with Butter and Maple Syrup"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2026-10-30": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Whole wheat pancakes, housemade"
     },
     {
      "cat": "Main Entree",

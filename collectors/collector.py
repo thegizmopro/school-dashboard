@@ -173,7 +173,8 @@ def _unesc(s):
 def fetch_shark():
     raw = fetch(SHARK_URL).decode("utf-8", errors="replace")
     events = []
-    # primary: the page's own embedded data — { date: "2026-10-03", title: "Autumn Gather", time, location, tickets, page }
+    # primary: the page's own embedded JS data — { date: "2026-10-03", title: ... }
+    # (pre-Sep-2026 format; kept in case it returns)
     for m in re.finditer(r'\{\s*date:\s*"(\d{4}-\d{2}-\d{2})"\s*,\s*title:\s*"([^"]+)"[^}]*\}', raw):
         date, title = m.group(1), _unesc(m.group(2)).strip()
         blob = m.group(0)
@@ -186,13 +187,46 @@ def fetch_shark():
                        "time": _unesc(tm.group(1)) if tm else None,
                        "location": _unesc(loc.group(1)) if loc else None,
                        "url": url})
-    # fallback: bare h3 titles (no dates) if the embedded data ever moves
+
+    # secondary: the rendered event list (Next.js site rebuild, Sep 2026) —
+    # <li class="ev"> with ev__date "Sep 18", h2/h3 title (often a link to the
+    # event page), and an ev__where "6–9pm · Location" line
     if not events:
-        seen = set()
-        for m in re.finditer(r"<h3[^>]*>([^<]+)</h3>", raw):
-            t = m.group(1).strip()
-            if t and t not in seen and "ROLE" not in t.upper():
-                seen.add(t)
+        MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+        today = datetime.date.today()
+        for b in re.finditer(r'<li class="ev[^"]*">(.*?)</li>', raw, re.S):
+            blob = b.group(1)
+            dm = re.search(r'ev__date">([A-Z][a-z]{2})\s+(\d{1,2})<', blob)
+            tm = re.search(r'<h[23][^>]*>(?:<a[^>]*>)?([^<]+)', blob)
+            if not dm or not tm:
+                continue
+            try:
+                mon = MONTHS.index(dm.group(1)) + 1
+                d = datetime.date(today.year, mon, int(dm.group(2)))
+                if d < today - datetime.timedelta(days=45):
+                    d = datetime.date(today.year + 1, mon, int(dm.group(2)))
+            except ValueError:
+                continue
+            wt, wl = None, None
+            where = re.search(r'ev__where">(.*?)(?:</p>|$)', blob, re.S)
+            if where:
+                parts = [p.strip() for p in re.sub(r"<!--.*?-->", "", where.group(1)).split("·")]
+                if parts and parts[0]:
+                    wt = _unesc(parts[0])
+                if len(parts) > 1 and parts[1]:
+                    wl = _unesc(parts[1])
+            am = re.search(r'<a href="(/[^"]+)"', blob)
+            url = SHARK_URL.rstrip("/") + am.group(1) if am else None
+            events.append({"date": d.isoformat(), "title": _unesc(tm.group(1)).strip(),
+                           "time": wt, "location": wl, "url": url})
+
+    # tertiary: bare h3 titles (no dates) if the page is restructured again
+    if not events:
+        seen_titles = set()
+        for m in re.finditer(r"<h3[^>]*>(?:<a[^>]*>)?([^<]+)</h3>", raw):
+            t = _unesc(m.group(1)).strip()
+            if t and t not in seen_titles and "ROLE" not in t.upper():
+                seen_titles.add(t)
                 events.append({"title": t})
     out = {"fetched": datetime.datetime.now().isoformat(timespec="seconds"),
            "url": SHARK_URL,

@@ -1,34 +1,56 @@
 {
- "fetched": "2026-09-16T00:03:10",
+ "fetched": "2026-09-16T20:50:11",
  "url": "https://www.harmonyark.org/",
  "campaign": "Parent-run since 1989, shARK's ~$75K a year all stays right here: $50K in school grants, the rest as classroom wishes, community events, and appreciation for our teachers. Thank you, shARK families! 💚",
  "events": [
   {
-   "title": "Fall Festival"
+   "date": "2026-09-18",
+   "title": "Glow Party",
+   "time": "6–9pm",
+   "location": "Harmony Salmon Creek School",
+   "url": "https://www.harmonyark.org/glow-party"
   },
   {
-   "title": "Move-a-thon"
+   "date": "2026-10-03",
+   "title": "Autumn Gather",
+   "time": "6–10pm",
+   "location": "Harmony Salmon Creek School",
+   "url": "https://www.harmonyark.org/autumn-gather"
   },
   {
-   "title": "Occidental Tree Lighting"
+   "date": "2026-10-16",
+   "title": "Fall Festival",
+   "time": null,
+   "location": null,
+   "url": null
   },
   {
-   "title": "Pancake Breakfast + Giving Tree"
+   "date": "2026-11-13",
+   "title": "Move-a-thon",
+   "time": null,
+   "location": null,
+   "url": null
   },
   {
-   "title": "Winter Festival"
+   "date": "2026-12-03",
+   "title": "Occidental Tree Lighting",
+   "time": null,
+   "location": null,
+   "url": null
   },
   {
-   "title": "Tell us what you can do"
+   "date": "2026-12-05",
+   "title": "Pancake Breakfast + Giving Tree",
+   "time": null,
+   "location": null,
+   "url": null
   },
   {
-   "title": "School food &amp; garden"
-  },
-  {
-   "title": "Events &amp; seasonal festivals"
-  },
-  {
-   "title": "Sports, enrichment &amp; requests"
+   "date": "2026-12-10",
+   "title": "Winter Festival",
+   "time": null,
+   "location": null,
+   "url": null
   }
  ]
 }

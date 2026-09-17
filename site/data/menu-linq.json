@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-15T18:03:11",
+ "fetched": "2026-09-16T18:03:11",
  "days": {
   "2026-09-14": {
    "lunch": [
@@ -194,12 +194,16 @@
      "item": "Oatmeal bar and string cheese"
     },
     {
-     "cat": "Fruit",
-     "item": "Apple"
+     "cat": "Main Entree",
+     "item": "Cinnamon Chex"
     },
     {
      "cat": "Fruit",
      "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Banana"
     },
     {
      "cat": "Milk",
@@ -235,7 +239,7 @@
     },
     {
      "cat": "Fruit",
-     "item": "Strawberries, 1 c"
+     "item": "Banana"
     },
     {
      "cat": "Milk",

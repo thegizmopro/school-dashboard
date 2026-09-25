@@ -103,12 +103,30 @@ HTML cannot execute. The ParentSquare feed token lives in
 
 - **Deploy = `git push`** (Vercel). Crons commit+push themselves; their commits
   ("scan …", "digest …") are normal history.
-- **Testing pattern:** no framework — syntax-check extracted JS with
-  `node --check`, drive page functions in a `node` VM with DOM/fetch stubs and
-  fake `Date`s, serve `site/` with `python -m http.server` and check in a browser.
+- **Behavior tests:** `node tests/page-tests.js` — locks canonTitle (dedupe
+  families), the lunch humanizer, and noSchoolMap/nextSchoolDay against the
+  real calendar data. Run it after touching the page script; exit 0 = pass.
+- **Ad-hoc checking** (things the tests don't cover): syntax-check the
+  extracted script with `node --check`, drive page functions in a `node` VM
+  with DOM/fetch stubs and fake `Date`s, serve `site/` with
+  `python -m http.server` and eyeball in a browser.
 - **Digest guards are structural:** `--write` rejects empty/over-long/unbalanced-anchor
   prose; listings merge (never replace); expiry is 5 days.
 - **SOURCES CHANGE SHAPE.** harmonyark.org rebuilt once already; the scraper is
   tiered (embedded JSON → rendered list → bare headings) and empty states are
   deliberate so breakage is visible, not silent.
 - Ops lives in **CRONS.md**; manual runbook in local **instructions.md**.
+
+## Known gaps / next work
+
+- **Service worker:** none — a wall tablet offline (or during a Vercel/network
+  blip) loses the page entirely. While online it re-fetches every 5 minutes.
+  Caching last-good index.html + JSON in a worker would keep the display up.
+- **Rate limiting on `/api/submit`:** honeypot + length caps only. Add
+  Cloudflare Turnstile if the forms ever get abused.
+- **Test coverage is pure-logic only** (canonTitle/humanizer/calendar maps);
+  nothing exercises the rendered DOM or the collectors' scrapers.
+- **ParentSquare feed URL sits in git history** (it predates local-config).
+  It's a read-only school calendar feed; history rewrite is deliberately NOT
+  planned (it would disrupt Vercel + the crons without revoking anything).
+  If ParentSquare can rotate the link, put the new URL in local-config.json.

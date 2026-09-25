@@ -629,7 +629,7 @@ function renderSponsors(){
 
 function renderNotices(){
   J("data/notices.json").then(n=>{
-    const today = new Date().toISOString().slice(0,10);
+    const today = isoOf(new Date());   // LOCAL date — toISOString() is UTC and would flip at 5pm Pacific
     const items = (n.notices||[])
       .filter(i => !i.until || i.until >= today)   // optional expiry per notice
       .sort((a,b) => String(b.posted||"").localeCompare(String(a.posted||"")))

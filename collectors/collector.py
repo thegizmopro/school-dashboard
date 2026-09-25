@@ -335,7 +335,14 @@ def write_calendar_ics():
             except ValueError:
                 continue
             slug = re.sub(r"[^a-z0-9]+", "-", (n.get("title") or "notice").lower())[:40]
-            add(f"notice-{slug}", dt.isoformat(), n.get("title", "Notice"))
+            # carry a time when the notice names one ("8:45pm") so board meetings
+            # show as timed rows in the calendar, not all-day blocks
+            tm = re.search(r"\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b", blob, re.I)
+            tstr = None
+            if tm:
+                hh = int(tm.group(1)) % 12 + (12 if tm.group(3).lower() == "pm" else 0)
+                tstr = f"{hh:02d}{int(tm.group(2) or 0):02d}"
+            add(f"notice-{slug}", dt.isoformat(), n.get("title", "Notice"), time=tstr)
     except Exception:
         pass
 

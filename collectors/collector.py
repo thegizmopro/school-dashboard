@@ -433,10 +433,37 @@ def fetch_district_cal():
     n = data.count("BEGIN:VEVENT")
     return f"district cal: {n} events"
 
+# ---------------- Absence emails ----------------
+# harmonyusd.org/report-an-absence maps each grade to its own absence email
+# (kinderabsence@, firstgradeabsence@, ... tkabsence@). Scrape every run;
+# keep the last good file if the page stops yielding emails.
+ABSENCE_URL = "https://www.harmonyusd.org/report-an-absence"
+ABSENCE_LABELS = [("tk", "TK"), ("kinder", "Kindergarten"), ("firstgrade", "1st Grade"),
+                  ("secondgrade", "2nd Grade"), ("3rdgrade", "3rd Grade"),
+                  ("4thgrade", "4th Grade"), ("5thgrade", "5th Grade"),
+                  ("6thgrade", "6th Grade"), ("7thgrade", "7th Grade"),
+                  ("8thgrade", "8th Grade")]
+
+def fetch_absence():
+    raw = fetch(ABSENCE_URL, timeout=20).decode("utf-8", errors="replace")
+    found = sorted(set(re.findall(r"([a-z0-9]+)absence@harmonyusd\.org", raw)))
+    if not found:
+        prev = DATA / "absence.json"
+        if prev.exists():
+            return "absence: no emails found on page — kept previous"
+        raise RuntimeError("no absence emails found on district page")
+    order = {p: i for i, (p, _) in enumerate(ABSENCE_LABELS)}
+    found.sort(key=lambda p: order.get(p, 99))
+    grades = [{"grade": dict(ABSENCE_LABELS).get(p, p.capitalize()), "email": f"{p}absence@harmonyusd.org"}
+              for p in found]
+    write_json(DATA / "absence.json", {"fetched": datetime.datetime.now().isoformat(timespec="seconds"),
+                                       "source": ABSENCE_URL, "grades": grades})
+    return f"absence: {len(grades)} grades"
+
 # ---------------- Runner ----------------
 def main():
     steps = [scan_whatsapp, fetch_ical, fetch_district_cal, fetch_board,
-             write_calendar_ics, fetch_weather]
+             fetch_absence, write_calendar_ics, fetch_weather]
     if stale("menu-linq.json", 20):
         steps.append(fetch_linq)
     if stale("shark.json", 24 * 6):

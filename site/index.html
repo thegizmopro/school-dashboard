@@ -54,6 +54,9 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .hero-weather .hilo{font-size:14px;opacity:.85}
 .chip-row{margin-top:14px}
 .chip{display:inline-flex;align-items:center;gap:6px;background:var(--sun);color:var(--sun-ink);border-radius:999px;padding:6px 16px;font-weight:500;font-size:15px}
+button.chip{border:none;cursor:pointer;font-family:Karla}
+.field select{width:100%;font-family:Karla;font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+a.send{display:inline-block;background:var(--clay);color:#fff;font-weight:700;font-size:14px;padding:8px 18px;border-radius:999px;text-decoration:none}
 
 /* Sections */
 .section{margin-top:16px}
@@ -180,7 +183,7 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
     </div>
   </div>
 </header>
-<div class="chip-row"><span class="chip" id="countdown">⏳ …</span> <span class="chip" id="summer-chip" style="background:var(--garden-pale);color:var(--garden-deep)">☀️ …</span></div>
+<div class="chip-row"><span class="chip" id="countdown">⏳ …</span> <span class="chip" id="summer-chip" style="background:var(--garden-pale);color:var(--garden-deep)">☀️ …</span> <button type="button" class="chip" id="absence-btn" style="background:var(--clay-pale);color:var(--clay-ink)">📝 Report absence</button></div>
 
 <div class="grid">
   <div class="section">
@@ -253,6 +256,22 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
     <div class="sub">Breakfast &amp; lunch for every school day</div>
     <div id="week-body"></div>
     <div class="actions"><button class="cancel" type="button" id="week-close">Close</button></div>
+  </div>
+</dialog>
+
+<dialog class="submission" id="absence-dialog">
+  <div class="body">
+    <h3>📝 Report an absence</h3>
+    <div class="sub">Emails your grade's absence line directly</div>
+    <div class="field"><label for="ab-grade">Grade</label><select id="ab-grade"></select></div>
+    <div class="field"><label for="ab-name">Student name</label><input id="ab-name" maxlength="60" placeholder="optional"></div>
+    <div class="field"><label for="ab-date">Date of absence</label><input id="ab-date" type="date"></div>
+    <div class="field"><label for="ab-reason">Reason</label><input id="ab-reason" maxlength="200" placeholder="illness, appointment… (optional)"></div>
+    <div class="actions">
+      <a class="send" id="ab-mail" href="#">Send email ✉️</a>
+      <button class="cancel" type="button" id="ab-cancel">Never mind</button>
+    </div>
+    <div class="status" id="ab-status"></div>
   </div>
 </dialog>
 
@@ -690,6 +709,37 @@ function renderLunchCard(){
   });
 }
 
+// ---------------- Absence reporter ----------------
+// pure builder so tests can lock the mailto format
+function absenceMailto(entry, name, date, reason){
+  const student = String(name || "").trim() || "Student";
+  const subject = `Absence — ${student} (${entry.grade}), ${date}`;
+  const body = `Hello,\n\n${student} (${entry.grade}) will be absent on ${date}.`
+            + (reason && reason.trim() ? `\nReason: ${reason.trim()}` : "")
+            + `\n\nThank you,\n`;
+  return `mailto:${entry.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+let ABSENCE = null;   // loaded once at boot — never re-rendered while the dialog may be open
+function loadAbsence(){
+  J("data/absence.json").then(d=>{
+    ABSENCE = d;
+    $("ab-grade").innerHTML = (d.grades||[]).map(g=>`<option value="${esc(g.email)}">${esc(g.grade)}</option>`).join("");
+    updateAbsenceMail();
+  }).catch(()=>{});
+}
+function updateAbsenceMail(){
+  if (!ABSENCE) return;
+  const entry = (ABSENCE.grades||[]).find(g => g.email === $("ab-grade").value);
+  if (!entry) return;
+  $("ab-mail").href = absenceMailto(entry, $("ab-name").value, $("ab-date").value || isoOf(new Date()), $("ab-reason").value);
+  $("ab-status").textContent = `to ${entry.email}`;
+}
+function openAbsence(){
+  $("ab-date").value = isoOf(new Date());
+  $("absence-dialog").showModal();
+  updateAbsenceMail();
+}
+
 // ---------------- Submit dialog (student news / event suggestions) ----------------
 const SUBMIT_COPY = {
   student: {title:"✏️ Submit news or an editorial", sub:"Student journalists: share a story, photo idea, or editorial.",
@@ -714,6 +764,14 @@ $("submit-dialog").addEventListener("click", e => { if (e.target === $("submit-d
 $("week-link").addEventListener("click", openWeek);
 $("week-close").addEventListener("click", () => $("week-dialog").close());
 $("week-dialog").addEventListener("click", e => { if (e.target === $("week-dialog")) $("week-dialog").close(); });
+$("absence-btn").addEventListener("click", openAbsence);
+$("ab-cancel").addEventListener("click", () => $("absence-dialog").close());
+$("absence-dialog").addEventListener("click", e => { if (e.target === $("absence-dialog")) $("absence-dialog").close(); });
+["ab-grade","ab-name","ab-date","ab-reason"].forEach(id => {
+  $(id).addEventListener("change", updateAbsenceMail);
+  $(id).addEventListener("input", updateAbsenceMail);
+});
+loadAbsence();
 $("submit-form").addEventListener("submit", async e => {
   e.preventDefault();
   if ($("sd-hp").value) return;   // honeypot — quietly drop bots

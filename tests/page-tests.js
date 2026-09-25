@@ -94,5 +94,20 @@ const yc = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'site', 'data',
   t('regular sunday -> monday', vm.runInContext(`isoOf(NSD2)`, sb) === '2026-09-14');
 }
 
+// ---------- absenceMailto ----------
+{
+  const sb = makeSandbox('2026-09-25T08:00:00');
+  vm.createContext(sb);
+  vm.runInContext(script, sb);
+  const m = (...a) => vm.runInContext(`absenceMailto(${JSON.stringify(a[0])}, ${JSON.stringify(a[1])}, ${JSON.stringify(a[2])}, ${JSON.stringify(a[3])})`, sb);
+  const entry = {grade: '3rd Grade', email: '3rdgradeabsence@harmonyusd.org'};
+  const href = m(entry, 'Rey', '2026-09-25', 'fever');
+  t('mailto targets grade email', href.startsWith('mailto:3rdgradeabsence@harmonyusd.org?'));
+  t('subject encoded with name+grade+date', href.includes(encodeURIComponent('Absence — Rey (3rd Grade), 2026-09-25')));
+  t('reason included when given', href.includes(encodeURIComponent('Reason: fever')));
+  t('blank name falls back to Student', m(entry, '', '2026-09-25', '').includes(encodeURIComponent('Absence — Student')));
+  t('blank reason omitted', !m(entry, 'X', '2026-09-25', '  ').includes('Reason'));
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -1,0 +1,46 @@
+{
+ "fetched": "2026-09-25T00:12:32",
+ "source": "https://www.harmonyusd.org/report-an-absence",
+ "grades": [
+  {
+   "grade": "TK",
+   "email": "tkabsence@harmonyusd.org"
+  },
+  {
+   "grade": "Kindergarten",
+   "email": "kinderabsence@harmonyusd.org"
+  },
+  {
+   "grade": "1st Grade",
+   "email": "firstgradeabsence@harmonyusd.org"
+  },
+  {
+   "grade": "2nd Grade",
+   "email": "secondgradeabsence@harmonyusd.org"
+  },
+  {
+   "grade": "3rd Grade",
+   "email": "3rdgradeabsence@harmonyusd.org"
+  },
+  {
+   "grade": "4th Grade",
+   "email": "4thgradeabsence@harmonyusd.org"
+  },
+  {
+   "grade": "5th Grade",
+   "email": "5thgradeabsence@harmonyusd.org"
+  },
+  {
+   "grade": "6th Grade",
+   "email": "6thgradeabsence@harmonyusd.org"
+  },
+  {
+   "grade": "7th Grade",
+   "email": "7thgradeabsence@harmonyusd.org"
+  },
+  {
+   "grade": "8th Grade",
+   "email": "8thgradeabsence@harmonyusd.org"
+  }
+ ]
+}

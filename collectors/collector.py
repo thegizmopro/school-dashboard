@@ -383,7 +383,7 @@ def write_calendar_ics():
             if tm:
                 hh = int(tm.group(1)) % 12 + (12 if tm.group(3).lower() == "pm" else 0)
                 tstr = f"{hh:02d}{int(tm.group(2) or 0):02d}"
-            add(f"notice-{slug}", dt.isoformat(), n.get("title", "Notice"), time=tstr)
+            add(f"notice-{slug}", dt.isoformat(), n.get("title", "Notice"), time=tstr, url=n.get("url"))
     except Exception:
         pass
 

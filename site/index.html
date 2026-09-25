@@ -173,7 +173,7 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
 </head>
 <body>
 
-<a class="board-banner" href="board.html"><span class="bb-tag">TONIGHT</span> School Board meets 8:45pm - agenda in plain language, how to join &rarr;</a>
+<a class="board-banner" id="board-banner" href="board.html" hidden></a>
 <header class="hero" id="hero">
   <div>
     <div class="kicker">Harmony Union School District · Occidental</div>
@@ -566,6 +566,21 @@ function renderEvents(){
     html += `<div class="sub-link"><a class="lnk" href="budget.html">💰 Our school budget, in plain language</a></div>`;
     html += `<div class="sub-link"><a class="lnk" href="board.html">🏪 Board of Education - agendas, how to join, plain-language guides</a></div>`;
     $("events-card").innerHTML = html;
+
+    // banner gates itself on real data: TONIGHT / COMING UP for the next board
+    // meeting, hidden when there's none upcoming — never goes stale
+    const bm = deduped.find(i => /board meeting/i.test(i.title) && i.date >= now);
+    const bn = $("board-banner");
+    if (bm) {
+      const isToday = bm.date.toDateString() === new Date().toDateString();
+      const tm = timeOf(bm.date);
+      bn.hidden = false;
+      bn.innerHTML = isToday
+        ? `<span class="bb-tag">TONIGHT</span> School Board meets ${tm || "tonight"} — agenda in plain language, how to join &rarr;`
+        : `<span class="bb-tag">COMING UP</span> School Board meets ${bm.date.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}${tm ? " · " + tm : ""} — plain-language agenda &rarr;`;
+    } else {
+      bn.hidden = true;
+    }
     countdown(yc);
   });
 }

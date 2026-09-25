@@ -563,8 +563,14 @@ function renderWeather(){
 
 function renderCommunity(){
   J("data/community-digest.json").then(d=>{
-    // digest prose is agent-written (trusted HTML); listings are chat-derived — escaped + linked only
-    let html = `<div class="digest-prose">${d.digest||""}</div>`;
+    // digest prose is agent-written (trusted HTML); listings are chat-derived — escaped + linked only.
+    // Belt-and-braces: an unclosed <a> would swallow the whole card below the prose,
+    // so close any that the writer left open (whatever wrote the JSON).
+    let prose = String(d.digest || "");
+    const aOpen = (prose.match(/<a\b/gi) || []).length;
+    const aClose = (prose.match(/<\/a>/gi) || []).length;
+    if (aOpen > aClose) prose += "</a>".repeat(aOpen - aClose);
+    let html = `<div class="digest-prose">${prose}</div>`;
     const listings = (d.listings||[]);
     if (listings.length) {
       html += `<div class="for-sale"><h4>📌 Don't miss + For Sale & Free</h4>`;

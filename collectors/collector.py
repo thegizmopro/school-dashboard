@@ -97,13 +97,54 @@ def scan_whatsapp():
 # ---------------- iCal fetch ----------------
 ICAL_URL = CONFIG.get("parentsquare_ics")   # private feed token — local-config.json, gitignored
 
+def _notice_vevents():
+    """VEVENT blocks for notices that name a date (and optionally a time, e.g.
+    board-meeting posts). The dashboard calendar card renders parentsquare-live.ics,
+    but ParentSquare posts aren't events in their feed - so we merge them in here."""
+    months = "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec"
+    now = datetime.datetime.now().strftime("%Y%m%dT%H%M%SZ")
+    out, today = [], datetime.date.today()
+    try:
+        nz = json.loads((DATA / "notices.json").read_text(encoding="utf-8"))
+    except Exception:
+        return out
+    for n_ in nz.get("notices", []):
+        blob = f"{n_.get('title','')} {n_.get('text','')}"
+        m = re.search(rf"\b({months})[a-z]*\.?\s+(\d{{1,2}})\b", blob)
+        if not m:
+            continue
+        try:
+            dt = datetime.datetime.strptime(f"{m.group(1)} {m.group(2)} {today.year}", "%b %d %Y").date()
+            if dt < today:
+                dt = dt.replace(year=today.year + 1)
+        except ValueError:
+            continue
+        tm = re.search(r"\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b", blob, re.I)
+        start = f"{dt.strftime('%Y%m%d')}"
+        if tm:
+            hh = int(tm.group(1)) % 12 + (12 if tm.group(3).lower() == "pm" else 0)
+            start += f"T{hh:02d}{int(tm.group(2) or 0):02d}00"
+        slug = re.sub(r"[^a-z0-9]+", "-", (n_.get("title") or "notice").lower())[:40]
+        url = n_.get("url")
+        out.append("\r\n".join([
+            "BEGIN:VEVENT",
+            f"UID:notice-{slug}@harmony-today",
+            f"DTSTAMP:{now}",
+            f"DTSTART{';VALUE=DATE' if len(start) == 8 else ''}:{start}",
+            f"SUMMARY:{_ics_escape(n_.get('title', 'Notice'))}",
+        ] + ([f"URL:{_ics_escape(url)}"] if url else []) + ["END:VEVENT"]))
+    return out
+
 def fetch_ical():
     if not ICAL_URL:
         raise RuntimeError("parentsquare_ics missing from collectors/local-config.json (see local-config.example.json)")
     data = fetch(ICAL_URL).decode("utf-8", errors="replace")
+    extra = _notice_vevents()
+    if extra:
+        data = data.replace("END:VCALENDAR", "\r\n".join(extra) + "\r\nEND:VCALENDAR")
     (DATA / "parentsquare-live.ics").write_text(data, encoding="utf-8")
     n = data.count("BEGIN:VEVENT")
-    return f"ical: {n} events"
+    return f"ical: {n} events (incl. {len(extra)} notice-derived)"
 
 # ---------------- Weather ----------------
 # Occidental, CA

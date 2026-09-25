@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Harmony Today//Family Dashboard//EN
+BEGIN:VEVENT
+UID:board-2026-09-25-special@harmony-today
+DTSTAMP:20260925T203200Z
+DTSTART:20260925T204500
+DTEND:20260925T223000
+SUMMARY:HUSD Board Meeting (special)
+LOCATION:Assembly Hall\, 1935 Bohemian Highway\, Occidental
+DESCRIPTION:Open session per agenda ~9pm (notice says 8:45pm). Telecast: https://meet.google.com/pmu-btbj-iwc
+END:VEVENT
+END:VCALENDAR

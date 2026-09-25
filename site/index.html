@@ -319,11 +319,12 @@ function noSchoolMap(yearCal){
 
 // LINQ item names are kitchen shorthand ("Bagel, WG, Dos Pisano",
 // "Pizza, house with Dos Pisano's") — humanize for the family cards
-const HUMANIZE_DROP = /^(frozen|canned|hpt|crystal|cooked from dry|thawed|1\/\d+ cup serving|reduced sugar)$/i;
+const HUMANIZE_DROP = /^(frozen|canned|hpt|crystal|cooked from dry|thawed|1\/\d+ cup serving|reduced sugar|\d+(\.\d+)?\s*(m\/ma|wg|g|oz|eq))$/i;   // last alt = USDA meal-pattern codes ("2 M/MA, 1 WG")
 const HUMANIZE_ADJ = { "wg": "whole-grain", "whole grain": "whole-grain", "whole wheat": "whole-wheat",
                        "choc": "chocolate", "housemade": "house-made", "house made": "house-made" };
 function humanizeItem(s){
-  let segs = String(s).split(/\s*,\s*/).filter(Boolean);
+  s = String(s).replace(/\(\s*\d+(\.\d+)?[^)]*(m\/ma|wg)[^)]*\)/gi, "").replace(/\s+/g, " ").trim();   // parenthesized meal-pattern codes
+  let segs = s.split(/\s*,\s*/).filter(Boolean);
   const head = segs.shift();
   let brand = null;
   const adj = [], tail = [];

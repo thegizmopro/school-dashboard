@@ -67,6 +67,8 @@ const t = (name, cond) => {
   t('housemade hoisted', h('Whole wheat pancakes, housemade') === 'House-made whole wheat pancakes');
   t('kitchen noise dropped', h('Peas, frozen') === 'Peas');
   t('allergen qualifier kept', h('Tamale, Bean and cheese, WG, Gluten free') === 'Whole-grain tamale, Bean and cheese, Gluten free');
+  t('USDA meal-pattern codes dropped', h('Macaroni and cheese, 2 M/MA, 1 WG') === 'Macaroni and cheese');
+  t('parenthesized meal codes dropped', h('Mac and cheese (2 M/MA, 1 WG)') === 'Mac and cheese');
   t('already-clean names untouched', h('Shredded chicken tacos') === 'Shredded chicken tacos');
 }
 

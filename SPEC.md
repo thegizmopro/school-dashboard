@@ -1,3 +1,9 @@
+> **⚠️ HISTORICAL DOCUMENT (2026-09-03) — read for intent, not current state.**
+> The system described below as "no code yet" has been live since Sep 2026 and
+> has outgrown this spec in many ways (district master calendar, forms → email,
+> PWA install, custom domain, notices pipeline, agent-written digest, sponsor
+> system). Current architecture: **README.md**. Automation/ops: **CRONS.md**.
+
 # School Dashboard — Project Spec (v0.1 draft)
 
 _Purpose: a single attractive, auto-updating dashboard for the kids' school — upcoming dates, countdowns, lunch menu by day, weather. Fun for kids, informative for parents._

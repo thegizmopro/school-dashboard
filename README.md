@@ -31,6 +31,7 @@ Kid-friendly, parent-trusted, installable to phone home screens.
 | `api/submit.js` | Vercel serverless function: student-news / event-suggestion forms → email (Resend). |
 | `collectors/collector.py` | Main collector: WhatsApp scan, iCal, district calendar, shARK scrape, board-meeting link, weather, LINQ menu, merged calendar feed. |
 | `collectors/gen_digest.py` | Community digest: dry-run default, `--write` publishes (merge semantics, see its docstring). |
+| `collectors/local-config.json` | **Local, gitignored** — ParentSquare feed URL (private token) + WhatsApp log paths. See `local-config.example.json`. |
 | `collectors/scan-state.json` | WhatsApp scan position — local, gitignored. |
 | `sponsors/` | Drop folder for new sponsor images + `install.py` (normalizes, deploys, updates JSON). |
 | `data/` | **Local-only pipeline state** (raw WhatsApp feed/items). Gitignored. Never deploys. |
@@ -51,7 +52,7 @@ Kid-friendly, parent-trusted, installable to phone home screens.
 | `menu-linq.json` | collector (LINQ API, 45-day window) | lunch card (primary source) + week dialog | ~daily (staleness-gated) |
 | `calendar-year.json` | hand-curated from the district PDF | structural layer: no-school map, break ranges, countdown | rarely (school year) |
 | `menu-and-events.json` | hand-built from September PDF | lunch fallback, breakfast weekly rotation, daily alternates | as needed |
-| `notices.json` | **agent-curated from ParentSquare emails** (manual/agent pass — not a cron yet) | notices card | on email arrival |
+| `notices.json` | **agent-curated from ParentSquare emails** (manual/agent pass — not a cron yet). Rows carry an optional `until` date; the site hides expired ones. Never store email click-tracking URLs — use the real destination. | notices card | on email arrival |
 | `community-digest.json` | digest cron 6:45am (agent-written prose + merged listings) or manual `--write` | community card | daily |
 | `all-events.ics` | collector (merged: structural + shARK + notices + ParentSquare + district, canonical-title dedupe, stable UIDs, board-meeting URLs) | calendar subscription link | 4×/day |
 | `sponsors.json` | `sponsors/install.py` or by hand | sponsor tiles | on change |
@@ -91,8 +92,12 @@ changes require a redeploy to take effect.
 
 **Everything under `site/` deploys publicly.** Raw WhatsApp content (real names,
 chat text) must only ever live in root `data/` (gitignored). The collector writes
-`community-feed.json`/`community-items.json` there, never into `site/data/`. Only
-the paraphrased digest and cleaned listings publish.
+`community-feed.json`/`community-items.json` there, never into `site/data/`.
+Published listings carry **no `who` field** (stripped at publish) and are
+paraphrased by the 6:45 agent; the digest prose is sanitized at render to an
+allowlist (https anchors + basic formatting only) with a CSP on top — chat-steered
+HTML cannot execute. The ParentSquare feed token lives in
+`collectors/local-config.json`, gitignored.
 
 ## Working on this repo
 

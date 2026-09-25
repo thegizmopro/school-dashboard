@@ -1,22 +1,38 @@
 """
-Harmony Today — data collector (tiered, 4x daily)
-Runs: WhatsApp scan + iCal fetch + weather ALWAYS; LINQ/shARK refresh only when
-their JSON is stale (LINQ > 20h, shARK > 6 days) so a missed 6am cron never
-leaves data frozen for a whole day.
+Harmony Today — data collector (cron 4x daily: 00/06/12/18 PT)
+
+Every run: WhatsApp scan (local-only output) · ParentSquare iCal · district
+master calendar (harmonyusd.org — the authoritative events layer) · board-meeting
+link (scraped off the district homepage) · merged all-events.ics · weather.
+Staleness-gated: LINQ menu (>20h) · shARK events (>6 days) — a missed cron
+self-heals on the next run.
+
+Each step is fault-isolated: a failed fetch logs and skips; the last good file
+stays on disk; the remaining sources still refresh and the cron still commits.
+
+Secrets/paths live in collectors/local-config.json (gitignored — see
+local-config.example.json): parentsquare_ics URL + WhatsApp log paths.
 
 Output split (privacy):
-  site/data/    — published to the web: ics, weather, menu-linq, shark, community-digest
-  data/         — LOCAL pipeline state only: raw-ish WhatsApp feed (names + chat text
-                  must never be deployed), scan-state
-Writes JSON files, then leaves git commit/push to caller.
+  site/data/    — published to the web (weather, both ics feeds, board.json,
+                  shark.json, menu-linq.json, all-events.ics, community-digest.json)
+  data/         — LOCAL pipeline state only (raw WhatsApp feed — real names and
+                  chat text must NEVER be deployed), scan-state
+Writes JSON files, then leaves git commit/push to the caller.
 """
 import json, re, io, os, sys, urllib.request, datetime, pathlib
 
-ROOT = pathlib.Path(r"C:\dev\school-dashboard")
+ROOT = pathlib.Path(__file__).resolve().parent.parent   # survives a moved checkout
 DATA = ROOT / "site" / "data"      # published
 LOCAL = ROOT / "data"              # local-only pipeline state
 DATA.mkdir(parents=True, exist_ok=True)
 LOCAL.mkdir(parents=True, exist_ok=True)
+
+# local, gitignored: {"parentsquare_ics": "...", "whatsapp_logs": [...]}
+try:
+    CONFIG = json.loads((ROOT / "collectors" / "local-config.json").read_text(encoding="utf-8"))
+except Exception:
+    CONFIG = {}
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) HarmonyToday/1.0",
       "Origin": "https://linqconnect.com",
@@ -49,24 +65,15 @@ def first_url(text):
     return m.group(0).rstrip(".,)!") if m else None
 
 # ---------------- WhatsApp scan ----------------
-KEYWORDS = re.compile(r"no school|reminder|due|early release|half day|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancelled|canceled|sold|free|for sale|iso|looking for|heads up|alert", re.I)
-# listing detection mirrors gen_digest.py: trade group = offer-by-default minus
-# claims/replies; other groups need strong verbs or a triggered "free"
-SALE_STRONG = re.compile(r"for sale|iso\b|selling|give ?away|giveaway|wtb", re.I)
-SALE_EVENTISH = re.compile(r"\b(event|potluck|activity|class|workshop|program|gathering|webinar|community|parade|festival|performance|movie)\b", re.I)
-SALE_INVITEISH = re.compile(r"\b(join|sign ?up|rsvp|drop-?in|meets|monthly|please join|welcome)\b", re.I)
-SALE_CLAIMISH = re.compile(r"^((i|we)[\u2019']?ll\b|i[\u2019']?d (love|take)|i would like|dibs|claimed|taken|mine\b|no[ .!]|maybe|yes please|thanks?\b|sold\b|i could use|we could use|i just grabbed|still available|is this|are these|perfect|interested|that|ok|sounds|awesome|cool|great)", re.I)
-SALE_ISO_Q = re.compile(r"\b(have|has|selling|sell|want|use for|give|giving|looking for|need)\b", re.I)
-SALE_FREE_TRIGGER = re.compile(r"\b(anyone|want|take|offer|pick ?up|available)\b", re.I)
-LOGS = [
-    pathlib.Path(r"C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-salmon-creek.md"),
-    pathlib.Path(r"C:\Users\kenzo\SynologyDrive\projects\whatsapp\whatsapp-harmony-sc-free-trade-sell.md"),
-]
+KEYWORDS = re.compile(r"no school|reminder|due|early release|half day|forms?|field trip|meeting|event|fundrais|volunteer|picture day|book fair|conference|spirit|schedule|cancelled|canceled|sold|free|for sale|iso|looking for|heads up|alert|tickets?|last weekend|demonstration|open to|invited|season", re.I)
+LOGS = [pathlib.Path(p) for p in CONFIG.get("whatsapp_logs", [])]
 STATE = ROOT / "collectors" / "scan-state.json"
 
+# NOTE: listing detection lives ONLY in gen_digest.py (it re-reads the logs) —
+# keeping one copy of those rules prevents drift.
 def scan_whatsapp():
     state = json.loads(STATE.read_text()) if STATE.exists() else {}
-    items, listings = [], []
+    items = []
     for log in LOGS:
         if not log.exists(): continue
         group = "salmon-creek" if "salmon" in log.name else "harmony-sc"
@@ -76,19 +83,6 @@ def scan_whatsapp():
             m = re.match(r"\[(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})\] \[([^\]]+)\] ([^:]+): (.*)", line)
             if not m: continue
             date, time, g, sender, text = m.groups()
-            trivial = text.strip() in ("[image]", "[image removed]") or len(text.strip()) < 5
-            if group == "harmony-sc":
-                is_sale = (not trivial and not SALE_CLAIMISH.search(text.strip())
-                           and not (text.strip().endswith("?") and not SALE_ISO_Q.search(text)))
-            else:
-                is_sale = (bool(SALE_STRONG.search(text))
-                           or (re.search(r"\bfree\b", text, re.I) and SALE_FREE_TRIGGER.search(text)
-                               and not SALE_EVENTISH.search(text) and not SALE_INVITEISH.search(text)))
-            if is_sale:
-                listings.append({"date": date, "group": g, "who": sender.strip(),
-                                 "text": text.strip()[:200],
-                                 "url": first_url(text),
-                                 "price": (re.search(r"\$\d+[\d,\.]*", text) or [None])[0] if re.search(r"\$", text) else "Free?" if re.search(r"\bfree\b", text, re.I) else "—"})
             if KEYWORDS.search(text):
                 items.append({"date": date, "time": time, "group": g, "who": sender.strip(),
                               "text": text.strip()[:300], "url": first_url(text)})
@@ -96,15 +90,16 @@ def scan_whatsapp():
     STATE.parent.mkdir(exist_ok=True)
     STATE.write_text(json.dumps(state))
     feed = {"scanned": datetime.datetime.now().isoformat(timespec="seconds"),
-            "items": items[-25:],
-            "listings": listings[-20:]}
+            "items": items[-25:]}
     write_json(LOCAL / "community-feed.json", feed)   # local ONLY — real names/chat text
-    return f"whatsapp: {len(items)} notable, {len(listings)} listings"
+    return f"whatsapp: {len(items)} notable"
 
 # ---------------- iCal fetch ----------------
-ICAL_URL = "https://www.parentsquare.com/schools/18160/users/MhJf0v_6IaRclQY_Yj1Itg/calendar.ics"
+ICAL_URL = CONFIG.get("parentsquare_ics")   # private feed token — local-config.json, gitignored
 
 def fetch_ical():
+    if not ICAL_URL:
+        raise RuntimeError("parentsquare_ics missing from collectors/local-config.json (see local-config.example.json)")
     data = fetch(ICAL_URL).decode("utf-8", errors="replace")
     (DATA / "parentsquare-live.ics").write_text(data, encoding="utf-8")
     n = data.count("BEGIN:VEVENT")
@@ -232,6 +227,16 @@ def fetch_shark():
            "url": SHARK_URL,
            "campaign": "Parent-run since 1989, shARK's ~$75K a year all stays right here: $50K in school grants, the rest as classroom wishes, community events, and appreciation for our teachers. Thank you, shARK families! 💚",
            "events": events}
+    # empty-scrape = failure, not "season over": keep the last good events
+    if not any(e.get("date") for e in events):
+        try:
+            prev = json.loads((DATA / "shark.json").read_text(encoding="utf-8"))
+            if any(e.get("date") for e in prev.get("events", [])):
+                out["events"] = prev["events"]
+                out["fetched"] = prev.get("fetched", out["fetched"])
+                out["warning"] = "scrape found no dated events — kept previous data"
+        except Exception:
+            pass
     write_json(DATA / "shark.json", out)
     return f"shark: {len(events)} events (dated: {sum(1 for e in events if e.get('date'))})"
 
@@ -430,17 +435,22 @@ def fetch_district_cal():
 
 # ---------------- Runner ----------------
 def main():
-    results = []
-    results.append(scan_whatsapp())
-    results.append(fetch_ical())
-    results.append(fetch_district_cal())
-    results.append(fetch_board())
-    results.append(write_calendar_ics())
-    results.append(fetch_weather())
+    steps = [scan_whatsapp, fetch_ical, fetch_district_cal, fetch_board,
+             write_calendar_ics, fetch_weather]
     if stale("menu-linq.json", 20):
-        results.append(fetch_linq())
+        steps.append(fetch_linq)
     if stale("shark.json", 24 * 6):
-        results.append(fetch_shark())
+        steps.append(fetch_shark)
+    results, failures = [], []
+    for step in steps:
+        try:
+            results.append(str(step()))
+        except Exception as e:
+            # fault-isolated: last good file stays, other sources still refresh,
+            # and the run still exits 0 so the cron commits what succeeded
+            failures.append(f"{step.__name__}: FAILED ({e})")
+    if failures:
+        print("WARNINGS: " + " | ".join(failures))
     print(" | ".join(results))
 
 if __name__ == "__main__":

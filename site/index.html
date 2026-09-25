@@ -563,13 +563,20 @@ function renderWeather(){
 
 function renderCommunity(){
   J("data/community-digest.json").then(d=>{
-    // digest prose is agent-written (trusted HTML); listings are chat-derived — escaped + linked only.
-    // Belt-and-braces: an unclosed <a> would swallow the whole card below the prose,
-    // so close any that the writer left open (whatever wrote the JSON).
+    // digest prose is agent-written HTML, but treated as HOSTILE input anyway:
+    // close unclosed anchors, escape everything, then re-enable ONLY the
+    // allowlist (https anchors + basic inline formatting). A WhatsApp-steered
+    // writer emitting <img onerror>/<script> renders as inert text.
     let prose = String(d.digest || "");
     const aOpen = (prose.match(/<a\b/gi) || []).length;
     const aClose = (prose.match(/<\/a>/gi) || []).length;
     if (aOpen > aClose) prose += "</a>".repeat(aOpen - aClose);
+    prose = esc(prose)
+      .replace(/&lt;a\s+href=&quot;(https?:\/\/[^&]*)&quot;[^&]*&gt;/gi, '<a href="$1" target="_blank" rel="noopener">')
+      .replace(/&lt;\/a&gt;/gi, "</a>")
+      .replace(/&lt;(b|strong|i|em)&gt;/gi, "<$1>")
+      .replace(/&lt;\/(b|strong|i|em)&gt;/gi, "</$1>")
+      .replace(/&lt;br\s*\/?&gt;/gi, "<br>");
     let html = `<div class="digest-prose">${prose}</div>`;
     const listings = (d.listings||[]);
     if (listings.length) {
@@ -622,7 +629,11 @@ function renderSponsors(){
 
 function renderNotices(){
   J("data/notices.json").then(n=>{
-    const items = (n.notices||[]).slice(0,3);
+    const today = new Date().toISOString().slice(0,10);
+    const items = (n.notices||[])
+      .filter(i => !i.until || i.until >= today)   // optional expiry per notice
+      .sort((a,b) => String(b.posted||"").localeCompare(String(a.posted||"")))
+      .slice(0,3);
     $("notices-card").innerHTML = items.map(i=>`<div class="notice"><div class="notice-head"><span class="source-chip chip-${i.source==="parentsquare"?"ps":i.source==="whatsapp"?"wa":"email"}">${esc(i.source)}</span><span class="ts">${esc(i.posted)}</span></div><div class="notice-title">${link(i.title, i.url)}</div><div class="notice-text">${esc(i.text||"")}</div></div>`).join("") || '<div class="empty-note">No notices yet</div>';
   }).catch(()=>{ $("notices-card").innerHTML = '<div class="empty-note">No notices yet</div>'; });
 }
@@ -721,7 +732,7 @@ $("submit-form").addEventListener("submit", async e => {
       $("sd-status").textContent = data.error || "Submissions aren't wired up yet — check back soon!";
     }
   } catch {
-    $("sd-status").textContent = "Submissions aren't wired up yet — check back soon!";
+    $("sd-status").textContent = "Couldn't reach the server — check your connection and try again.";
   }
   btn.disabled = false;
 });

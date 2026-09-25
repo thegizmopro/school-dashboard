@@ -1,6 +1,6 @@
 # School Dashboard — Crons & Automation Reference
 
-_For the developer (Claude or human). Last verified 2026-09-04._
+_For the developer (Claude or human). Last verified 2026-09-25._
 _The scheduler lives in OpenClaw (agent "main" on this desktop), NOT in crontab or GitHub Actions._
 
 ## The one cron that matters
@@ -26,11 +26,16 @@ The collector self-tiers by STALENESS, not by clock:
 
 | Data | Refresh rule | Output |
 |---|---|---|
-| WhatsApp scan | Every run (2 groups: salmon-creek, harmony-sc free-trade) | `data/community-feed.json` (LOCAL ONLY — names/chat never deploy) |
-| ParentSquare iCal | Every run | `site/data/parentsquare-live.ics` |
+| WhatsApp scan (keyword items only — listing detection lives in gen_digest.py) | Every run (2 groups: salmon-creek, harmony-sc free-trade) | `data/community-feed.json` (LOCAL ONLY — names/chat never deploy) |
+| ParentSquare iCal (URL from `collectors/local-config.json`, gitignored) | Every run | `site/data/parentsquare-live.ics` |
+| District master calendar (harmonyusd.org — authoritative events layer) | Every run | `site/data/district-calendar.ics` |
+| Board-meeting link (scraped off district homepage) | Every run | `site/data/board.json` |
+| Merged subscription feed (all sources, canonical-title dedupe, stable UIDs) | Every run | `site/data/all-events.ics` |
 | Weather (Open-Meteo) | Every run | `site/data/weather.json` |
 | LINQ menu | When stale > 20h | `site/data/menu-linq.json` |
-| shARK events | When stale > 6 days | `site/data/shark.json` |
+| shARK events (tiered scraper; empty scrape keeps previous data — an empty scrape is a failure, not "season over") | When stale > 6 days | `site/data/shark.json` |
+
+Every step is fault-isolated: a failed fetch logs a WARNING, keeps the last good file, and the run still exits 0 so the cron commits the sources that succeeded.
 
 Consequence: the "morning run does LINQ/shARK" idea from the original spec is superseded — a missed cron self-heals on the next run because staleness triggers refresh regardless of which slot it lands in.
 
@@ -59,8 +64,11 @@ Daily community digest for the Harmony dashboard:
    items from the scans (each has date, who, text, and url where present).
 2. Write 1–3 short, plain sentences for families about what's new. Rules:
    only facts found in the items; include at most 2 links, formatted as
-   <a href="..." target="_blank" rel="noopener">label</a>; friendly tone;
-   no for-sale minutiae (listings render separately below the prose).
+   <a href="https://..." target="_blank" rel="noopener">label</a>; friendly tone;
+   no for-sale minutiae (listings render separately below the prose);
+   PRIVACY: no full names in prose, and paraphrase any listing row in
+   community-digest.json that still reads like verbatim chat (keep its
+   posted date; the publisher strips `who` automatically).
 3. If nothing in the items is newer than the 'generated' timestamp in
    C:\dev\school-dashboard\site\data\community-digest.json, run WITHOUT prose
    (yesterday's prose is preserved):

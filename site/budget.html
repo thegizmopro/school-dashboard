@@ -153,5 +153,10 @@ Stacy Kalember, Chief Business Official, 707-874-1205 ext. 12. Parent summary pr
 Harmony community; corrections welcome via the site's suggestion box.
 </footer>
 </div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
 </body>
 </html>

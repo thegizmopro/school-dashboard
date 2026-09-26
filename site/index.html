@@ -229,6 +229,7 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
   <div class="involved">
     <button type="button" data-submit="student">✏️ Students: submit news</button>
     <button type="button" class="alt" data-submit="event">🎪 Parents: suggest an event</button>
+    <a href="install.html" style="background:var(--garden-pale);color:var(--garden-deep)">📲 Install as an app</a>
   </div>
   <div class="footer-note">
     No popups, no tracking. Data: ParentSquare · LINQ Connect · Open-Meteo · school WhatsApp groups · harmonyark.org.
@@ -841,6 +842,10 @@ function renderAll(){
 }
 renderAll();
 setInterval(renderAll, 300000);
+// offline app shell — guard keeps the test VM happy (no navigator there)
+if (typeof navigator !== "undefined" && navigator.serviceWorker) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
 </script>
 </body>
 </html>

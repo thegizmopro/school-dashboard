@@ -28,6 +28,8 @@ Kid-friendly, parent-trusted, installable to phone home screens.
 | `site/index.html` | The whole site: one HTML file, embedded CSS + JS. No framework, no build step. |
 | `site/data/` | **Published data contracts** (see table below). Everything here deploys publicly. |
 | `site/sponsors/` | Sponsor images (processed copies; drop originals in `sponsors/` + run installer). |
+| `site/sw.js` | Service worker: offline shell + last-good data (documents/JSON network-first, icons/fonts cache-first; cache keys strip the `?t=` bust). Bump `VERSION` when changing the precache list. |
+| `site/install.html` | Add-to-home-screen guide (per-platform, Android one-tap install via `beforeinstallprompt`). |
 | `api/submit.js` | Vercel serverless function: student-news / event-suggestion forms → email (Resend). |
 | `collectors/collector.py` | Main collector: WhatsApp scan, iCal, district calendar, shARK scrape, board-meeting link, weather, LINQ menu, merged calendar feed. |
 | `collectors/gen_digest.py` | Community digest: dry-run default, `--write` publishes (merge semantics, see its docstring). |
@@ -119,9 +121,6 @@ HTML cannot execute. The ParentSquare feed token lives in
 
 ## Known gaps / next work
 
-- **Service worker:** none — a wall tablet offline (or during a Vercel/network
-  blip) loses the page entirely. While online it re-fetches every 5 minutes.
-  Caching last-good index.html + JSON in a worker would keep the display up.
 - **Rate limiting on `/api/submit`:** honeypot + length caps only. Add
   Cloudflare Turnstile if the forms ever get abused.
 - **Test coverage is pure-logic only** (canonTitle/humanizer/calendar maps);

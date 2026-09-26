@@ -22,7 +22,7 @@ TZNAME:PST
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-DTSTAMP:20260926T010307Z
+DTSTAMP:20260926T070307Z
 UID:88870604@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20261016T130000
 DTEND;TZID=America/Los_Angeles:20261016T150000
@@ -33,45 +33,45 @@ SUMMARY:Harmony Events for 2026-2027 & FALL FESTIVAL October 16
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-photo-day-at-harmony-elementary-oct-14@harmony-today
-DTSTAMP:20260925T180307Z
+DTSTAMP:20260926T000307Z
 DTSTART;VALUE=DATE:20261014
 SUMMARY:Photo Day at Harmony Elementary - Oct 14
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-conference-week-oct-5-9-early-dismissal-@harmony-today
-DTSTAMP:20260925T180307Z
+DTSTAMP:20260926T000307Z
 DTSTART:20261005T131500
 SUMMARY:Conference Week Oct 5-9: early dismissal 1:15pm daily
 URL:https://forms.gle/s2wGxaRafVLJbkAu5
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-board-meeting-thu-sep-25-8-45pm@harmony-today
-DTSTAMP:20260925T180307Z
-DTSTART:20260925T204500
+DTSTAMP:20260926T000307Z
+DTSTART:20270925T204500
 SUMMARY:Board Meeting — Thu Sep 25\, 8:45pm
 URL:https://meet.google.com/pmu-btbj-iwc
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-scoe-virtual-mental-health-workshops-for@harmony-today
-DTSTAMP:20260925T180307Z
+DTSTAMP:20260926T000307Z
 DTSTART:20261105T170000
 SUMMARY:SCOE Virtual Mental Health Workshops for Families
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-harmony-writers-workshop-after-school-cl@harmony-today
-DTSTAMP:20260925T180307Z
+DTSTAMP:20260926T000307Z
 DTSTART:20261029T142000
 SUMMARY:Harmony Writers' Workshop — after-school club
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-hand-in-hand-parenting-workshops-startin@harmony-today
-DTSTAMP:20260925T180307Z
+DTSTAMP:20260926T000307Z
 DTSTART;VALUE=DATE:20261014
 SUMMARY:Hand In Hand Parenting Workshops starting Oct 14
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-parenting-through-adversity-workshop-sep@harmony-today
-DTSTAMP:20260925T180307Z
+DTSTAMP:20260926T000307Z
 DTSTART:20270911T083000
 SUMMARY:Parenting Through Adversity workshop — Sep 11\, 8:30am\, library
 END:VEVENT

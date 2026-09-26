@@ -154,6 +154,10 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
 .submission .send:disabled{opacity:.6;cursor:default}
 .submission .cancel{background:none;border:none;color:var(--ink-muted);font-size:14px;cursor:pointer;font-family:Karla}
 .submission .status{font-size:13.5px;margin-top:10px;min-height:18px;color:var(--ink-soft)}
+/* Flyer popup */
+#flyer-img{max-width:100%;border-radius:12px;display:block;margin-top:10px}
+#flyer-dialog .body{max-height:calc(100vh - 80px);overflow:auto}
+.flyer-btn{cursor:pointer;margin-left:6px;font-size:14px}
 .menu-week{max-width:560px}
 .menu-week .wk-day{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
 .menu-week .wk-day:last-child{border-bottom:none}
@@ -253,6 +257,15 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
       </div>
       <div class="status" id="sd-status"></div>
     </form>
+  </div>
+</dialog>
+
+<dialog class="submission" id="flyer-dialog">
+  <div class="body">
+    <h3 id="flyer-title">Flyer</h3>
+    <img id="flyer-img" alt="event flyer">
+    <div class="sub" id="flyer-cap"></div>
+    <div class="actions"><button class="cancel" type="button" id="flyer-close">Close</button></div>
   </div>
 </dialog>
 
@@ -558,7 +571,7 @@ function renderEvents(){
     let html = "";
     if (todayItems.length) {
       html += todayItems.map(i=>{ const det = i.detail || timeOf(i.date);
-        return `<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${link(i.title, i.url)}</div>${det?`<div class="event-detail">${esc(det)}</div>`:""}</div></div>`; }).join("");
+        return `<div class="event-row"><span style="font-size:20px">📍</span><div><div class="event-title">Today: ${link(i.title, i.url)}${flyerBtn(i)}</div>${det?`<div class="event-detail">${esc(det)}</div>`:""}</div></div>`; }).join("");
     } else {
       html += `<div class="event-row"><span style="font-size:20px">🏫</span><div><div class="event-title">Regular school day</div><div class="event-detail">No special events today</div></div></div>`;
     }
@@ -570,7 +583,7 @@ function renderEvents(){
         html += `<div class="no-school-row">🚫 ${i.date.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})} — ${esc(i.title.replace(/ — No School.*/,""))}</div>`;
       } else {
         const det = i.detail || timeOf(i.date);
-        html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${link(i.title, i.url)}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div>${det?`<div class="event-detail">${esc(det)}</div>`:""}</div></div>`;
+        html += `<div class="event-row"><div class="date-block"><div class="dow">${dow2}</div><div class="day">${day}</div></div><div class="accent" style="background:${color}"></div><div><div class="event-title">${link(i.title, i.url)}${flyerBtn(i)}${i.src==="shARK"?'<span class="shark-tag">shARK</span>':""}</div>${det?`<div class="event-detail">${esc(det)}</div>`:""}</div></div>`;
       }
     }
     html += `<div class="sub-link"><a class="lnk" href="data/all-events.ics">📅 Subscribe — all these dates in your calendar app</a></div>`;
@@ -742,6 +755,24 @@ function renderLunchCard(){
   });
 }
 
+// ---------------- Event flyers (data/flyers.json) ----------------
+let FLYERS = [];   // loaded once at boot; rows matching a flyer get a 🖼️ popup
+function loadFlyers(){
+  J("data/flyers.json").then(d => { FLYERS = d.flyers || []; }).catch(()=>{});
+}
+const flyerFor = title => FLYERS.find(f => f.match && title.toLowerCase().includes(f.match.toLowerCase()));
+function flyerBtn(i){
+  const f = flyerFor(i.title);
+  if (!f) return "";
+  return ` <span class="lnk flyer-btn" data-flyer="${esc(f.image)}" data-flyer-title="${esc(f.title || i.title)}" data-flyer-cap="${esc(f.caption || "")}" title="see the flyer">🖼️</span>`;
+}
+function openFlyer(src, title, cap){
+  $("flyer-img").src = src;
+  $("flyer-title").textContent = title || "Flyer";
+  $("flyer-cap").textContent = cap || "";
+  $("flyer-dialog").showModal();
+}
+
 // ---------------- Absence reporter ----------------
 // pure builder so tests can lock the mailto format
 function absenceMailto(entry, name, date, reason){
@@ -800,6 +831,13 @@ $("week-dialog").addEventListener("click", e => { if (e.target === $("week-dialo
 $("absence-btn").addEventListener("click", openAbsence);
 $("ab-cancel").addEventListener("click", () => $("absence-dialog").close());
 $("absence-dialog").addEventListener("click", e => { if (e.target === $("absence-dialog")) $("absence-dialog").close(); });
+$("flyer-close").addEventListener("click", () => $("flyer-dialog").close());
+$("flyer-dialog").addEventListener("click", e => { if (e.target === $("flyer-dialog")) $("flyer-dialog").close(); });
+$("events-card").addEventListener("click", e => {
+  const b = e.target.closest("[data-flyer]");
+  if (b) openFlyer(b.dataset.flyer, b.dataset.flyerTitle, b.dataset.flyerCap);
+});
+loadFlyers();
 ["ab-grade","ab-name","ab-date","ab-reason"].forEach(id => {
   $(id).addEventListener("change", updateAbsenceMail);
   $(id).addEventListener("input", updateAbsenceMail);

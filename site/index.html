@@ -202,6 +202,21 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
   </div>
 
   <div class="section">
+    <div class="section-title">🗳️ Measure M — Nov 2026</div>
+    <div class="card" id="measurem-card">
+      <div class="notice">
+        <div class="notice-head"><span class="source-chip chip-email">community</span><span class="ts">2026-09-29</span></div>
+        <div class="notice-title">School Board Chair Yuri Koslen: please support Measure M — the HUSD parcel tax</div>
+        <div class="notice-text">Ballots mail out next week, and passing needs a 2/3 majority — so the campaign needs to mobilize fast. After 8 years of state and federal funding swings, Measure M would create stable LOCAL funding for our teachers, aides, and the programs we love. Ways to help: website development, graphic design, campaign organizing, donations (under $99 need no reporting), and — the most effective single thing — talking to 20 neighbors in the district.</div>
+        <div class="involved" style="margin-top:10px;gap:8px;display:flex;flex-wrap:wrap">
+          <a class="cta" href="https://harmonyusd.org/measure-m-parcel-tax" target="_blank" rel="noopener">Read about Measure M →</a>
+          <button type="button" data-submit="measurem" style="background:var(--clay-pale);color:var(--clay-ink)">✋ I can help — count me in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">📅 Today & Coming Up</div>
     <div class="card" id="events-card">Loading…</div>
   </div>
@@ -809,7 +824,9 @@ const SUBMIT_COPY = {
   student: {title:"✏️ Submit news or an editorial", sub:"Student journalists: share a story, photo idea, or editorial.",
             head:"Headline", body:"Tell us more", crew:"student editors"},
   event:   {title:"🎪 Suggest an event", sub:"Parents: ideas for the calendar — festivals, meetups, traditions.",
-            head:"What's the event?", body:"Details — when, where, who it's for", crew:"events crew"}
+            head:"What's the event?", body:"Details — when, where, who it's for", crew:"events crew"},
+  measurem:{title:"✋ Help with Measure M", sub:"Tell the campaign how you'd like to pitch in — website, design, organizing, funding, or talking to neighbors.",
+            head:"How can you help?", body:"Your name + how you'd like to help (pick any: website, graphic design, organizing, donation, talking to neighbors)", crew:"Measure M campaign"}
 };
 function openSubmit(type){
   const c = SUBMIT_COPY[type] || SUBMIT_COPY.student;
@@ -849,7 +866,7 @@ $("submit-form").addEventListener("submit", async e => {
   const btn = $("sd-send");
   btn.disabled = true;
   $("sd-status").textContent = "Sending…";
-  const type = $("sd-type").value === "event" ? "event" : "student";
+  const type = ["event","measurem"].includes($("sd-type").value) ? $("sd-type").value : "student";
   try {
     const r = await fetch("api/submit", {method:"POST", headers:{"Content-Type":"application/json"},
       body: JSON.stringify({type, name:$("sd-name").value, title:$("sd-head").value, body:$("sd-body").value, website:$("sd-hp").value})});

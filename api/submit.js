@@ -29,7 +29,7 @@ export default async function handler(req, res) {
   }
   if (d.website) return res.json({ ok: true });   // honeypot: pretend success, deliver nothing
 
-  const type = d.type === "event" ? "event" : "student";
+  const type = ["event","measurem"].includes(d.type) ? d.type : "student";
   const clean = s => String(s ?? "").slice(0, 4000).trim();
   const name = clean(d.name).slice(0, 80);
   const title = clean(d.title).slice(0, 120);
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from,
         to: [to],
-        subject: (type === "student" ? "[student news] " : "[event idea] ") + title,
+        subject: (type === "student" ? "[student news] " : type === "measurem" ? "[measure M] " : "[event idea] ") + title,
         text: `From: ${name || "anonymous"}\nType: ${type}\n\n${title}\n\n${body}\n`
       })
     });

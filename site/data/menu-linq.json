@@ -1,68 +1,6 @@
 {
- "fetched": "2026-10-07T18:04:04",
+ "fetched": "2026-10-08T18:03:41",
  "days": {
-  "2026-10-05": {
-   "lunch": [
-    {
-     "cat": "Main Entree",
-     "item": "Tamale, Bean and cheese, WG, Gluten free"
-    },
-    {
-     "cat": "Meat/meat alternative",
-     "item": "Cheddar cheese, shredded, 2 oz"
-    },
-    {
-     "cat": "Vegetable",
-     "item": "Baked potato, russet, 70 ct, .75 C starchy"
-    },
-    {
-     "cat": "Vegetable",
-     "item": "Salsa"
-    },
-    {
-     "cat": "Fruit",
-     "item": "Banana"
-    },
-    {
-     "cat": "Milk",
-     "item": "Milk, 1% HPT, Crystal"
-    },
-    {
-     "cat": "Milk",
-     "item": "Milk, FF Chocolate, HPT, Crystal"
-    },
-    {
-     "cat": "Condiments",
-     "item": "Sour cream, serving"
-    }
-   ],
-   "breakfast": [
-    {
-     "cat": "Main Entree",
-     "item": "Bagel, WG, Dos Pisano"
-    },
-    {
-     "cat": "Main Entree",
-     "item": "Cinnamon Toast Crunch, reduced sugar"
-    },
-    {
-     "cat": "Main Entree",
-     "item": "Oatmeal bar and string cheese"
-    },
-    {
-     "cat": "Fruit",
-     "item": "Apple"
-    },
-    {
-     "cat": "Fruit",
-     "item": "Orange, sliced, 1/2 cup serving"
-    },
-    {
-     "cat": "Milk",
-     "item": "Milk, 1% HPT, Crystal"
-    }
-   ]
-  },
   "2026-10-06": {
    "lunch": [
     {

@@ -23,7 +23,7 @@ header.hero h1{font-size:26px;font-weight:700;line-height:1.25}
 header.hero .sub{margin-top:8px;font-size:14px;opacity:.85;font-family:system-ui,sans-serif}
 #count{font-family:'IBM Plex Mono',monospace;font-size:15px;background:rgba(255,255,255,.14);display:inline-block;padding:6px 14px;border-radius:999px;margin-top:14px}
 .btn-row{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
-.btn{font-family:system-ui,sans-serif;font-size:14px;font-weight:600;text-decoration:none;padding:10px 18px;border-radius:999px;display:inline-block}
+.btn{font-family:system-ui,sans-serif;font-size:14px;font-weight:600;text-decoration:none;padding:10px 18px;border-radius:999px;display:inline-block;cursor:pointer;border:none}
 .btn-meet{background:#fff;color:var(--garden-deep)}
 .btn-ics{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.35)}
 section{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:20px 22px;margin-bottom:14px}
@@ -40,6 +40,7 @@ section li{margin-bottom:6px}
 .agenda-item .why{font-size:14.5px;margin-bottom:6px}
 .agenda-item .do{font-size:14px;color:var(--garden-deep)}
 .tag{font-family:system-ui,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:var(--oat);color:var(--oat-ink);border-radius:999px;padding:2px 9px;vertical-align:2px;margin-left:6px}
+.placeholder{font-size:15px;color:var(--ink-soft);font-style:italic}
 footer{margin-top:20px;font-size:12.5px;color:var(--ink-muted);font-family:system-ui,sans-serif}
 </style>
 </head>
@@ -49,47 +50,24 @@ footer{margin-top:20px;font-size:12.5px;color:var(--ink-muted);font-family:syste
 
 <header class="hero">
   <h1>Harmony Union School Board</h1>
-  <div class="sub">Next meeting: <strong>Thursday, September 25</strong> &middot; Assembly Hall, 1935 Bohemian Highway, Occidental &middot; also on Google Meet</div>
+  <div class="sub" id="next-line">Next meeting: <strong id="next-when">…</strong> &middot; Assembly Hall, 1935 Bohemian Highway, Occidental &middot; also on Google Meet</div>
   <div id="count">…</div>
   <div class="btn-row">
-    <a class="btn btn-meet" href="https://meet.google.com/pmu-btbj-iwc" target="_blank" rel="noopener">Join on Google Meet</a>
-    <a class="btn btn-ics" href="data/board-meeting.ics">Add to calendar</a>
+    <a class="btn btn-meet" id="join-btn" href="https://www.harmonyusd.org/" target="_blank" rel="noopener">Join on Google Meet</a>
+    <button class="btn btn-ics" id="ics-btn" type="button">Add to calendar</button>
   </div>
 </header>
 
-<div class="flag">
-<strong>Time note:</strong> the meeting notice says <strong>8:45&nbsp;PM</strong> and the posted agenda says open session begins at <strong>9&nbsp;PM</strong> (the district's own documents disagree). If you're attending in person, arrive around <strong>8:40&nbsp;PM</strong> — and if you're watching the telecast, join by 8:50 to be safe.
-</div>
+<div class="flag" id="time-note" hidden></div>
 
 <section class="when">
-<h2>Tonight's agenda — in plain language</h2>
-<p style="font-size:14px;color:var(--ink-muted)">Official agenda: available in ParentSquare and on the district's <a href="https://simbli.eboardsolutions.com/SB_Meetings/SB_MeetingListing.aspx?S=36030644" target="_blank" rel="noopener">Simbli meeting page</a>. Documents are open for public review at the district office at least 72 hours before the meeting.</p>
-
-<div class="agenda-item">
-<h3>1–3. Call to order, pledge, agenda approval</h3>
-<div class="why">Housekeeping — the board confirms what it will vote on tonight.</div>
-</div>
-
-<div class="agenda-item">
-<h3>4. Public comment <span class="tag">your voice</span></h3>
-<div class="why">Anyone may speak briefly on any district matter — even items not on the agenda. This is the easiest way to be heard: show up, sign in if there's a card, and keep it to the usual 2&ndash;3 minutes. The board generally can't discuss or act on non-agenda items tonight, but they must listen, and items raised often reach future agendas.</div>
-<div class="do">Want to speak? Come to Assembly Hall by 8:40, or ask in the Meet chat how remote comment is handled.</div>
-</div>
-
-<div class="agenda-item">
-<h3>5A. Approve Unaudited Actuals for 2025-26 <span class="tag">money</span></h3>
-<div class="why">California school years close June 30; the "unaudited actuals" are the closed books for 2025-26 — official even though an outside CPA audit comes later in the fall. Approving them authorizes no new spending; it accepts the accounting of what already happened, and the packet then goes to the county office (Education Code &sect;42100, normally by Sep 15). This is the year-end scorecard against <a href="budget" style="color:var(--garden-deep)">the adopted budget we summarized</a>: the plan projected a ~$291K unrestricted surplus, a ~$1.21M total ending balance (~$204K unassigned), SpEd costs of ~$1.25M with a ~$958K general-fund subsidy, and funding built on 206.85 ADA. It also <em>assumed</em> a $650&ndash;750K architect-lawsuit settlement landing this year.</div>
-<div class="do"><strong>What to watch in the report:</strong> did the unrestricted fund finish above or below plan &middot; did the lawsuit money actually arrive &middot; actual ADA vs. the 206.85 projected (attendance is what the state pays on) &middot; whether staff still project the district can reach 2027-28 without more cuts. The two pages that tell the story: the unrestricted general-fund summary and the components of ending fund balance. Document is public at the district office during business hours.</div>
-</div>
-
-<div class="agenda-item">
-<h3>6–7. Next meeting &amp; adjournment</h3>
-<div class="why">The board's next <strong>regular meeting is October 8</strong> (see the <a href="./" style="color:var(--garden-deep)">dashboard calendar</a>).</div>
-</div>
+<h2 id="agenda-heading">The agenda — in plain language</h2>
+<p style="font-size:14px;color:var(--ink-muted)">Official agenda: available in ParentSquare and on the district's <a id="simbli-link" href="https://simbli.eboardsolutions.com/SB_Meetings/SB_MeetingListing.aspx?S=36030644" target="_blank" rel="noopener">Simbli meeting page</a>. Documents are open for public review at the district office at least 72 hours before the meeting.</p>
+<div id="agenda-body"><p class="placeholder">Loading…</p></div>
 </section>
 
 <section>
-<h2>Joining the meeting — set up before, not at 8:44</h2>
+<h2>Joining the meeting — set up before, not at start-minus-one-minute</h2>
 <ul>
 <li><strong>No account needed.</strong> Tap the Meet link, type your name, press "Ask to join." The district admits attendees at start time — that waiting screen is normal.</li>
 <li><strong>iPhone / iPad:</strong> works in Safari without installing anything. The first visit asks for camera &amp; microphone permission — fine to allow. The free Google Meet app is optional but slightly more reliable.</li>
@@ -105,19 +83,112 @@ footer{margin-top:20px;font-size:12.5px;color:var(--ink-muted);font-family:syste
 <p>Agenda requests go to the superintendent's office by <strong>3:00&nbsp;PM on the Thursday of the week before</strong> each meeting. For smaller questions, public comment (above) needs no advance sign-up.</p>
 </section>
 
-<footer>Harmony Today is a parent-run family dashboard and is not an official district publication. Agenda summaries are plain-language guides — the official agenda and documents govern. Meeting details from the district's ParentSquare notice and posted agenda, Sep 2026.</footer>
+<footer>Harmony Today is a parent-run family dashboard and is not an official district publication. Agenda summaries are plain-language guides — the official agenda and documents govern.</footer>
 </div>
 
 <script>
-const t = new Date(2026, 8, 25, 20, 45, 0);   // Sep 25 2026 8:45 PM local
+// Everything computable is computed: the next meeting comes from the district
+// calendar, the join link from board.json, the ICS is generated on the fly.
+// Only the plain-language agenda is curated — in data/board-agenda.json, and
+// it is shown ONLY when its "meeting" date matches the next real meeting.
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":'&#39;'}[c]));
+// allowlist sanitizer (same policy as the digest prose): https anchors + basic formatting
+const safeHTML = s => esc(s)
+  .replace(/&lt;a\s+href=&quot;(https?:\/\/[^&]*)&quot;[^&]*&gt;/gi, '<a href="$1" target="_blank" rel="noopener">')
+  .replace(/&lt;\/a&gt;/gi, "</a>")
+  .replace(/&lt;(b|strong|i|em)&gt;/gi, "<$1>")
+  .replace(/&lt;\/(b|strong|i|em)&gt;/gi, "</$1>");
+
+let NEXT = null;   // Date of the next board meeting
+
+async function init(){
+  // board.json: live meeting link + Simbli listing
+  try {
+    const b = await (await fetch("data/board.json?t=" + Date.now())).json();
+    if (b.meeting_url) $("join-btn").href = b.meeting_url;
+    if (b.listing_url) $("simbli-link").href = b.listing_url;
+  } catch (e) {}
+
+  // next board meeting from the district master calendar
+  try {
+    const ics = await (await fetch("data/district-calendar.ics?t=" + Date.now())).text();
+    const flat = ics.replace(/\r?\n[ \t]/g, "");
+    const now = new Date();
+    let best = null;
+    for (const blk of flat.split("BEGIN:VEVENT").slice(1)) {
+      const sm = blk.match(/SUMMARY:([^\r\n]+)/);
+      if (!sm || !/board meeting/i.test(sm[1])) continue;
+      const dt = blk.match(/DTSTART[^:\n]*:(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2}))?/);
+      if (!dt) continue;
+      const d = dt[4] ? new Date(+dt[1], +dt[2]-1, +dt[3], +dt[4], +dt[5]) : new Date(+dt[1], +dt[2]-1, +dt[3]);
+      if (d >= new Date(now.getFullYear(), now.getMonth(), now.getDate()) && (!best || d < best)) best = d;
+    }
+    NEXT = best;
+    if (NEXT) {
+      const when = NEXT.toLocaleDateString("en-US", {weekday:"long", month:"long", day:"numeric"});
+      const tm = (NEXT.getHours() || NEXT.getMinutes())
+        ? NEXT.toLocaleTimeString("en-US", {hour:"numeric", minute:"2-digit"}).toLowerCase() : "";
+      $("next-when").textContent = when + (tm ? " · " + tm : "");
+    } else {
+      $("next-when").textContent = "no upcoming meeting on the district calendar — see the Simbli listing";
+    }
+    tick();   // paint the countdown as soon as NEXT is known, don't wait for the 30s interval
+  } catch (e) {}
+
+  // curated plain-language agenda — shown (incl. its time_note) only if it matches the next meeting
+  try {
+    const a = await (await fetch("data/board-agenda.json?t=" + Date.now())).json();
+    const iso = NEXT ? `${NEXT.getFullYear()}-${String(NEXT.getMonth()+1).padStart(2,"0")}-${String(NEXT.getDate()).padStart(2,"0")}` : null;
+    if (iso && a.meeting === iso) {
+      if (a.time_note) {
+        $("time-note").hidden = false;
+        $("time-note").innerHTML = "<strong>Time note:</strong> " + safeHTML(a.time_note);
+      }
+      if (a.heading) $("agenda-heading").textContent = a.heading;
+      $("agenda-body").innerHTML = (a.items || []).map(i =>
+        `<div class="agenda-item"><h3>${esc(i.title)}${i.tag ? ` <span class="tag">${esc(i.tag)}</span>` : ""}</h3>` +
+        (i.why ? `<div class="why">${safeHTML(i.why)}</div>` : "") +
+        (i.do ? `<div class="do">${safeHTML(i.do)}</div>` : "") + `</div>`
+      ).join("");
+    } else {
+      const label = NEXT ? `the ${NEXT.toLocaleDateString("en-US", {month:"long", day:"numeric"})} meeting` : "the next meeting";
+      $("agenda-body").innerHTML =
+        `<p class="placeholder">Plain-language summary for ${esc(label)} is on its way — meanwhile the official agenda is always on the Simbli page linked above.</p>`;
+    }
+  } catch (e) {
+    $("agenda-body").innerHTML = '<p class="placeholder">Agenda summary unavailable right now — see the Simbli page linked above.</p>';
+  }
+}
+
+// countdown toward NEXT (recomputed each tick; runs even before data lands)
 function tick(){
-  const ms = t - new Date();
-  const el = document.getElementById('count');
+  const el = $("count");
+  if (!NEXT) { el.textContent = ""; return; }
+  const ms = NEXT - new Date();
   if (ms <= 0) { el.textContent = "The meeting has started (or has wrapped) — the Meet link above stays live."; return; }
-  const h = Math.floor(ms/3.6e6), m = Math.floor(ms%3.6e6/6e4);
-  el.textContent = h > 0 ? `Starts in ${h} hr ${m} min` : `Starts in ${m} min`;
+  const d = Math.floor(ms/864e5), h = Math.floor(ms%864e5/3.6e6), m = Math.floor(ms%3.6e6/6e4);
+  el.textContent = d > 0 ? `Starts in ${d} day${d>1?"s":""} · ${h} hr` : h > 0 ? `Starts in ${h} hr ${m} min` : `Starts in ${m} min`;
 }
 tick(); setInterval(tick, 30000);
+
+// "Add to calendar" — generated from the computed next meeting, so it's never stale
+$("ics-btn").addEventListener("click", () => {
+  if (!NEXT) return;
+  const p = n => String(n).padStart(2, "0");
+  const dt = x => `${x.getFullYear()}${p(x.getMonth()+1)}${p(x.getDate())}T${p(x.getHours())}${p(x.getMinutes())}00`;
+  const end = new Date(NEXT.getTime() + 2.5 * 3600e3);
+  const ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Harmony Today//Board//EN\r\nBEGIN:VEVENT\r\n" +
+    `UID:board-${dt(NEXT)}@harmony-today\r\nDTSTAMP:${dt(new Date())}\r\nDTSTART:${dt(NEXT)}\r\nDTEND:${dt(end)}\r\n` +
+    "SUMMARY:HUSD Board Meeting\r\nLOCATION:Assembly Hall\\, 1935 Bohemian Highway\\, Occidental\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics], {type: "text/calendar"}));
+  a.download = "husd-board-meeting.ics";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+init();
 </script>
 <script>
 if ('serviceWorker' in navigator) {

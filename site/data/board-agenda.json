@@ -1,0 +1,26 @@
+{
+ "_note": "Per-meeting file. The board page shows 'items' ONLY when 'meeting' equals the ISO date of the next real board meeting (from the district calendar). Copy this shape for each new meeting: read the Simbli agenda, write plain-language items, set meeting/updated/time_note. time_note is optional (e.g. when notice and agenda disagree on start time). HTML allowed in why/do: <a href='https://...'>, b, i, em only.",
+ "meeting": "2026-09-25",
+ "updated": "2026-09-25",
+ "heading": "Tonight's agenda — in plain language",
+ "time_note": "The meeting notice says 8:45 PM and the posted agenda says open session at 9 PM (the district's own documents disagree). If attending in person, arrive around 8:40 PM; join the Meet by 8:50 to be safe.",
+ "items": [
+  {
+   "title": "1–3. Call to order, pledge, agenda approval",
+   "tag": null,
+   "why": "Housekeeping — the board confirms what it will vote on tonight."
+  },
+  {
+   "title": "4. Public comment",
+   "tag": "your voice",
+   "why": "Anyone may speak briefly on any district matter — even items not on the agenda. Show up, sign in if there's a card, keep it to the usual 2–3 minutes.",
+   "do": "Want to speak? Come to Assembly Hall a few minutes early, or ask in the Meet chat how remote comment is handled."
+  },
+  {
+   "title": "5A. Approve Unaudited Actuals for 2025-26",
+   "tag": "money",
+   "why": "The closed books for 2025-26 — approving them accepts the accounting of what already happened; no new spending authorized. Packet goes to the county office per Education Code §42100. Compare against <a href=\"https://harmony.justsoyouknow.site/budget\">the adopted budget summary</a>.",
+   "do": "What to watch: unrestricted fund vs plan, whether the lawsuit settlement arrived, actual ADA vs the 206.85 projected."
+  }
+ ]
+}

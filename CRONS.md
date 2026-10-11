@@ -92,7 +92,19 @@ Safety rails (in code, not trust):
 | Job | Schedule | Role |
 |---|---|---|
 | `School Dashboard Digest` (id `325717d2`) | Daily 7:00am | agent-written prose + listing merge via `gen_digest.py --write` (see spec above) |
+| Board-meeting agenda summary (agent task, not a cron — run when a new meeting appears on the calendar, ideally ~3 days before) | ~monthly | write `site/data/board-agenda.json` for the next meeting (see below) |
 | Grants check (Daisy Bakery — separate but related) | Monthly, 1st @ 9am | verifies grant deadlines, emails kenbradbury@gmail.com |
+
+**Per-meeting board ritual:** the board page (`/board`) computes the next meeting,
+countdown, join link, and calendar download by itself — the only curated piece is
+`site/data/board-agenda.json`. When a new board meeting approaches: read the agenda
+on Simbli (listing URL is in `site/data/board.json`), then update
+`site/data/board-agenda.json` — set `meeting` to the ISO date of THAT meeting,
+write plain-language `items` (title/tag/why/do; HTML allowlist: https links, b/i/em),
+optional `time_note` when notice and agenda disagree on timing, then commit + push.
+The page shows the items ONLY when `meeting` matches the next real meeting — a stale
+file renders an honest "summary on its way" placeholder instead of wrong content.
+The Sep 25 entry in the file is a worked example of the shape.
 
 ## Change-history note for the dev
 

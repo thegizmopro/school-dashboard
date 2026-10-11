@@ -39,6 +39,10 @@ section li{margin-bottom:6px}
 .agenda-item h3{font-size:16.5px;color:var(--ink);margin-bottom:6px}
 .agenda-item .why{font-size:14.5px;margin-bottom:6px}
 .agenda-item .do{font-size:14px;color:var(--garden-deep)}
+.hist-meeting{margin-bottom:6px}
+.hist-date{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.4px;margin:18px 0 2px}
+.hist-meeting:first-child .hist-date{margin-top:2px}
+.hist-note{font-size:13.5px;color:var(--ink-muted);font-style:italic;margin-bottom:4px}
 .tag{font-family:system-ui,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:var(--oat);color:var(--oat-ink);border-radius:999px;padding:2px 9px;vertical-align:2px;margin-left:6px}
 .placeholder{font-size:15px;color:var(--ink-soft);font-style:italic}
 footer{margin-top:20px;font-size:12.5px;color:var(--ink-muted);font-family:system-ui,sans-serif}
@@ -81,6 +85,12 @@ footer{margin-top:20px;font-size:12.5px;color:var(--ink-muted);font-family:syste
 <section>
 <h2>Getting an item on a future agenda</h2>
 <p>Agenda requests go to the superintendent's office by <strong>3:00&nbsp;PM on the Thursday of the week before</strong> each meeting. For smaller questions, public comment (above) needs no advance sign-up.</p>
+</section>
+
+<section>
+<h2>Past meetings — what the board actually did</h2>
+<p style="font-size:14px;color:var(--ink-muted)">Plain-language recaps from the district's official minutes and agendas, newest first. Recaps marked <i>agenda only</i> reflect the plan — no minutes were posted for that meeting.</p>
+<div id="history-body"><p class="placeholder">Loading…</p></div>
 </section>
 
 <footer>Harmony Today is a parent-run family dashboard and is not an official district publication. Agenda summaries are plain-language guides — the official agenda and documents govern.</footer>
@@ -158,6 +168,22 @@ async function init(){
     }
   } catch (e) {
     $("agenda-body").innerHTML = '<p class="placeholder">Agenda summary unavailable right now — see the Simbli page linked above.</p>';
+  }
+
+  // past meetings — plain-language recaps from data/board-history.json (static, no guard needed)
+  try {
+    const h = await (await fetch("data/board-history.json?t=" + Date.now())).json();
+    const fmt = iso => new Date(iso + "T12:00").toLocaleDateString("en-US", {weekday:"long", year:"numeric", month:"long", day:"numeric"});
+    $("history-body").innerHTML = (h.meetings || []).map(m =>
+      `<div class="hist-meeting">` +
+      `<div class="hist-date">${esc(fmt(m.date))}${m.type ? " · " + esc(m.type) : ""}${m.record === "agenda" ? ` <span class="tag">agenda only</span>` : ""}</div>` +
+      (m.record_note ? `<div class="hist-note">${esc(m.record_note)}</div>` : "") +
+      (m.items || []).map(i =>
+        `<div class="agenda-item"><h3>${esc(i.title)}${i.tag ? ` <span class="tag">${esc(i.tag)}</span>` : ""}</h3>` +
+        (i.why ? `<div class="why">${safeHTML(i.why)}</div>` : "") + `</div>`).join("") +
+      `</div>`).join("");
+  } catch (e) {
+    $("history-body").innerHTML = '<p class="placeholder">Meeting recaps unavailable right now.</p>';
   }
 }
 

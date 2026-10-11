@@ -1,14 +1,15 @@
 {
-  "_note": "Past meetings in plain language, newest first. Sourced from district minutes/agendas (Simbli); curated by hand. HTML allowed in item text: <a href=\"https://...\">, b, i, em only.",
+  "_note": "Past meetings in plain language, newest first. Sourced from district minutes/agendas (Simbli); curated by hand. HTML allowed in item text: <a href=\"https://...\">, b, i, em only. headline = one-line characterization of the meeting.",
   "updated": "2026-10-10",
   "meetings": [
     {
       "date": "2026-10-08",
       "type": "Regular Board Meeting",
+      "headline": "The first real bond money moves",
       "record": "agenda",
       "record_note": "No minutes posted yet — this recap reflects the agenda (the plan), not the vote record.",
       "items": [
-        {"title": "Bond contracts — about $83K", "tag": "money", "why": "Five consent items moved the first real bond money: cargo storage ($34,000), EOC pad ($13,000), perimeter survey ($8,000), septic risers ($12,000), and cistern/garden water overflow ($16,000)."},
+        {"title": "Bond contracts — about $83K", "tag": "money", "why": "Five consent items: cargo storage ($34,000), EOC pad ($13,000), perimeter survey ($8,000), septic risers ($12,000), and cistern/garden water overflow ($16,000)."},
         {"title": "Field trips (consent)", "tag": null, "why": "Routine approvals for upcoming student trips."},
         {"title": "William's Law quarterly reports", "tag": null, "why": "The state's school-safety reporting requirement — quarterly confirmation the district is current."},
         {"title": "Next meeting: November 12", "tag": null, "why": "Confirmed on the record."}
@@ -17,19 +18,19 @@
     {
       "date": "2026-09-25",
       "type": "Special Board Meeting",
+      "headline": "The three-minute meeting",
       "record": "minutes",
       "items": [
-        {"title": "The three-minute meeting", "tag": null, "why": "Convened 8:49 AM, adjourned 8:52 AM. One substantive act:"},
-        {"title": "2025-26 unaudited actuals approved (unanimous)", "tag": "money", "why": "The district's closed books for 2025-26, headed to the county office. The full report runs about a hundred pages; the headline numbers are on <a href=\"https://harmony.justsoyouknow.site/budget\">the budget page</a> — including an attendance shortfall worth roughly $160K in state funding."}
+        {"title": "2025-26 unaudited actuals approved — unanimous", "tag": "money", "why": "Convened 8:49 AM, adjourned 8:52 AM — the meeting's one substantive act. The district's closed books for 2025-26 (Gress/Laird, unanimous), headed to the county office. The full report runs about a hundred pages; the headline numbers are on <a href=\"https://harmony.justsoyouknow.site/budget\">the budget page</a> — including an attendance shortfall worth roughly $160K in state funding."}
       ]
     },
     {
       "date": "2026-09-10",
       "type": "Special Board Meeting",
+      "headline": "The workhorse — nine approvals, every vote unanimous",
       "record": "minutes",
       "items": [
-        {"title": "Nine approvals, every vote unanimous", "tag": null, "why": "A two-and-a-half-hour workhorse session: consent agenda plus eight action items, all passing without a dissenting vote."},
-        {"title": "Money items", "tag": "money", "why": "LCAP revisions, unaudited actuals, the Gann limit (the state's spending cap), and substitute teacher compensation — all approved."},
+        {"title": "Money items", "tag": "money", "why": "LCAP revisions, unaudited actuals, the Gann limit (the state's spending cap), and substitute teacher compensation — all approved unanimously."},
         {"title": "Facilities and energy", "tag": null, "why": "PCO Energy Resiliency Project, a PG&E contract, and a new facilities fee schedule — all approved."},
         {"title": "New math pilot", "tag": null, "why": "Innovamat Thinking Math approved for piloting."},
         {"title": "The bond pipeline", "tag": "money", "why": "$17M in identified project needs; $1M–$2.5M potentially bond-fundable; committee phases finalized, due January 2027."},
@@ -41,9 +42,10 @@
     {
       "date": "2026-08-20",
       "type": "Special Board Meeting",
+      "headline": "The quiet one",
       "record": "minutes",
       "items": [
-        {"title": "One quiet hour with the lawyer", "tag": null, "why": "Almost the entire meeting was closed session: legal counsel on two anticipated litigation matters. No report out, no votes, no dollars. The public record is essentially \"we met with our lawyer.\""}
+        {"title": "Closed session: two anticipated litigation matters", "tag": null, "why": "Almost the entire hour was legal counsel in closed session. No report out, no votes, no dollars. The public record is essentially \"we met with our lawyer.\""}
       ]
     }
   ]

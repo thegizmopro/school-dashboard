@@ -80,7 +80,7 @@ const yc = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'site', 'data',
   vm.runInContext(script, sb);
   vm.runInContext(`NSM = noSchoolMap(YC); NSD = nextSchoolDay(new Date(), NSM);`, Object.assign(sb, { YC: yc }));
   t('labor day mapped', vm.runInContext(`NSM.get('2026-09-07')`, sb) === 'Labor Day — No School');
-  t('in-service day mapped', vm.runInContext(`NSM.get('2026-10-12')`, sb) === 'Teacher In-Service — No School');
+  t('columbus day mapped', vm.runInContext(`NSM.get('2026-10-12')`, sb) === 'Columbus Day 🇮🇹 — No School');
   t('break range expanded (mid)', vm.runInContext(`NSM.has('2026-11-25')`, sb) === true);
   t('break range expanded (end)', vm.runInContext(`NSM.has('2026-11-27')`, sb) === true);
   t('regular school day unmapped', vm.runInContext(`NSM.get('2026-09-08')`, sb) === undefined);

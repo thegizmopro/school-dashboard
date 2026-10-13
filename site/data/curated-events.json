@@ -1,0 +1,23 @@
+{
+  "_note": "Hand-curated calendar events the feeds don't carry (WhatsApp/community-sourced). Merged into all-events.ics by the collector's calendar build. time is optional HH:MM 24h.",
+  "events": [
+    {
+      "date": "2026-10-16",
+      "time": "08:30",
+      "title": "School Board Coffee — Measure M & Candidates",
+      "description": "Join current School Board members to discuss Measure M, meet school board candidates, or talk school-board matters. Picnic tables at the cafeteria, after drop-off 8:30-9:15am."
+    },
+    {
+      "date": "2026-10-23",
+      "time": "08:30",
+      "title": "School Board Coffee — Measure M & Candidates",
+      "description": "Join current School Board members to discuss Measure M, meet school board candidates, or talk school-board matters. Picnic tables at the cafeteria, after drop-off 8:30-9:15am."
+    },
+    {
+      "date": "2026-10-26",
+      "time": "08:30",
+      "title": "School Board Coffee — Measure M & Candidates",
+      "description": "Join current School Board members to discuss Measure M, meet school board candidates, or talk school-board matters. Picnic tables at the cafeteria, after drop-off 8:30-9:15am."
+    }
+  ]
+}

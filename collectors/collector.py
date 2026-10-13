@@ -109,6 +109,8 @@ def _notice_vevents():
     except Exception:
         return out
     for n_ in nz.get("notices", []):
+        if n_.get("calendar") is False:   # notice stays visible, but the calendar already carries the event
+            continue
         blob = f"{n_.get('title','')} {n_.get('text','')}"
         m = re.search(rf"\b({months})[a-z]*\.?\s+(\d{{1,2}})\b", blob)
         if not m:
@@ -364,6 +366,8 @@ def write_calendar_ics():
     try:
         nz = json.loads((DATA / "notices.json").read_text(encoding="utf-8"))
         for n in nz.get("notices", []):
+            if n.get("calendar") is False:   # duplicate of a district-calendar event; notice stays visible
+                continue
             blob = f"{n.get('title','')} {n.get('text','')}"
             m = re.search(rf"\b({months})[a-z]*\.?\s+(\d{{1,2}})\b", blob)
             if not m:
@@ -427,6 +431,21 @@ def write_calendar_ics():
             url = board_url if re.search(r"board meeting", title, re.I) else None
             add(f"district-{date}-{slug}", date, title,
                 time=f"{dt[4]}{dt[5]}" if dt[4] else None, url=url)
+    except Exception:
+        pass
+
+    # curated events — hand-added (curated-events.json) for things the feeds don't carry
+    try:
+        cz = json.loads((DATA / "curated-events.json").read_text(encoding="utf-8"))
+        for e_ in cz.get("events", []):
+            date = str(e_.get("date", ""))
+            if not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
+                continue
+            tm = re.match(r"^(\d{1,2}):(\d{2})$", str(e_.get("time") or ""))
+            time = f"{int(tm.group(1)):02d}{tm.group(2)}" if tm else None
+            title = str(e_.get("title") or "Event")
+            slug = re.sub(r"[^a-z0-9]+", "-", title.lower())[:40]
+            add(f"curated-{date}-{slug}", date, title, time=time)
     except Exception:
         pass
 

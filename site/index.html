@@ -42,6 +42,7 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:18px 20px;overflow:hidden;word-wrap:break-word;overflow-wrap:break-word}
 .card h3{font-size:19px;font-weight:700;margin-bottom:8px}
 .card *{max-width:100%}
+.ev-more{display:block;width:100%;margin-top:8px;padding:9px;border:none;border-radius:12px;background:var(--paper,#F6F1E4);color:var(--ink,#262626);font-size:14px;font-weight:600;cursor:pointer}
 
 .board-banner{display:block;background:var(--clay);color:#fff;text-decoration:none;font-family:Karla,system-ui,sans-serif;font-size:15px;font-weight:700;padding:12px 18px;border-radius:var(--r-card);margin-bottom:12px;box-shadow:0 2px 8px rgba(194,100,59,.25)}
 .board-banner:hover{filter:brightness(1.06)}
@@ -507,6 +508,7 @@ function renderLunch(menu, linqDays, noSchool){
   $("lunch-card").innerHTML = html;
 }
 
+let EV_LIMIT = 7;   // upcoming-events window; "Show more" grows it by 7 per click
 function renderEvents(){
   const now = new Date(); now.setHours(0,0,0,0);
   Promise.all([
@@ -579,7 +581,8 @@ function renderEvents(){
     });
 
     const todayItems = deduped.filter(i=>i.date.toDateString()===new Date().toDateString());
-    const week = deduped.filter(i=>i.date>new Date()).slice(0,7);
+    const futureAll = deduped.filter(i=>i.date>new Date());
+    const week = futureAll.slice(0, EV_LIMIT);
     const kindColor = {holiday:"var(--sun)",break:"var(--sky)",conference:"var(--iris)",event:"var(--garden)",no_school:"var(--clay)"};
     // timed events (constructed with hours) show a small time line; all-day ones (midnight) don't
     const timeOf = d => (d.getHours() || d.getMinutes()) ? d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}).toLowerCase() : null;
@@ -602,9 +605,14 @@ function renderEvents(){
       }
     }
     html += `<div class="sub-link"><a class="lnk" href="data/all-events.ics">📅 Subscribe — all these dates in your calendar app</a></div>`;
+    if (futureAll.length > week.length) {
+      html += `<button id="ev-more" class="ev-more">Show ${Math.min(7, futureAll.length - EV_LIMIT)} more ▾</button>`;
+    }
     html += `<div class="sub-link"><a class="lnk" href="budget.html">💰 Our school budget, in plain language</a></div>`;
     html += `<div class="sub-link"><a class="lnk" href="board.html">🏪 Board of Education - agendas, how to join, plain-language guides</a></div>`;
     $("events-card").innerHTML = html;
+    const moreBtn = $("ev-more");
+    if (moreBtn) moreBtn.onclick = () => { EV_LIMIT += 7; renderEvents(); };
 
     // banner gates itself on real data: TONIGHT / COMING UP for the next board
     // meeting, hidden when there's none upcoming — never goes stale

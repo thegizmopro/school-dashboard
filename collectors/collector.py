@@ -328,12 +328,12 @@ def write_calendar_ics():
     seen = set()          # (date, canon) — first source wins: yc -> shARK -> notices -> PS -> district
     ns_dates = set()      # every date the structural calendar says has no school
 
-    def add(uid, date, summary, time=None, url=None):
+    def add(uid, date, summary, time=None, url=None, desc=None):
         key = (date, _canon(summary))
         if key in seen:
             return
         seen.add(key)
-        evs[uid] = (date, summary, time, url)
+        evs[uid] = (date, summary, time, url, desc)
 
     try:
         yc = json.loads((DATA / "calendar-year.json").read_text(encoding="utf-8"))
@@ -445,7 +445,7 @@ def write_calendar_ics():
             time = f"{int(tm.group(1)):02d}{tm.group(2)}" if tm else None
             title = str(e_.get("title") or "Event")
             slug = re.sub(r"[^a-z0-9]+", "-", title.lower())[:40]
-            add(f"curated-{date}-{slug}", date, title, time=time)
+            add(f"curated-{date}-{slug}", date, title, time=time, desc=e_.get("description"))
     except Exception:
         pass
 
@@ -454,7 +454,7 @@ def write_calendar_ics():
              "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
              "X-WR-CALNAME:Harmony Today",
              f"DTSTAMP:{now}"]
-    for uid, (date, summary, time, url) in sorted(evs.items(), key=lambda kv: (kv[1][0], kv[1][2] or "")):
+    for uid, (date, summary, time, url, desc) in sorted(evs.items(), key=lambda kv: (kv[1][0], kv[1][2] or "")):
         lines += ["BEGIN:VEVENT",
                   f"UID:{uid}@harmony-today",
                   f"DTSTAMP:{now}",
@@ -463,6 +463,8 @@ def write_calendar_ics():
                   f"SUMMARY:{_ics_escape(summary)}"]
         if url:
             lines.append(f"URL:{_ics_escape(url)}")
+        if desc:
+            lines.append(f"DESCRIPTION:{_ics_escape(desc)}")
         lines.append("END:VEVENT")
     lines.append("END:VCALENDAR")
     with open(DATA / "all-events.ics", "w", encoding="utf-8", newline="") as f:   # newline="": no CRLF translation on Windows

@@ -663,13 +663,13 @@ function renderCommunity(){
     const aClose = (prose.match(/<\/a>/gi) || []).length;
     if (aOpen > aClose) prose += "</a>".repeat(aOpen - aClose);
     prose = esc(prose)
-      .replace(/&lt;a\s+href=&quot;(https?:\/\/[^&]*)&quot;[^&]*&gt;/gi, '<a href="$1" target="_blank" rel="noopener">')
+      .replace(/&lt;a\s+href=&quot;(https?:\/\/[^&]*)&quot;.*?&gt;/gi, '<a href="$1" target="_blank" rel="noopener">')
       .replace(/&lt;\/a&gt;/gi, "</a>")
       .replace(/&lt;(b|strong|i|em)&gt;/gi, "<$1>")
       .replace(/&lt;\/(b|strong|i|em)&gt;/gi, "</$1>")
       .replace(/&lt;br\s*\/?&gt;/gi, "<br>");
     let html = `<div class="digest-prose">${prose}</div>`;
-    html += `<div class="for-sale"><h4>💬 Join in</h4><a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO?mode=gi_t" target="_blank" rel="noopener">All of this happens live in the WhatsApp group — come say hi →</a></div>`;
+    html += `<div class="for-sale"><h4>🤝 Buy · Sell · Trade</h4><a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO?mode=gi_t" target="_blank" rel="noopener">Join the buy/sell/trade WhatsApp group →</a></div>`;
     $("community-card").innerHTML = html || '<div class="empty-note">First community digest coming soon</div>';
   }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community digest unavailable</div>'; });
 }

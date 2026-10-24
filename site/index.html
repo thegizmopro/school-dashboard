@@ -672,7 +672,8 @@ function renderCommunity(){
     let html = `<div class="digest-prose">${prose}</div>`;
     html += `<div class="for-sale"><h4>💬 Join the conversation</h4>`
           + `<a class="join" href="https://chat.whatsapp.com/GMgNmXq9ukFAiHbwjQKdYA" target="_blank" rel="noopener">Salmon Creek community group →</a>`
-          + `<a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO" target="_blank" rel="noopener">Buy/sell/trade group →</a></div>`;
+          + `<a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO" target="_blank" rel="noopener">Buy/sell/trade group →</a>`
+          + `<a class="join" href="https://chat.whatsapp.com/GboJT9iyGN55RexxVxJEQb" target="_blank" rel="noopener">Help spread the word on Measure M →</a></div>`;
     $("community-card").innerHTML = html || '<div class="empty-note">First community digest coming soon</div>';
   }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community digest unavailable</div>'; });
 }

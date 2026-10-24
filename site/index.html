@@ -114,6 +114,7 @@ a.send{display:inline-block;background:var(--clay);color:#fff;font-weight:700;fo
 .for-sale h4{font-size:15px;font-weight:700;margin-bottom:6px}
 .for-sale .join{display:block;color:var(--garden-deep);font-weight:700;font-size:14.5px;text-decoration:none;padding:12px 0}
 .for-sale .join:hover{text-decoration:underline}
+.for-sale .join + .join{border-top:1px solid var(--line-soft)}
 .listing{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;padding:3px 0}
 .listing .price{font-weight:700}
 .listing.sold .item{text-decoration:line-through;color:var(--ink-ghost)}
@@ -669,7 +670,9 @@ function renderCommunity(){
       .replace(/&lt;\/(b|strong|i|em)&gt;/gi, "</$1>")
       .replace(/&lt;br\s*\/?&gt;/gi, "<br>");
     let html = `<div class="digest-prose">${prose}</div>`;
-    html += `<div class="for-sale"><h4>🤝 Buy · Sell · Trade</h4><a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO?mode=gi_t" target="_blank" rel="noopener">Join the buy/sell/trade WhatsApp group →</a></div>`;
+    html += `<div class="for-sale"><h4>💬 Join the conversation</h4>`
+          + `<a class="join" href="https://chat.whatsapp.com/GMgNmXq9ukFAiHbwjQKdYA" target="_blank" rel="noopener">Salmon Creek community group →</a>`
+          + `<a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO" target="_blank" rel="noopener">Buy/sell/trade group →</a></div>`;
     $("community-card").innerHTML = html || '<div class="empty-note">First community digest coming soon</div>';
   }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community digest unavailable</div>'; });
 }

@@ -112,6 +112,8 @@ a.send{display:inline-block;background:var(--clay);color:#fff;font-weight:700;fo
 .digest-prose{font-size:14px;line-height:1.55;color:var(--ink-body)}
 .for-sale{margin-top:10px;padding-top:10px;border-top:1px solid var(--line-soft)}
 .for-sale h4{font-size:15px;font-weight:700;margin-bottom:6px}
+.for-sale .join{display:block;color:var(--garden-deep);font-weight:700;font-size:14.5px;text-decoration:none;padding:12px 0}
+.for-sale .join:hover{text-decoration:underline}
 .listing{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;padding:3px 0}
 .listing .price{font-weight:700}
 .listing.sold .item{text-decoration:line-through;color:var(--ink-ghost)}
@@ -667,15 +669,7 @@ function renderCommunity(){
       .replace(/&lt;\/(b|strong|i|em)&gt;/gi, "</$1>")
       .replace(/&lt;br\s*\/?&gt;/gi, "<br>");
     let html = `<div class="digest-prose">${prose}</div>`;
-    const listings = (d.listings||[]);
-    if (listings.length) {
-      html += `<div class="for-sale"><h4>📌 Don't miss + For Sale & Free</h4>`;
-      for (const l of listings) {
-        const label = l.item || l.text || "";
-        html += `<div class="listing"><span class="item">${link(label, l.url)}</span><span class="price">${esc(l.price||"")}</span></div>`;
-      }
-      html += `</div>`;
-    }
+    html += `<div class="for-sale"><h4>💬 Join in</h4><a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO?mode=gi_t" target="_blank" rel="noopener">All of this happens live in the WhatsApp group — come say hi →</a></div>`;
     $("community-card").innerHTML = html || '<div class="empty-note">First community digest coming soon</div>';
   }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community digest unavailable</div>'; });
 }

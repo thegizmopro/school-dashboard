@@ -103,10 +103,11 @@ HTML cannot execute. The ParentSquare feed token lives in
 
 ## Design
 
-- Palette (**Riverbend**, since Oct 2026): paper `#F6F1E4`, spruce teal `#2E6B60`/`#1F4A43`
-  (the CSS var is still `--garden` — role names are historical), marigold `#C98A1D`
-  (`--clay`), gold `#E8A33D`, fog blue `#7A93A8`, ink `#22301F`. Chosen to step out
-  of the orange+green "West County school" genre every local site converges on.
+- Palette (**Tuscan Sunset**, since Oct 2026): paper `#F6F1E4`, terracotta `#E35336`/deep
+  brown `#8A2B0E` (CSS var still `--garden` — role names are historical), dusty lavender
+  `#9988A1` (`--clay`), soft peach `#FFD3AC` (`--garden-pale`/`--sun`), ink `#22301F`.
+  Hero gradient runs terracotta→brown like an actual sunset. (Riverbend teal was a
+  one-week stop on the way here.)
 - Type: Baloo 2 (display) · Karla (body) · IBM Plex Mono (kickers/meta).
 - Each page carries its own `:root` token copy (index, board, budget, install) —
   a palette change must hit all four plus `manifest.webmanifest` theme_color,

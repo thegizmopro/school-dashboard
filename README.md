@@ -103,11 +103,13 @@ HTML cannot execute. The ParentSquare feed token lives in
 
 ## Design
 
-- Palette (**Tuscan Sunset**, since Oct 2026): paper `#F6F1E4`, terracotta `#E35336`/deep
-  brown `#8A2B0E` (CSS var still `--garden` — role names are historical), dusty lavender
-  `#9988A1` (`--clay`), soft peach `#FFD3AC` (`--garden-pale`/`--sun`), ink `#22301F`.
-  Hero gradient runs terracotta→brown like an actual sunset. (Riverbend teal was a
-  one-week stop on the way here.)
+- Palette (**Tuscan Sunset DARK**, since Oct 2026): deep warm brown ground
+  `#261610` (body) / `#33201A` (cards) with cream ink `#F6F1E4`; terracotta
+  `#E35336` primary, dusty lavender `#9988A1` callouts, soft peach `#FFD3AC`
+  for emphasis text (`--garden-deep` — role names are historical) and chips.
+  Hero gradient is terracotta→deep brown. Form fields stay light
+  (`#FFF9F2` bg, dark text) deliberately. (Light-cream era: green → Riverbend
+  teal → light Tuscan, all replaced.)
 - Type: Baloo 2 (display) · Karla (body) · IBM Plex Mono (kickers/meta).
 - Each page carries its own `:root` token copy (index, board, budget, install) —
   a palette change must hit all four plus `manifest.webmanifest` theme_color,

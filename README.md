@@ -101,6 +101,20 @@ allowlist (https anchors + basic formatting only) with a CSP on top — chat-ste
 HTML cannot execute. The ParentSquare feed token lives in
 `collectors/local-config.json`, gitignored.
 
+## Design
+
+- Palette (**Riverbend**, since Oct 2026): paper `#F6F1E4`, spruce teal `#2E6B60`/`#1F4A43`
+  (the CSS var is still `--garden` — role names are historical), marigold `#C98A1D`
+  (`--clay`), gold `#E8A33D`, fog blue `#7A93A8`, ink `#22301F`. Chosen to step out
+  of the orange+green "West County school" genre every local site converges on.
+- Type: Baloo 2 (display) · Karla (body) · IBM Plex Mono (kickers/meta).
+- Each page carries its own `:root` token copy (index, board, budget, install) —
+  a palette change must hit all four plus `manifest.webmanifest` theme_color,
+  the `theme-color` meta, and the schoolhouse icons (regenerate via the PIL
+  script pattern in git history, e.g. commit 21c2ebb).
+- `handoff/tokens.json` + `tokens-dark.json` are the ORIGINAL design-system
+  artifacts (green era) — historical reference, not the live palette.
+
 ## Working on this repo
 
 - **Deploy = `git push`** (Vercel). Crons commit+push themselves; their commits

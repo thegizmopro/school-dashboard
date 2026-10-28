@@ -29,6 +29,16 @@
    "kind": "no_school"
   },
   {
+   "date": "2026-10-30",
+   "label": "School Board Meeting (Morning) — 8:50 AM",
+   "kind": "board-meeting"
+  },
+  {
+   "date": "2026-10-30",
+   "label": "School Board Meeting (Evening) — 8:30 PM",
+   "kind": "board-meeting"
+  },
+  {
    "date": "2026-11-11",
    "label": "Veterans Day — No School",
    "kind": "holiday"

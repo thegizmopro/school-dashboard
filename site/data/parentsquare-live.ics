@@ -23,39 +23,39 @@ END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
 UID:notice-pop-up-market-at-santa-rosa-pumpkin-patc@harmony-today
-DTSTAMP:20261029T000331Z
+DTSTAMP:20261029T060315Z
 DTSTART:20270926T100000
 SUMMARY:Pop-up Market at Santa Rosa Pumpkin Patch (Sat Sep 26\, 10am–2pm)
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-conference-week-oct-5-9-early-dismissal-@harmony-today
-DTSTAMP:20261029T000331Z
+DTSTAMP:20261029T060315Z
 DTSTART:20271005T131500
 SUMMARY:Conference Week Oct 5-9: early dismissal 1:15pm daily
 URL:https://forms.gle/s2wGxaRafVLJbkAu5
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-board-meeting-thu-sep-25-8-45pm@harmony-today
-DTSTAMP:20261029T000331Z
+DTSTAMP:20261029T060315Z
 DTSTART:20270925T204500
 SUMMARY:Board Meeting — Thu Sep 25\, 8:45pm
 URL:https://meet.google.com/pmu-btbj-iwc
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-scoe-virtual-mental-health-workshops-for@harmony-today
-DTSTAMP:20261029T000331Z
+DTSTAMP:20261029T060315Z
 DTSTART:20261105T170000
 SUMMARY:SCOE Virtual Mental Health Workshops for Families
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-harmony-writers-workshop-after-school-cl@harmony-today
-DTSTAMP:20261029T000331Z
+DTSTAMP:20261029T060315Z
 DTSTART:20261029T142000
 SUMMARY:Harmony Writers' Workshop — after-school club
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-parenting-through-adversity-workshop-sep@harmony-today
-DTSTAMP:20261029T000331Z
+DTSTAMP:20261029T060315Z
 DTSTART:20270911T083000
 SUMMARY:Parenting Through Adversity workshop — Sep 11\, 8:30am\, library
 END:VEVENT

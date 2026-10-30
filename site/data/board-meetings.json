@@ -1,13 +1,8 @@
 [
  {
   "date": "2026-10-30",
-  "label": "HUSD Board Meeting - Morning 8:50 AM + Evening 8:30 PM",
+  "label": "HUSD Board Meeting (Evening Session)",
   "times": [
-   {
-    "start": "085000",
-    "end": "093000",
-    "session": "Morning"
-   },
    {
     "start": "203000",
     "end": "213000",
@@ -15,7 +10,7 @@
    }
   ],
   "location": "District Office",
-  "description": "Special meeting - OPSC resolution, contract approvals, facilities awards",
+  "description": "Special meeting - facilities awards, budget, Williams reports",
   "added": "2026-10-30",
   "added_by": "kenzo"
  }

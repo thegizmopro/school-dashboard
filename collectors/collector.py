@@ -496,11 +496,51 @@ def fetch_board():
 # its curated linked events; ParentSquare adds near-term items this feed misses.
 DISTRICT_CAL = "https://harmonyusd.org/sndreq/generateCalendarICS.php?calendar_id=136424"
 
+def merge_board_meetings(ics_text):
+    """Merge board-meetings.json overlay entries into the district calendar ICS.
+    Entries whose date has passed are silently dropped (natural expiry)."""
+    overlay_path = DATA / "board-meetings.json"
+    if not overlay_path.exists():
+        return ics_text, 0
+    try:
+        import json as _json
+        meetings = _json.loads(overlay_path.read_text(encoding="utf-8"))
+    except Exception:
+        return ics_text, 0
+    today = datetime.date.today().isoformat()
+    events = []
+    for m in meetings:
+        if m.get("date", "") < today:
+            continue  # past meeting, skip
+        for t in m.get("times", [{"start": "190000", "end": "200000"}]):
+            d = m["date"].replace("-", "")
+            events.append(
+                f"BEGIN:VEVENT\r\n"
+                f"UID:board-manual-{d}-{t.get('session','am').lower()}@harmony-today\r\n"
+                f"DTSTART;TZID=America/Los_Angeles:{d}T{t['start']}\r\n"
+                f"DTEND;TZID=America/Los_Angeles:{d}T{t['end']}\r\n"
+                f"SUMMARY:{m['label']}\r\n"
+                f"DESCRIPTION:{m.get('description','')}\r\n"
+                f"LOCATION:{m.get('location','')}\r\n"
+                f"END:VEVENT\r\n"
+            )
+    if not events:
+        return ics_text, 0
+    # insert before the first existing event so manual events sort first
+    idx = ics_text.find("BEGIN:VEVENT")
+    if idx < 0:
+        merged = ics_text.replace("END:VCALENDAR", "".join(events) + "END:VCALENDAR")
+    else:
+        merged = ics_text[:idx] + "".join(events) + ics_text[idx:]
+    return merged, len(events)
+
+
 def fetch_district_cal():
     data = fetch(DISTRICT_CAL).decode("utf-8", errors="replace")
+    data, n_manual = merge_board_meetings(data)
     (DATA / "district-calendar.ics").write_text(data, encoding="utf-8")
     n = data.count("BEGIN:VEVENT")
-    return f"district cal: {n} events"
+    return f"district cal: {n} events ({n_manual} manual)"
 
 # ---------------- Absence emails ----------------
 # harmonyusd.org/report-an-absence maps each grade to its own absence email

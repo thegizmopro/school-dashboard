@@ -21,7 +21,22 @@ DTSTART:19701101T020000
 RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
 END:STANDARD
 END:VTIMEZONE
-BEGIN:VEVENT
+BEGIN:VEVENT
+UID:oct30-board-morning@harmony-today
+DTSTART;TZID=America/Los_Angeles:20261030T085000
+DTEND;TZID=America/Los_Angeles:20261030T093000
+SUMMARY:HUSD Board Meeting - Morning 8:50 AM + Evening 8:30 PM
+DESCRIPTION:Special meeting - OPSC resolution, contract approvals
+LOCATION:District Office
+END:VEVENT
+BEGIN:VEVENT
+UID:oct30-board-evening@harmony-today
+DTSTART;TZID=America/Los_Angeles:20261030T203000
+DTEND;TZID=America/Los_Angeles:20261030T213000
+SUMMARY:HUSD Board Meeting (Evening Session)
+DESCRIPTION:Special meeting - facilities awards, budget
+LOCATION:District Office
+END:VEVENTBEGIN:VEVENT
 UID:12806ae289dd83470
 DTSTART;TZID=America/Los_Angeles:20261028T161500
 DTEND;TZID=America/Los_Angeles:20261028T171500

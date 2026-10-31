@@ -22,14 +22,6 @@ RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-UID:board-manual-20261030-evening@harmony-today
-DTSTART;TZID=America/Los_Angeles:20261030T203000
-DTEND;TZID=America/Los_Angeles:20261030T213000
-SUMMARY:HUSD Board Meeting (Evening Session)
-DESCRIPTION:Special meeting - facilities awards, budget, Williams reports
-LOCATION:District Office
-END:VEVENT
-BEGIN:VEVENT
 UID:24016ae3df67769ec
 DTSTART;TZID=America/Los_Angeles:20261029T163000
 DTEND;TZID=America/Los_Angeles:20261029T173000

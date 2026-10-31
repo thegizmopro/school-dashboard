@@ -25,8 +25,8 @@ BEGIN:VEVENT
 UID:board-manual-20261030-evening@harmony-today
 DTSTART;TZID=America/Los_Angeles:20261030T203000
 DTEND;TZID=America/Los_Angeles:20261030T213000
-SUMMARY:HUSD Board Meeting - Morning 8:50 AM + Evening 8:30 PM
-DESCRIPTION:Special meeting - OPSC resolution, contract approvals, facilities awards
+SUMMARY:HUSD Board Meeting (Evening Session)
+DESCRIPTION:Special meeting - facilities awards, budget, Williams reports
 LOCATION:District Office
 END:VEVENT
 BEGIN:VEVENT
@@ -39,6 +39,20 @@ DESCRIPTION:
 LAST-MODIFIED:20261030T000559Z
 LOCATION:
 SUMMARY:Cross County Meet
+SEQUENCE:0
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:8336ae3df6776a47
+DTSTART;TZID=America/Los_Angeles:20261030T085000
+DTEND;TZID=America/Los_Angeles:20261030T095000
+DTSTAMP:20261030T000559Z
+CREATED:20261030T000559Z
+DESCRIPTION:https://meet.google.com/meet/pmu-btbj-iwc?pli=1
+LAST-MODIFIED:20261030T000559Z
+LOCATION:
+SUMMARY:Board Meeting
 SEQUENCE:0
 STATUS:CONFIRMED
 TRANSP:OPAQUE

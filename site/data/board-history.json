@@ -1,6 +1,6 @@
 {
   "_note": "Past meetings in plain language, newest first. Sourced from district minutes/agendas (Simbli); curated by hand. HTML allowed in item text: <a href=\"https://...\">, b, i, em only. headline = one-line characterization of the meeting.",
-  "updated": "2026-11-01",
+  "updated": "2026-11-03",
   "meetings": [
     {
       "date": "2026-10-30",
@@ -32,30 +32,34 @@
     },
     {
       "date": "2026-10-08",
-      "type": "Regular Board Meeting",
+      "type": "Special Board Meeting",
       "headline": "The first real bond money moves",
-      "record": "agenda",
-      "record_note": "No minutes posted yet — this recap reflects the agenda (the plan), not the vote record.",
+      "record": "minutes",
       "items": [
         {
-          "title": "Bond contracts — about $83K",
+          "title": "Bond contracts approved — about $83K",
           "tag": "money",
-          "why": "Five consent items: cargo storage ($34,000), EOC pad ($13,000), perimeter survey ($8,000), septic risers ($12,000), and cistern/garden water overflow ($16,000)."
+          "why": "Unanimous consent (Laird/Solter): cargo storage ($34,000), EOC pad ($13,000), perimeter survey ($8,000), septic risers ($12,000), and cistern/garden water overflow ($16,000) — the first Measure M bond contracts actually executed, not just budgeted."
         },
         {
           "title": "Field trips (consent)",
           "tag": null,
-          "why": "Routine approvals for upcoming student trips."
+          "why": "Overnight and water-related student trips approved."
         },
         {
           "title": "William's Law quarterly reports",
           "tag": null,
-          "why": "The state's school-safety reporting requirement — quarterly confirmation the district is current."
+          "why": "Q4 2025-26 and Q1 2026-27 school-safety reporting approved unanimously — the state's quarterly confirmation the district is current."
+        },
+        {
+          "title": "Five minutes flat",
+          "tag": null,
+          "why": "The open session ran 9:16 to 9:21 PM — every vote unanimous, no discussion on the record. The board's real work that night happened in closed session beforehand; the open session was the rapid-fire sign-off."
         },
         {
           "title": "Next meeting: November 12",
           "tag": null,
-          "why": "Confirmed on the record."
+          "why": "Confirmed on the record — since moved to November 16 per the October 30 minutes."
         }
       ]
     },

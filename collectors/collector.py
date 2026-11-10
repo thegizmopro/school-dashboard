@@ -280,6 +280,25 @@ def fetch_shark():
                 out["warning"] = "scrape found no dated events — kept previous data"
         except Exception:
             pass
+    # source-correction overrides (collectors/event-overrides.json): stale source
+    # data corrected by hand — e.g. an event the school moved but the source site
+    # has not yet updated. Rules self-retire via 'until'. Defensive: any error
+    # leaves events untouched so the collector still runs.
+    try:
+        ov = json.loads((ROOT / "collectors" / "event-overrides.json").read_text(encoding="utf-8"))
+        today_iso = datetime.date.today().isoformat()
+        for rule in ov.get("replace", []):
+            if rule.get("until", "") and rule["until"] < today_iso:
+                continue
+            pat = rule.get("match", "")
+            if not pat:
+                continue
+            for e in out["events"]:
+                if re.search(pat, e.get("title") or "", re.I):
+                    e.update(rule.get("set", {}))
+                    break
+    except Exception:
+        pass
     write_json(DATA / "shark.json", out)
     return f"shark: {len(events)} events (dated: {sum(1 for e in events if e.get('date'))})"
 
@@ -446,6 +465,23 @@ def write_calendar_ics():
             title = str(e_.get("title") or "Event")
             slug = re.sub(r"[^a-z0-9]+", "-", title.lower())[:40]
             add(f"curated-{date}-{slug}", date, title, time=time, desc=e_.get("description"))
+    except Exception:
+        pass
+
+    # source-correction overrides (drop): stale events the merged feed would
+    # otherwise carry (see collectors/event-overrides.json). Same 'until'
+    # self-retirement as the shARK replace rules.
+    try:
+        ov = json.loads((ROOT / "collectors" / "event-overrides.json").read_text(encoding="utf-8"))
+        today_iso = datetime.date.today().isoformat()
+        for rule in ov.get("drop", []):
+            if rule.get("until", "") and rule["until"] < today_iso:
+                continue
+            pat = rule.get("uid", "")
+            if not pat:
+                continue
+            for uid in [u for u in evs if re.search(pat, u)]:
+                del evs[uid]
     except Exception:
         pass
 

@@ -1,0 +1,17 @@
+{
+ "_note": "Source-correction rules applied after each shARK fetch (collectors/fetch_shark). 'match' = case-insensitive regex on event title; first matching event gets fields from 'set'. 'until' (YYYY-MM-DD) retires the rule. Use for stale-source corrections, e.g. the school moved an event but harmonyark.org has not updated yet. Rules are idempotent and self-retiring.",
+ "replace": [
+  {
+   "match": "move\\s*-?a\\s*-?thon",
+   "until": "2026-12-01",
+   "set": {"date": "2026-11-16", "time": "Rescheduled from Nov 13: 12:45-2:45pm"}
+  }
+ ],
+ "drop": [
+  {
+   "uid": "-2026-11-13-move",
+   "until": "2026-12-01",
+   "_note": "district master calendar still lists Move a Thon on Nov 13; suppress it from all-events until the district feed updates"
+  }
+ ]
+}

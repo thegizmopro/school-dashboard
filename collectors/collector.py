@@ -137,16 +137,43 @@ def _notice_vevents():
         ] + ([f"URL:{_ics_escape(url)}"] if url else []) + ["END:VEVENT"]))
     return out
 
+def _active_drop_summaries():
+    """SUMMARY regex patterns from active drop rules (event-overrides.json).
+    'summary' rules filter source ICS feeds at write time (fetch_ical,
+    fetch_district_cal); 'uid' rules filter the merged feed in write_calendar_ics."""
+    try:
+        ov = json.loads((ROOT / "collectors" / "event-overrides.json").read_text(encoding="utf-8"))
+        today_iso = datetime.date.today().isoformat()
+        return [r["summary"] for r in ov.get("drop", [])
+                if r.get("summary") and (not r.get("until") or r["until"] >= today_iso)]
+    except Exception:
+        return []
+
+def _drop_vevents(text):
+    """Remove VEVENT blocks whose SUMMARY matches an active summary drop rule.
+    Returns (filtered_text, dropped_count)."""
+    pats = _active_drop_summaries()
+    if not pats:
+        return text, 0
+    n = 0
+    for b in re.findall(r"BEGIN:VEVENT.*?END:VEVENT\r?\n?", text, re.S):
+        sm = re.search(r"SUMMARY:([^\r\n]+)", b)
+        if sm and any(re.search(p, sm.group(1), re.I) for p in pats):
+            text = text.replace(b, "")
+            n += 1
+    return text, n
+
 def fetch_ical():
     if not ICAL_URL:
         raise RuntimeError("parentsquare_ics missing from collectors/local-config.json (see local-config.example.json)")
     data = fetch(ICAL_URL).decode("utf-8", errors="replace")
+    data, ndrop = _drop_vevents(data)
     extra = _notice_vevents()
     if extra:
         data = data.replace("END:VCALENDAR", "\r\n".join(extra) + "\r\nEND:VCALENDAR")
     (DATA / "parentsquare-live.ics").write_text(data, encoding="utf-8")
     n = data.count("BEGIN:VEVENT")
-    return f"ical: {n} events (incl. {len(extra)} notice-derived)"
+    return f"ical: {n} events (incl. {len(extra)} notice-derived, {ndrop} dropped by overrides)"
 
 # ---------------- Weather ----------------
 # Occidental, CA
@@ -574,9 +601,10 @@ def merge_board_meetings(ics_text):
 def fetch_district_cal():
     data = fetch(DISTRICT_CAL).decode("utf-8", errors="replace")
     data, n_manual = merge_board_meetings(data)
+    data, ndrop = _drop_vevents(data)
     (DATA / "district-calendar.ics").write_text(data, encoding="utf-8")
     n = data.count("BEGIN:VEVENT")
-    return f"district cal: {n} events ({n_manual} manual)"
+    return f"district cal: {n} events ({n_manual} manual, {ndrop} dropped by overrides)"
 
 # ---------------- Absence emails ----------------
 # harmonyusd.org/report-an-absence maps each grade to its own absence email

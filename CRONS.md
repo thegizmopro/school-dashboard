@@ -131,3 +131,8 @@ If the cron message text and `collector.py` docstring ever disagree, **trust the
 - Rules retire automatically once today > `until` (YYYY-MM-DD). Defensive by design: any error leaves events untouched.
 - Current use: Move-A-Thon moved Fri 11/13 -> Mon 11/16 (announced via ParentSquare; shARK and district feeds still listed 11/13). Rules expire 2026-12-01.
 
+
+### Feed-level summary drops (2026-11-10)
+
+Drop rules may also carry `summary` (regex, case-insensitive). These filter the SOURCE ics feeds at write time: `fetch_ical` (ParentSquare) and `fetch_district_cal` strip matching VEVENTs before the files land in site/data, so the events card (which reads the raw feeds) never sees them. `uid` rules stay merged-feed-only (`write_calendar_ics`). Current use: PS's auto-created day-of Move-A-Thon volunteer event and the district's stale Fri 11/13 entry; the corrected shARK row is the single calendar source.
+

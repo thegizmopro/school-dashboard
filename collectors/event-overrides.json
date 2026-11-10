@@ -12,6 +12,11 @@
    "uid": "-2026-11-13-move",
    "until": "2026-12-01",
    "_note": "district master calendar still lists Move a Thon on Nov 13; suppress it from all-events until the district feed updates"
+  },
+  {
+   "summary": "move.?a.?thon",
+   "until": "2026-12-01",
+   "_note": "source-feed filter (fetch_ical + fetch_district_cal): ParentSquare auto-created a day-of 'Volunteer Sign Ups' event and the district feed still carries the old Fri 11/13 event. The shARK entry (corrected to Mon 11/16) is the single calendar source until upstreams update."
   }
  ]
 }

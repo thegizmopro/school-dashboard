@@ -22,7 +22,7 @@ TZNAME:PST
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-DTSTAMP:20261110T060934Z
+DTSTAMP:20261110T062216Z
 UID:96058563@parentsquare.com
 DTSTART;TZID=America/Los_Angeles:20261116T114500
 DTEND;TZID=America/Los_Angeles:20261116T150000
@@ -33,45 +33,52 @@ SUMMARY:Move-A-Thon Volunteer Sign Ups
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-move-a-thon-moved-to-mon-nov-16-12-45pm-@harmony-today
-DTSTAMP:20261109T220934Z
+DTSTAMP:20261109T222217Z
 DTSTART:20261116T124500
 SUMMARY:Move-A-Thon moved to Mon Nov 16\, 12:45pm to 2:45pm
 END:VEVENT
 BEGIN:VEVENT
+UID:notice-forest-improvement-project-forest-trail-@harmony-today
+DTSTAMP:20261109T222217Z
+DTSTART;VALUE=DATE:20261111
+SUMMARY:Forest Improvement Project: forest trail closed
+URL:data/flyers/forest-improvement-psa-2026.pdf
+END:VEVENT
+BEGIN:VEVENT
 UID:notice-pop-up-market-at-santa-rosa-pumpkin-patc@harmony-today
-DTSTAMP:20261109T220934Z
+DTSTAMP:20261109T222217Z
 DTSTART:20270926T100000
 SUMMARY:Pop-up Market at Santa Rosa Pumpkin Patch (Sat Sep 26\, 10am–2pm)
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-conference-week-oct-5-9-early-dismissal-@harmony-today
-DTSTAMP:20261109T220934Z
+DTSTAMP:20261109T222217Z
 DTSTART:20271005T131500
 SUMMARY:Conference Week Oct 5-9: early dismissal 1:15pm daily
 URL:https://forms.gle/s2wGxaRafVLJbkAu5
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-board-meeting-thu-sep-25-8-45pm@harmony-today
-DTSTAMP:20261109T220934Z
+DTSTAMP:20261109T222217Z
 DTSTART:20270925T204500
 SUMMARY:Board Meeting — Thu Sep 25\, 8:45pm
 URL:https://meet.google.com/pmu-btbj-iwc
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-scoe-virtual-mental-health-workshops-for@harmony-today
-DTSTAMP:20261109T220934Z
+DTSTAMP:20261109T222217Z
 DTSTART:20271105T170000
 SUMMARY:SCOE Virtual Mental Health Workshops for Families
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-harmony-writers-workshop-after-school-cl@harmony-today
-DTSTAMP:20261109T220934Z
+DTSTAMP:20261109T222217Z
 DTSTART:20271029T142000
 SUMMARY:Harmony Writers' Workshop — after-school club
 END:VEVENT
 BEGIN:VEVENT
 UID:notice-parenting-through-adversity-workshop-sep@harmony-today
-DTSTAMP:20261109T220934Z
+DTSTAMP:20261109T222217Z
 DTSTART:20270911T083000
 SUMMARY:Parenting Through Adversity workshop — Sep 11\, 8:30am\, library
 END:VEVENT

@@ -1,6 +1,12 @@
 {
  "flyers": [
   {
+   "match": "Forest Improvement",
+   "image": "data/flyers/forest-improvement-psa-2026-11.jpg",
+   "title": "Forest Improvement Project PSA",
+   "caption": "Gold Ridge RCD + CalFire fuel-thinning to protect the forest from hot fires. Full 8-page PSA linked from the notice title."
+  },
+  {
    "match": "Pop-up Market",
    "image": "data/flyers/popup-market-2026-09-26.jpg",
    "title": "Pop-up Market at Santa Rosa Pumpkin Patch",

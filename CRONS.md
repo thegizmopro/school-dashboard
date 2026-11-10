@@ -122,3 +122,12 @@ If the cron message text and `collector.py` docstring ever disagree, **trust the
 - Collector cron: live since Sep 3, verified across update-day boundary (staleness self-heal exercised Sep 4 00:03 + 06:03 runs).
 - Digest cron: implemented Sep 4 (id 325717d2). Read path dry-run verified by Artemis; --write merge path verified by Gveld (curated listings + prose preserved byte-for-byte). Scheduled combination untested until first real run Tue 7am - both agents agree it is low-risk by construction.
 - Expected behavior: gen_digest --write always refreshes the generated timestamp, so daily runs produce a small commit even with no listing changes. This is intentional provenance stamping, not churn.
+
+## Source-correction overrides (2026-11-09)
+
+`collectors/event-overrides.json` corrects stale upstream data without hand-editing fetched files:
+- `replace` - applied in `fetch_shark()` after each scrape: first event whose title matches `match` (regex, case-insensitive) gets fields from `set`.
+- `drop` - applied in `write_calendar_ics()` after the merge: any event whose UID matches `uid` (regex) is removed from all-events.ics.
+- Rules retire automatically once today > `until` (YYYY-MM-DD). Defensive by design: any error leaves events untouched.
+- Current use: Move-A-Thon moved Fri 11/13 -> Mon 11/16 (announced via ParentSquare; shARK and district feeds still listed 11/13). Rules expire 2026-12-01.
+

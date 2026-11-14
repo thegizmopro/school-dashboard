@@ -1,44 +1,54 @@
 {
  "_note": "Per-meeting file. The board page shows items ONLY when meeting equals the ISO date of the next real board meeting.",
- "meeting": "2026-10-30",
- "updated": "2026-10-28",
- "heading": "Oct 30 board meetings — in plain language",
- "time_note": "Two sessions: morning at 8:50 AM and evening at 8:30 PM. Both at the district office.",
+ "meeting": "2026-11-16",
+ "updated": "2026-11-14",
+ "heading": "Nov 16 board meeting, in plain language",
+ "time_note": "Closed session starts at 6:00 PM; the public open session starts at 7:00 PM. Both at the Assembly Hall, 1935 Bohemian Highway, Occidental.",
  "items": [
   {
-   "what": "OPSC Resolution 20261030 — school facilities funding application",
-   "why": "The board is authorizing submission of an application to the state Office of Public School Construction for program eligibility. This is the first step toward state funding for school facilities — it commits the district to developing a master plan.",
-   "do": "If you care about school buildings and facilities, this is the item to watch."
+   "what": "Closed session: labor negotiations, litigation update, superintendent review",
+   "why": "The board meets privately at 6:00 PM with labor negotiator Matthew Morgan on CSEA and HUTA contracts, hears an update on anticipated litigation, and does the superintendent's review. Closed sessions are permitted under the Brown Act.",
+   "do": "If you want to attend, the public open session starts at 7:00 PM. Any closed-session action gets reported out then."
   },
   {
-   "what": "Contract: 1.0 FTE Special Education Assistant (paraeducator)",
-   "why": "Full-time paraeducator position, 8 hours daily (~9:00 AM to 5:30 PM). Supports special education students.",
-   "do": "Affects staffing levels for students with IEPs."
+   "what": "Consent agenda: vendor warrants, personnel report, surplus property, meeting minutes, field trips",
+   "why": "One bundled vote covers routine items: check payments, staffing changes, declaring property surplus, approval of past meeting minutes, and permission for overnight or water-related student field trips.",
+   "do": "Any single item can be pulled for separate discussion before the vote."
   },
   {
-   "what": "Contract: 0.47 FTE Custodial and Maintenance Technician",
-   "why": "Part-time custodial/maintenance position, approximately 3.75 hours daily.",
-   "do": "Affects campus upkeep."
+   "what": "Reports and updates (discussion)",
+   "why": "Includes the enrollment report, a discussion of the West County Consortium (shared programs with neighboring west county districts), HR announcements, business services updates, staff support, and administrative planning. The Bond Committee also gives an update, teeing up the bond decisions later in the meeting.",
+   "do": "Worth listening if you track enrollment, staffing, or the bond."
   },
   {
-   "what": "Perimeter survey and fencing project ($7,980)",
-   "why": "Awarded to Phelps and Associates for surveying the property boundary ahead of fencing work.",
-   "do": "First step toward improved campus security fencing."
+   "what": "Action: Sonoma County Triennial Plan for Providing Educational Services, mid-cycle amendment",
+   "why": "Amends the countywide special education plan between its required three-year reviews. Mid-cycle amendments typically reflect service or membership changes among local districts.",
+   "do": "Affects how special education services are coordinated countywide."
   },
   {
-   "what": "Septic risers and water diversion ($12,000)",
-   "why": "Grounds project to manage wastewater access and redirect water away from buildings.",
-   "do": "Infrastructure maintenance."
+   "what": "Action: Board Resolution 2026-27-5, updating the Conflict of Interest Code",
+   "why": "State-mandated housekeeping under the Political Reform Act: the code lists which district positions must file financial disclosure statements.",
+   "do": "Routine compliance item."
   },
   {
-   "what": "Cistern and garden water overflow intertie ($16,000)",
-   "why": "Connects rainwater cistern overflow to the garden irrigation system.",
-   "do": "Sustainability and garden program infrastructure."
+   "what": "Action: Board Resolution 2026-27-6, increasing school facilities fees (developer fees)",
+   "why": "Raises the fees charged on new residential and commercial construction to the highest level state law currently allows (Government Code 65995). The district must pass a resolution to capture the increased amounts.",
+   "do": "If you build in the district, this changes what you pay. More developer fee revenue also supports the facilities program."
   },
   {
-   "what": "Williams Law quarterly reports",
-   "why": "Standard quarterly reporting on instructional materials and facilities conditions (Q4 2025-26 and Q1 2026-27).",
-   "do": "Procedural but relevant if you track facilities conditions."
+   "what": "Action: 2025-26 Developer's Fee Annual Report",
+   "why": "The required yearly accounting of developer fee collections and expenditures.",
+   "do": "Shows how much construction-related revenue the district actually collected last year."
+  },
+  {
+   "what": "Action: Board Resolution 2026-27-7, committing funds in Fund 17",
+   "why": "Fund 17 is the district's special reserve for capital projects. The resolution formally commits that money to facilities use, another step in the bond pipeline.",
+   "do": "Moves reserved money closer to actual facilities spending."
+  },
+  {
+   "what": "Action: Bond Project List approval",
+   "why": "Formally adopts the list of projects bond money will fund. The Bond Committee update earlier in the meeting feeds directly into this decision; it sets what gets built or repaired and in what order.",
+   "do": "The biggest facilities decision on tonight's agenda."
   }
  ]
 }

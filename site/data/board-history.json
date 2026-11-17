@@ -1,136 +1,185 @@
 {
-  "_note": "Past meetings in plain language, newest first. Sourced from district minutes/agendas (Simbli); curated by hand. HTML allowed in item text: <a href=\"https://...\">, b, i, em only. headline = one-line characterization of the meeting.",
-  "updated": "2026-11-03",
-  "meetings": [
+ "_note": "Past meetings in plain language, newest first. Sourced from district minutes/agendas (Simbli); curated by hand. HTML allowed in item text: <a href=\"https://...\">, b, i, em only. headline = one-line characterization of the meeting.",
+ "updated": "2026-11-17",
+ "meetings": [
+  {
+   "date": "2026-11-16",
+   "type": "Regular Board Meeting",
+   "headline": "The layoffs-reckoning meeting",
+   "record": "notes",
+   "record_note": "Live notes from an AI-assisted transcript of the meeting; official district minutes to come. All votes were voice votes (\"all in favor, aye\"), with no roll call and no audible opposition recorded.",
+   "items": [
     {
-      "date": "2026-10-30",
-      "type": "Special Board Meeting",
-      "headline": "The master plan meeting",
-      "record": "minutes",
-      "items": [
-        {
-          "title": "Facilities master plan adopted; state application authorized",
-          "tag": "money",
-          "why": "Three unanimous OPSC items: correcting the district's 2012 filing, submitting the 2026 one, and adopting Resolution 20261030 — the facilities master plan plus authorization to apply to the state's school-construction funding program. This is the pipeline the board has been assembling since September's $17M needs list, now formalized as a state application. In and out in an hour (8:57–10:01 AM), every vote unanimous."
-        },
-        {
-          "title": "Two hires approved",
-          "tag": null,
-          "why": "A special-education paraeducator and a custodial/maintenance technician — the October starts flagged at the September meeting."
-        },
-        {
-          "title": "November meeting moved",
-          "tag": null,
-          "why": "November 12 shifts to Monday, November 16, 2026 — 7:00 PM via Google Meet per the district calendar."
-        },
-        {
-          "title": "Pathways financials on the November agenda",
-          "tag": "money",
-          "why": "The board requested a November discussion item: a Pathways financial explanation and how it affects Harmony Union School District."
-        }
-      ]
+     "title": "Developer fee raised to $3.72 per square foot",
+     "tag": "money",
+     "why": "The new rate takes effect in January, up from $3.31, and is shared with the high school district, which the district will notify. Matthew Morgan first read the study's recommended $3.59, then corrected himself from the document: $3.72 is the actual total. A speaker warned the roughly 40-cent jump will hurt families building a second home on their property. Passed by voice vote."
     },
     {
-      "date": "2026-10-08",
-      "type": "Special Board Meeting",
-      "headline": "The first real bond money moves",
-      "record": "minutes",
-      "items": [
-        {
-          "title": "Bond contracts approved — about $83K",
-          "tag": "money",
-          "why": "Unanimous consent (Laird/Solter): cargo storage ($34,000), EOC pad ($13,000), perimeter survey ($8,000), septic risers ($12,000), and cistern/garden water overflow ($16,000) — the first Measure M bond contracts actually executed, not just budgeted."
-        },
-        {
-          "title": "Field trips (consent)",
-          "tag": null,
-          "why": "Overnight and water-related student trips approved."
-        },
-        {
-          "title": "William's Law quarterly reports",
-          "tag": null,
-          "why": "Q4 2025-26 and Q1 2026-27 school-safety reporting approved unanimously — the state's quarterly confirmation the district is current."
-        },
-        {
-          "title": "Five minutes flat",
-          "tag": null,
-          "why": "The open session ran 9:16 to 9:21 PM — every vote unanimous, no discussion on the record. The board's real work that night happened in closed session beforehand; the open session was the rapid-fire sign-off."
-        },
-        {
-          "title": "Next meeting: November 12",
-          "tag": null,
-          "why": "Confirmed on the record — since moved to November 16 per the October 30 minutes."
-        }
-      ]
+     "title": "Board commits 3% of spending to a reserve",
+     "tag": "money",
+     "why": "About $210,000 into a separate reserve fund (Fund 17), on top of the 17% the state recommends, bringing total reserves to 20%. Morgan called the 3% a goal rather than a yearly amount; projections for the next two years show only about $6,000 of room. The general fund is running $194,000 ahead, with about $50,000 in administrative savings."
     },
     {
-      "date": "2026-09-25",
-      "type": "Special Board Meeting",
-      "headline": "The three-minute meeting",
-      "record": "minutes",
-      "items": [
-        {
-          "title": "2025-26 unaudited actuals approved — unanimous",
-          "tag": "money",
-          "why": "Convened 8:49 AM, adjourned 8:52 AM — the meeting's one substantive act. The district's closed books for 2025-26 (Gress/Laird, unanimous), headed to the county office. The full report runs about a hundred pages; the headline numbers are on <a href=\"https://harmony.justsoyouknow.site/budget\">the budget page</a> — including an attendance shortfall worth roughly $160K in state funding."
-        }
-      ]
+     "title": "Classified staff described the layoffs' human toll",
+     "tag": null,
+     "why": "Under Item G, staff told the board the cuts left people struggling with rent and food, burned out and without real breaks; some called the process traumatizing. Morgan called the process imperfect and the timing unfortunate, and committed to more support and better communication. Ideas raised: board listening sessions two or three times a year, staff rotating to cover each other's breaks, and one-on-one check-ins. The board approved Mandel's proposal to give staff short breaks after working with dysregulated students."
     },
     {
-      "date": "2026-09-10",
-      "type": "Special Board Meeting",
-      "headline": "The workhorse — nine approvals, every vote unanimous",
-      "record": "minutes",
-      "items": [
-        {
-          "title": "Money items",
-          "tag": "money",
-          "why": "LCAP revisions, unaudited actuals, the Gann limit (the state's spending cap), and substitute teacher compensation — all approved unanimously."
-        },
-        {
-          "title": "Facilities and energy",
-          "tag": null,
-          "why": "PCO Energy Resiliency Project, a PG&E contract, and a new facilities fee schedule — all approved."
-        },
-        {
-          "title": "New math pilot",
-          "tag": null,
-          "why": "Innovamat Thinking Math approved for piloting."
-        },
-        {
-          "title": "The bond pipeline",
-          "tag": "money",
-          "why": "$17M in identified project needs; $1M–$2.5M potentially bond-fundable; committee phases finalized, due January 2027."
-        },
-        {
-          "title": "People",
-          "tag": null,
-          "why": "New special-education and custodial hires start in October. Closed session covered union negotiations (CSEA and HUTA), anticipated litigation, and the superintendent's review."
-        },
-        {
-          "title": "shARK fundraising",
-          "tag": null,
-          "why": "$11K pledged toward a $20K goal."
-        },
-        {
-          "title": "What's coming",
-          "tag": null,
-          "why": "Parcel tax discussions (Koslen), a Town Hall on October 15, and new-board-member training January 14."
-        }
-      ]
+     "title": "Admin restructuring plan sketched, $127k in savings",
+     "tag": "money",
+     "why": "Morgan proposed more business support from the county office to cover departing business chief Stacey's work, stipends or added hours for Lindsay and Melina, possibly a district secretary for communications, and redesigning his own role. He returns in December for direction once county figures and staff input are in. Stacey is leaving for a bigger district, two new board members will need onboarding, and the December 15 meeting will recognize the departures."
     },
     {
-      "date": "2026-08-20",
-      "type": "Special Board Meeting",
-      "headline": "The quiet one",
-      "record": "minutes",
-      "items": [
-        {
-          "title": "Closed session: two anticipated litigation matters",
-          "tag": null,
-          "why": "Almost the entire hour was legal counsel in closed session. No report out, no votes, no dollars. The public record is essentially \"we met with our lawyer.\""
-        }
-      ]
+     "title": "Bond project list adopted; Measure M leaning toward passage",
+     "tag": "money",
+     "why": "The list sets priorities and phases, not specific contracts; a request for architect qualifications comes next. Late votes on the Measure M bond favor passage, and Amanda Jacobs found a USDA grant worth about $57,000."
+    },
+    {
+     "title": "Creek fix likely means boulders",
+     "tag": null,
+     "why": "A geotechnical engineer walked the creek and found bedrock pushing water into the bank; placing boulders is the likely fix. Permitting is slow, with a site walk by Pernisky Chatham next. Forestry work takes about a week, with debris burned in spring."
+    },
+    {
+     "title": "Conflict-of-interest code updated after 25 years",
+     "tag": null,
+     "why": "Resolution 2627, requested by Sonoma County, is the first update since the code was written: disclosure filing now follows the district's current roles, the trustees, superintendent/principal, and a chief business official replacing the old \"business manager\" title, with annual updates from now on. Passed by voice vote."
+    },
+    {
+     "title": "Enrollment at 207; classroom and community notes",
+     "tag": null,
+     "why": "West Canyon Consortium is losing its host and needs space for its roughly 220 students. Tammy started part-time November 2 and Jeanette full-time November 3. The Shark parent group reported summer music training for teachers, a local author visit for reading week, and the Color Run held in the rain; feedback on the Thinking Math pilot is mixed."
     }
-  ]
+   ]
+  },
+  {
+   "date": "2026-10-30",
+   "type": "Special Board Meeting",
+   "headline": "The master plan meeting",
+   "record": "minutes",
+   "items": [
+    {
+     "title": "Facilities master plan adopted; state application authorized",
+     "tag": "money",
+     "why": "Three unanimous OPSC items: correcting the district's 2012 filing, submitting the 2026 one, and adopting Resolution 20261030 — the facilities master plan plus authorization to apply to the state's school-construction funding program. This is the pipeline the board has been assembling since September's $17M needs list, now formalized as a state application. In and out in an hour (8:57–10:01 AM), every vote unanimous."
+    },
+    {
+     "title": "Two hires approved",
+     "tag": null,
+     "why": "A special-education paraeducator and a custodial/maintenance technician — the October starts flagged at the September meeting."
+    },
+    {
+     "title": "November meeting moved",
+     "tag": null,
+     "why": "November 12 shifts to Monday, November 16, 2026 — 7:00 PM via Google Meet per the district calendar."
+    },
+    {
+     "title": "Pathways financials on the November agenda",
+     "tag": "money",
+     "why": "The board requested a November discussion item: a Pathways financial explanation and how it affects Harmony Union School District."
+    }
+   ]
+  },
+  {
+   "date": "2026-10-08",
+   "type": "Special Board Meeting",
+   "headline": "The first real bond money moves",
+   "record": "minutes",
+   "items": [
+    {
+     "title": "Bond contracts approved — about $83K",
+     "tag": "money",
+     "why": "Unanimous consent (Laird/Solter): cargo storage ($34,000), EOC pad ($13,000), perimeter survey ($8,000), septic risers ($12,000), and cistern/garden water overflow ($16,000) — the first Measure M bond contracts actually executed, not just budgeted."
+    },
+    {
+     "title": "Field trips (consent)",
+     "tag": null,
+     "why": "Overnight and water-related student trips approved."
+    },
+    {
+     "title": "William's Law quarterly reports",
+     "tag": null,
+     "why": "Q4 2025-26 and Q1 2026-27 school-safety reporting approved unanimously — the state's quarterly confirmation the district is current."
+    },
+    {
+     "title": "Five minutes flat",
+     "tag": null,
+     "why": "The open session ran 9:16 to 9:21 PM — every vote unanimous, no discussion on the record. The board's real work that night happened in closed session beforehand; the open session was the rapid-fire sign-off."
+    },
+    {
+     "title": "Next meeting: November 12",
+     "tag": null,
+     "why": "Confirmed on the record — since moved to November 16 per the October 30 minutes."
+    }
+   ]
+  },
+  {
+   "date": "2026-09-25",
+   "type": "Special Board Meeting",
+   "headline": "The three-minute meeting",
+   "record": "minutes",
+   "items": [
+    {
+     "title": "2025-26 unaudited actuals approved — unanimous",
+     "tag": "money",
+     "why": "Convened 8:49 AM, adjourned 8:52 AM — the meeting's one substantive act. The district's closed books for 2025-26 (Gress/Laird, unanimous), headed to the county office. The full report runs about a hundred pages; the headline numbers are on <a href=\"https://harmony.justsoyouknow.site/budget\">the budget page</a> — including an attendance shortfall worth roughly $160K in state funding."
+    }
+   ]
+  },
+  {
+   "date": "2026-09-10",
+   "type": "Special Board Meeting",
+   "headline": "The workhorse — nine approvals, every vote unanimous",
+   "record": "minutes",
+   "items": [
+    {
+     "title": "Money items",
+     "tag": "money",
+     "why": "LCAP revisions, unaudited actuals, the Gann limit (the state's spending cap), and substitute teacher compensation — all approved unanimously."
+    },
+    {
+     "title": "Facilities and energy",
+     "tag": null,
+     "why": "PCO Energy Resiliency Project, a PG&E contract, and a new facilities fee schedule — all approved."
+    },
+    {
+     "title": "New math pilot",
+     "tag": null,
+     "why": "Innovamat Thinking Math approved for piloting."
+    },
+    {
+     "title": "The bond pipeline",
+     "tag": "money",
+     "why": "$17M in identified project needs; $1M–$2.5M potentially bond-fundable; committee phases finalized, due January 2027."
+    },
+    {
+     "title": "People",
+     "tag": null,
+     "why": "New special-education and custodial hires start in October. Closed session covered union negotiations (CSEA and HUTA), anticipated litigation, and the superintendent's review."
+    },
+    {
+     "title": "shARK fundraising",
+     "tag": null,
+     "why": "$11K pledged toward a $20K goal."
+    },
+    {
+     "title": "What's coming",
+     "tag": null,
+     "why": "Parcel tax discussions (Koslen), a Town Hall on October 15, and new-board-member training January 14."
+    }
+   ]
+  },
+  {
+   "date": "2026-08-20",
+   "type": "Special Board Meeting",
+   "headline": "The quiet one",
+   "record": "minutes",
+   "items": [
+    {
+     "title": "Closed session: two anticipated litigation matters",
+     "tag": null,
+     "why": "Almost the entire hour was legal counsel in closed session. No report out, no votes, no dollars. The public record is essentially \"we met with our lawyer.\""
+    }
+   ]
+  }
+ ]
 }

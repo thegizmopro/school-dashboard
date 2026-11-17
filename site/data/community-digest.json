@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T06:47:10",
+ "generated": "2026-11-17T06:45:28",
  "digest": "Monday's Move-a-thon is on, rain or shine! There's still a need for volunteers — if you'd signed up for the original date and can't make it, please update your name on ParentSquare.",
  "listings": [
   {
@@ -35,6 +35,12 @@
   {
    "posted": "2026-11-15",
    "item": "@231284072800470",
+   "price": "—",
+   "url": null
+  },
+  {
+   "posted": "2026-11-16",
+   "item": "Yes! I’ll text you to figure out a pick up",
    "price": "—",
    "url": null
   }

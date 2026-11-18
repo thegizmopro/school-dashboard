@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-16T18:03:13",
+ "fetched": "2026-11-17T18:03:36",
  "days": {
   "2026-11-16": {
    "lunch": [
@@ -340,10 +340,6 @@
     {
      "cat": "Fruit",
      "item": "Banana"
-    },
-    {
-     "cat": "Fruit",
-     "item": "Avocado"
     },
     {
      "cat": "Milk",

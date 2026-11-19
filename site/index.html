@@ -208,12 +208,14 @@ dialog.submission::backdrop{background:rgba(34,48,31,.45)}
   </div>
 
   <div class="section">
-    <div class="section-title">🗳️ Measure M: your vote, counted</div>
+    <div class="section-title">🗳️ Measure M: passed</div>
     <div class="card" id="measurem-card">
       <div class="notice">
-        <div class="notice-head"><span class="source-chip chip-email">community</span><span class="ts">2026-11-12</span></div>
-        <div class="notice-title">Measure M is passing, and the margin keeps growing</div>
-        <div class="notice-text">On election night this measure was two votes short. Wednesday's Sonoma County count: 1,449 yes, 687 no, 67.8%, about 25 votes above the two-thirds it needs. Still unofficial, with roughly 43,700 ballots left to count countywide, so the number can still move. Next update is expected Friday by 3 PM, and certification is due December 3. From two votes short to twenty-five clear: every one of those ballots mattered. Updates as the count moves or certifies.</div>
+        <div class="notice-head"><span class="source-chip chip-email">community</span><span class="ts">2026-11-19</span></div>
+        <div class="notice-title">Measure M passes!</div>
+        <div class="notice-text">By 47 votes.</div>
+        <div class="notice-text" style="margin-top:8px">What it brings to our school: about $177,600 a year for four years, starting July 1, 2027. The money can go to 3 things: the Garden Enrichment farm-to-table program, (which also grows produce for student lunches), student mental health services, and reading and math intervention.</div>
+        <div class="notice-text" style="margin-top:8px">What it means for homeowners: a flat $75 a year on each parcel's property tax bill for the 2027-28 through 2030-31 tax years. The first charge shows up on the fall 2027 bill.</div>
         <div class="involved" style="margin-top:10px;gap:8px;display:flex;flex-wrap:wrap">
           <a class="cta" href="https://harmonyusd.org/measure-m-parcel-tax" target="_blank" rel="noopener">Read about Measure M →</a>
         </div>
@@ -673,8 +675,7 @@ function renderCommunity(){
     let html = `<div class="digest-prose">${prose}</div>`;
     html += `<div class="for-sale"><h4>💬 Join the conversation</h4>`
           + `<a class="join" href="https://chat.whatsapp.com/GMgNmXq9ukFAiHbwjQKdYA" target="_blank" rel="noopener">Salmon Creek community group →</a>`
-          + `<a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO" target="_blank" rel="noopener">Buy/sell/trade group →</a>`
-          + `<a class="join" href="https://chat.whatsapp.com/GboJT9iyGN55RexxVxJEQb" target="_blank" rel="noopener">Help spread the word on Measure M →</a></div>`;
+          + `<a class="join" href="https://chat.whatsapp.com/KxehqXA1aN387LmFMFJDDO" target="_blank" rel="noopener">Buy/sell/trade group →</a></div>`;
     $("community-card").innerHTML = html || '<div class="empty-note">First community digest coming soon</div>';
   }).catch(()=>{ $("community-card").innerHTML = '<div class="empty-note">Community digest unavailable</div>'; });
 }
@@ -831,9 +832,7 @@ const SUBMIT_COPY = {
   student: {title:"✏️ Submit news or an editorial", sub:"Student journalists: share a story, photo idea, or editorial.",
             head:"Headline", body:"Tell us more", crew:"student editors"},
   event:   {title:"🎪 Suggest an event", sub:"Parents: ideas for the calendar — festivals, meetups, traditions.",
-            head:"What's the event?", body:"Details — when, where, who it's for", crew:"events crew"},
-  measurem:{title:"✋ Help with Measure M", sub:"Tell the campaign how you'd like to pitch in — website, design, organizing, funding, or talking to neighbors.",
-            head:"How can you help?", body:"Your name + how you'd like to help (pick any: website, graphic design, organizing, donation, talking to neighbors)", crew:"Measure M campaign"}
+            head:"What's the event?", body:"Details — when, where, who it's for", crew:"events crew"}
 };
 function openSubmit(type){
   const c = SUBMIT_COPY[type] || SUBMIT_COPY.student;
@@ -873,7 +872,7 @@ $("submit-form").addEventListener("submit", async e => {
   const btn = $("sd-send");
   btn.disabled = true;
   $("sd-status").textContent = "Sending…";
-  const type = ["event","measurem"].includes($("sd-type").value) ? $("sd-type").value : "student";
+  const type = $("sd-type").value === "event" ? "event" : "student";
   try {
     const r = await fetch("api/submit", {method:"POST", headers:{"Content-Type":"application/json"},
       body: JSON.stringify({type, name:$("sd-name").value, title:$("sd-head").value, body:$("sd-body").value, website:$("sd-hp").value})});

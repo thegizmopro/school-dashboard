@@ -1,58 +1,64 @@
 {
  "_note": "Past meetings in plain language, newest first. Sourced from district minutes/agendas (Simbli); curated by hand. HTML allowed in item text: <a href=\"https://...\">, b, i, em only. headline = one-line characterization of the meeting.",
- "updated": "2026-11-17",
+ "updated": "2026-11-19",
  "meetings": [
   {
    "date": "2026-11-16",
    "type": "Regular Board Meeting",
-   "headline": "The layoffs-reckoning meeting",
+   "headline": "The budget lands in the black, and the school year is in full swing",
    "record": "notes",
-   "record_note": "AI-assisted live notes from the meeting; official district minutes to follow. Most votes were voice votes with no opposition heard; the facilities fee motion was made but no second or vote was captured on the recording.",
+   "record_note": "These notes were made with AI assistance from a single room microphone, and the recording quality was poor in places. Every number below was checked against the recording and cross-checked with the district's published agenda, and where the audio was not clear enough to be sure of something, we left it out rather than guess. The official district minutes remain the authoritative record. Corrections are always welcome and get fixed promptly.",
    "items": [
     {
-     "title": "Developer fee raised to $3.72 per square foot",
+     "title": "The budget ends the year $194,000 in the black",
      "tag": "money",
-     "why": "The residential developer fee rises from $3.31 to $3.72 per square foot, effective in January, sixty days after the meeting. The presenter first read the study's recommended $3.59, then corrected from the document: $3.72 is the total, shared with the high school district. A speaker warned the roughly 40-cent jump will hurt families building a second home on their property. A motion to approve was made; the recording captured no second or vote call on it. The annual developer fee report showed five payments, deposited into Fund 25, which can only fund construction."
+     "why": "The June budget had projected just $3,143. Property taxes came in 12.9 percent over what was budgeted, helped by a $126,000 transportation reimbursement and a $181,000 grant. The fund balance is projected to rise from $479,000 to $673,000, moving toward the district's $1 million long-term goal. The board also approved building a committed reserve of 3 percent of expenses (about $200,000 to $220,000): the fund already holds $45,000, with $125,000 set aside this year and $50,000 next year. Passed by voice vote. The first interim budget comes in December."
     },
     {
-     "title": "Board commits 3% of spending to a reserve",
+     "title": "Every family took part in the Shark fundraiser",
+     "why": "At $40,000 raised against a $50,000 goal with two days to go, participation reached every family in the school. Ahead: a pancake breakfast with Santa, a tamale dinner at the winter festival, and a winter concert with Big Buddies and Little Buddies singing together, followed by cider and a luminary walk. Shark is funding the music teacher preparing the concert, music training for teachers, and a monthly wellness activity for staff, and a local author will visit each grade during reading week."
+    },
+    {
+     "title": "A USDA grant of about $57,000 brings a garden aide",
+     "why": "The grant to the food service program funds a garden aide, freeing Hunter to return to the kitchen. The job posting is up. The garden program also grows produce for student lunches, the same farm-to-table work Measure M will now support for the next four years."
+    },
+    {
+     "title": "Enrollment holds at 207, with two new team members",
+     "why": "Tammy started part time on November 2, and Jeanette started November 3 as a full-time special education aide."
+    },
+    {
+     "title": "Conflict-of-interest code updated for the first time since 2001",
+     "why": "Resolution 2627, requested by the county, modernizes the list of positions that file annual disclosures: the board, the superintendent/principal, and the chief business official. Passed by voice vote."
+    },
+    {
+     "title": "Developer fee set at $3.72 per square foot",
      "tag": "money",
-     "why": "About $210,000 into a separate reserve fund (Fund 17), on top of the 17% the state recommends, bringing total reserves to 20%. Morgan called the 3% a goal rather than a yearly amount; projections for the next two years show only about $6,000 of room. The general fund is running $194,000 ahead, with about $50,000 in administrative savings."
+     "why": "The residential fee rises from $3.31, effective January, following the state study, and is shared with the high school district. The annual report showed five payments last year, deposited in Fund 25, which is reserved for construction. A motion to approve the fee was made; the recording did not capture a second or a vote call."
     },
     {
-     "title": "The layoffs' toll on classified staff, relayed to the board",
-     "tag": null,
-     "why": "Staff concerns reached the board secondhand, reported from an earlier meeting with the classified staff union (CSEA) attended by Matthew Morgan and at least one board member. Last summer's layoffs broke trust: wage and hour cuts hit people making rent and feeding families, most staff were rehired but a few were not or came back to fewer hours, and cutting larger positions forced reductions on everyone below them, hitting some longtime staff again in a long, drawn-out process. At the union meeting, every person was described as frustrated or furious, devastated, or feeling undervalued; some said traumatized. Classified staff were called surrogate parents who go nonstop with very little downtime and no prep time, while student behavior problems were described as higher than they have ever been. A board member called the process not at all perfect and its timing unfortunate, and said staff should know how much they are valued; one speaker pledged better communication and a hard look for other cuts, revenue, and grants so that staff are not cut. Ideas raised: time away from students for basic tasks, with support staff rotating to cover each other; board listening sessions two or three times a year whether or not there is a problem; and one-on-ones with Morgan, with a union representative present if staff prefer, with board members as another channel for concerns. A member of the school community, Micah, plans a master's project on giving staff short relief breaks."
+     "title": "Bond project list approved; campus work moves ahead",
+     "why": "The board gave conceptual approval to the project list, which allows the district to request architect qualifications without committing to any project. The district's side of the PG&E work is done; PG&E has been sent an appeal letter after missing its January window. New storage units are being built, and property-line fencing was walked with the committee."
     },
     {
-     "title": "An administrative restructure takes shape, $127k savings next year",
+     "title": "Grounds and forest stewardship",
+     "why": "Crews are clearing brush and tan oak lost to sudden oak death, with a controlled burn planned for spring. A trail is being scouted on the district's southwest parcel along the old rail line. The eroding creek bank near the parking lot was inspected by a geotechnical engineer, with a likely boulder repair in permitting."
+    },
+    {
+     "title": "Regional planning for special education",
+     "why": "The West County Consortium, which pools special education classes and staff among the small West County districts, will see a change of host as the high school district steps back after 15 to 20 years. The county office has brought in a consultant to guide the transition. Harmony's planned bond build-out includes five classrooms, with space for a special day class."
+    },
+    {
+     "title": "An administrative restructure takes shape for next year",
      "tag": "money",
-     "why": "Morgan proposed more business support from the county office to cover departing business chief Stacey's work, stipends or added hours for Lindsay and Melina, possibly a district secretary for communications, and redesigning his own role. He returns in December for direction once county figures and staff input are in. Stacey is leaving for a bigger district, two new board members will need onboarding, and the December 15 meeting will recognize the departures."
+     "why": "This year, county office support is covering business duties, shared among Melina, Lindsay, and Stephanie. Next year's plan would combine the superintendent and chief business official roles and promote the assistant principal to principal, saving about $127,000. The board asked to hear from staff first and to see the roles clearly defined before anything is decided; a detailed plan returns at the next meeting."
     },
     {
-     "title": "Bond project list approved; PG&E timeline slips",
-     "tag": "money",
-     "why": "The list passed as a conceptual approval so the district can request architect qualifications; it does not commit to any project. On the PG&E work: the district's side is done, but PG&E will not make the January install date and still must replace two poles and run the line; the district has sent an appeal letter, and the contractor has $1 million of bonding tied up until the project completes. Meanwhile new storage units are being built and property-line fencing was walked."
+     "title": "Support steps for staff",
+     "why": "Following this year's reductions, the board and superintendent outlined steps for the months ahead: board listening sessions with staff two or three times a year, one-on-one conversations available with union representation if staff prefer, and a master's project by staff member Micah to pilot short relief breaks during the day."
     },
     {
-     "title": "Creek fix likely means boulders",
-     "tag": null,
-     "why": "A geotechnical engineer walked the creek and found bedrock pushing water into the bank; placing boulders is the likely fix. Permitting is slow, with a site walk by Pernisky Chatham next. Forestry work takes about a week, with debris burned in spring."
-    },
-    {
-     "title": "Conflict-of-interest code updated, first time since 2001",
-     "tag": null,
-     "why": "Resolution 2627, requested by Sonoma County, is the first update since the code was written: disclosure filing now follows the district's current roles, the trustees, superintendent/principal, and a chief business official replacing the old \"business manager\" title, with annual updates from now on. Passed by voice vote; no opposition was heard."
-    },
-    {
-     "title": "West County Consortium needs a new host district",
-     "tag": null,
-     "why": "The West County Consortium pools special education staff and classrooms for the small West County elementary districts, including Harmony. The West County High School District has run it for 15 to 20 years and plans to pull out; it employs all consortium staff (about 40 to 45 people, running roughly seven classes serving 45 to 55 students across the member districts, two of them from Harmony) and cannot formally exit until the end of 2028, with notice expected around May. Member districts collectively pay close to $500,000 in admin charges; the county office brought in a consultant, but no district has stepped forward to host. If it dissolves, each district would run its own programs at higher cost or buy seats elsewhere. The district needs space for at least one special day class; the planned bond build-out includes five classrooms."
-    },
-    {
-     "title": "Enrollment at 207; classroom and community notes",
-     "tag": null,
-     "why": "Enrollment stands at 207. The Shark fundraiser hit $40,000 of a $50,000 goal with two days left, with every family taking part; coming up are a pancake breakfast with Santa, a tamale dinner at the winter festival, and a winter concert with Big and Little Buddies singing together. Tammy started part-time November 2 and Jeanette started full-time as a special education aide November 3. A USDA grant of about $57,000 pays for a garden aide so Hunter can return to the kitchen. Thinking Math was described as strong in some areas and weak in others, and some teachers may try other curricula this spring. Late Measure M tallies were looking increasingly promising."
+     "title": "Looking ahead",
+     "why": "Stacey, the business manager, stays through December before starting a new role, with thanks for her years of service. Two new board members will be onboarded before the next meeting on December 15, when the first interim budget also arrives."
     }
    ]
   },

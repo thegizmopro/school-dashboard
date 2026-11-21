@@ -4,6 +4,13 @@
  "campaign": "Parent-run since 1989, shARK's ~$75K a year all stays right here: $50K in school grants, the rest as classroom wishes, community events, and appreciation for our teachers. Thank you, shARK families! 💚",
  "events": [
   {
+   "date": "2026-12-02",
+   "title": "Giving Tree: wish lists due",
+   "time": null,
+   "location": null,
+   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
+  },
+  {
    "date": "2026-12-03",
    "title": "Occidental Tree Lighting",
    "time": null,
@@ -32,11 +39,39 @@
    "url": null
   },
   {
+   "date": "2026-12-06",
+   "title": "Book Faire Setup",
+   "time": "12:00-1:30pm",
+   "location": "Falls Building",
+   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
+  },
+  {
+   "date": "2026-12-07",
+   "title": "Book Faire & Reading Week (through Dec 10)",
+   "time": null,
+   "location": "Falls Building",
+   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
+  },
+  {
    "date": "2026-12-10",
    "title": "Winter Festival",
    "time": null,
    "location": null,
    "url": null
+  },
+  {
+   "date": "2026-12-16",
+   "title": "Giving Tree: drop off unwrapped gifts",
+   "time": null,
+   "location": "School office",
+   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
+  },
+  {
+   "date": "2026-12-17",
+   "title": "Giving Tree: gift pickup (also Dec 18)",
+   "time": null,
+   "location": "School office",
+   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
   }
  ]
 }

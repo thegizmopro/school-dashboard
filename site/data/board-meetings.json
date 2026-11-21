@@ -13,5 +13,75 @@
   "description": "Special meeting - facilities awards, budget, Williams reports",
   "added": "2026-10-30",
   "added_by": "kenzo"
+ },
+ {
+  "date": "2026-12-02",
+  "label": "Giving Tree: wish lists due",
+  "times": [
+   {
+    "start": "080000",
+    "end": "163000"
+   }
+  ],
+  "location": "Season of Giving at HUSD",
+  "description": "Wish lists due for the Season of Giving. Requests stay anonymous and private; submit via the Season of Sharing form (link in the shARK newsletter or Mr. Morgan's 11/18 ParentSquare post).",
+  "added": "2026-11-20",
+  "added_by": "arty"
+ },
+ {
+  "date": "2026-12-06",
+  "label": "Book Faire Setup",
+  "times": [
+   {
+    "start": "120000",
+    "end": "133000"
+   }
+  ],
+  "location": "Falls Building",
+  "description": "Set up the Scholastic Book Faire displays ahead of Reading Week.",
+  "added": "2026-11-20",
+  "added_by": "arty"
+ },
+ {
+  "date": "2026-12-07",
+  "label": "Book Faire & Reading Week (through Dec 10)",
+  "times": [
+   {
+    "start": "080000",
+    "end": "153000"
+   }
+  ],
+  "location": "Falls Building",
+  "description": "The annual Scholastic Book Faire is back: books at school all week, and every purchase benefits the school. Open late Dec 10 during the Winter Festival; breakdown Dec 11, 11am-1pm.",
+  "added": "2026-11-20",
+  "added_by": "arty"
+ },
+ {
+  "date": "2026-12-16",
+  "label": "Giving Tree: drop off unwrapped gifts",
+  "times": [
+   {
+    "start": "080000",
+    "end": "163000"
+   }
+  ],
+  "location": "School office",
+  "description": "Drop off unwrapped Giving Tree items at the office.",
+  "added": "2026-11-20",
+  "added_by": "arty"
+ },
+ {
+  "date": "2026-12-17",
+  "label": "Giving Tree: gift pickup (also Dec 18)",
+  "times": [
+   {
+    "start": "080000",
+    "end": "163000"
+   }
+  ],
+  "location": "School office",
+  "description": "Gifts available for pickup by requesting families, December 17 and 18.",
+  "added": "2026-11-20",
+  "added_by": "arty"
  }
 ]

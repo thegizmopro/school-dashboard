@@ -1,77 +1,42 @@
 {
- "fetched": "2026-11-17T06:03:41",
+ "fetched": "2026-11-23T12:03:31",
  "url": "https://www.harmonyark.org/",
  "campaign": "Parent-run since 1989, shARK's ~$75K a year all stays right here: $50K in school grants, the rest as classroom wishes, community events, and appreciation for our teachers. Thank you, shARK families! 💚",
  "events": [
   {
-   "date": "2026-12-02",
-   "title": "Giving Tree: wish lists due",
-   "time": null,
-   "location": null,
-   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
-  },
-  {
    "date": "2026-12-03",
    "title": "Occidental Tree Lighting",
-   "time": null,
-   "location": null,
+   "time": "5-7",
+   "location": "Downtown Occidental",
    "url": null
   },
   {
    "date": "2026-12-05",
    "title": "Pancake Breakfast + Giving Tree",
-   "time": null,
-   "location": null,
+   "time": "9am-11am",
+   "location": "Harmony Salmon Creek School",
    "url": null
   },
   {
    "date": "2026-12-06",
-   "title": "6th Grade Work Day",
-   "time": null,
-   "location": null,
+   "title": "6th Grade Adopt-A-Garden Work Day",
+   "time": "11am-1pm",
+   "location": "Harmony Salmon Creek School Garden",
    "url": null
   },
   {
    "date": "2026-12-06",
-   "title": "Tamale Making + Dinner",
-   "time": null,
-   "location": null,
+   "title": "Tamale Making Party",
+   "time": "8am-2pm",
+   "location": "Harmony Salmon Creek School Kitchen",
    "url": null
-  },
-  {
-   "date": "2026-12-06",
-   "title": "Book Faire Setup",
-   "time": "12:00-1:30pm",
-   "location": "Falls Building",
-   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
-  },
-  {
-   "date": "2026-12-07",
-   "title": "Book Faire & Reading Week (through Dec 10)",
-   "time": null,
-   "location": "Falls Building",
-   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
   },
   {
    "date": "2026-12-10",
    "title": "Winter Festival",
-   "time": null,
-   "location": null,
+   "time": "4:30-7:00",
+   "location": "Harmony Salmon Creek School",
    "url": null
-  },
-  {
-   "date": "2026-12-16",
-   "title": "Giving Tree: drop off unwrapped gifts",
-   "time": null,
-   "location": "School office",
-   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
-  },
-  {
-   "date": "2026-12-17",
-   "title": "Giving Tree: gift pickup (also Dec 18)",
-   "time": null,
-   "location": "School office",
-   "url": "https://www.harmonyark.org/newsletter/nov-26-nibble"
   }
  ]
 }

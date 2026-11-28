@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-27T00:03:27",
+ "fetched": "2026-11-28T00:03:31",
  "days": {
   "2026-11-30": {
    "lunch": [
@@ -591,6 +591,35 @@
     {
      "cat": "Main Entree",
      "item": "Bagel, WG, Dos Pisano"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Cinnamon Toast Crunch, reduced sugar"
+    },
+    {
+     "cat": "Main Entree",
+     "item": "Oatmeal bar and string cheese"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Apple"
+    },
+    {
+     "cat": "Fruit",
+     "item": "Orange, sliced, 1/2 cup serving"
+    },
+    {
+     "cat": "Milk",
+     "item": "Milk, 1% HPT, Crystal"
+    }
+   ]
+  },
+  "2027-01-12": {
+   "lunch": null,
+   "breakfast": [
+    {
+     "cat": "Main Entree",
+     "item": "Breakfast Burrito"
     },
     {
      "cat": "Main Entree",
